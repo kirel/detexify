@@ -3,7 +3,8 @@ require 'open-uri'
 require 'data-uri'
 require 'json'
 require 'sinatra'
-require 'classifier'
+
+load 'detexify.rb' 
 
 MATHTRANURL = 'http://www.mathtran.org/cgi-bin/mathtran?D=%s;tex=%s'
 

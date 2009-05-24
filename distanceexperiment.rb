@@ -1,3 +1,5 @@
+# TODO remove
+
 require 'rmagick'
 require 'image_moments'
 require 'statistics'

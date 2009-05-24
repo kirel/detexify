@@ -22,4 +22,6 @@ describe 'The Sinatra classifier' do
       response.body.should == "You passed #{url}"      
     end
   end
+  
+  it "can train"
 end

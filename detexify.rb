@@ -1,47 +1,9 @@
-BASEDIR = File.expand_path(File.dirname(__FILE__))
-
-require 'rubygems'
 require 'couchrest'
+require 'extended_enumerable'
 require 'matrix'
 require 'statistics'
 
 module Detexify
-
-  # TODO
-  # module CouchRest
-  #   module Mixins
-
-  module EnumerableDocument
-    DEFAULT_BATCHSIZE = 25
-
-    def self.included(base)
-      base.class_eval do
-        view_by :_id
-      end
-      base.extend ClassMethods
-      base.extend Enumerable
-    end
-
-    module ClassMethods
-      def batch(num = DEFAULT_BATCHSIZE, opts = {}, &block)
-        b = self.all(opts.merge!(:limit => num+1))
-        while b.size == num+1
-          this_batch, start = b[0..-2], b[-1]
-          yield this_batch
-          b = self.by__id(opts.merge!(:limit => num+1, :startkey => start.id))
-        end
-        yield b
-      end
-
-      def each(&block)
-        self.batch do |b|
-          b.each do |s|
-            yield s
-          end
-        end
-      end
-    end
-  end
     
   class Sample < CouchRest::ExtendedDocument
     use_database CouchRest.new.database! 'samples' # FIXME database?
@@ -51,17 +13,15 @@ module Detexify
     timestamps!
     
     view_by :mean,
-      :map => open(File.join(BASEDIR, 'js/mean-map.js')).read,
-      :reduce => open(File.join(BASEDIR, 'js/mean-reduce.js')).read
-      
-    include EnumerableDocument # TODO CouchRest::ExtendedDocument.send :include ExtendedEnumerable
-      
+      :map => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/mean-map.js')).read,
+      :reduce => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/mean-reduce.js')).read
+    
+    # TODO view_by :covariance_matrix
+            
     def source
       read_attachment 'source'
     end
       
-    # TODO view_by :covariance_matrix
-
     def Sample.mean command
       result = by_mean :key => command, :group => true, :reduce => true
       Vector.elements result['rows'][0]['value']['mean']
@@ -100,7 +60,6 @@ module Detexify
     def classify io
       f = extract_features io.read
       ms = @samples.means
-      puts "************ #{ms.inspect}"
       # TODO use mahalanobis distance for commands with enough samples -> m[:count]
       ms.map { |m| { :tex => m[:command], :score => Statistics.euclidean_distance(Vector.elements(f), m[:mean]) } }.sort_by { |h| -h[:score] }
     end
