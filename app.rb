@@ -3,7 +3,7 @@ require 'open-uri'
 require 'data-uri'
 require 'json'
 require 'sinatra'
-require 'lib/classifier'
+require 'classifier'
 
 MATHTRANURL = 'http://www.mathtran.org/cgi-bin/mathtran?D=%s;tex=%s'
 

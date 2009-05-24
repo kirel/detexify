@@ -1,4 +1,4 @@
-require '../lib/image_moments'
+require File.join(File.expand_path(File.dirname(__FILE__)), '../image_moments')
 
 describe ImageMoments do
   

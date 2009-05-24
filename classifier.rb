@@ -3,7 +3,7 @@ BASEDIR = File.expand_path(File.dirname(__FILE__))
 require 'rubygems'
 require 'couchrest'
 require 'matrix'
-require File.join(BASEDIR, 'statistics')
+require 'statistics'
 
 module Detexify
 
@@ -51,8 +51,8 @@ module Detexify
     timestamps!
     
     view_by :mean,
-      :map => open(File.join(BASEDIR, 'mean-map.js')).read,
-      :reduce => open(File.join(BASEDIR, 'mean-reduce.js')).read
+      :map => open(File.join(BASEDIR, 'js/mean-map.js')).read,
+      :reduce => open(File.join(BASEDIR, 'js/mean-reduce.js')).read
       
     include EnumerableDocument # TODO CouchRest::ExtendedDocument.send :include ExtendedEnumerable
       
