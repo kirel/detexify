@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %title Detexify - Latex Classifier
+    /%script{:src => "http://www.google.com/jsapi"}
+    %script{:type => 'text/javascript', :src => "/js/jquery"}
+    %script{:type => 'text/javascript', :src => "/js/mathtran"}
+    %script{:type => 'text/javascript', :src => "/js/canvassify"}
+    %script{:type => 'text/javascript', :src => "/js/train"}
+    %style
+      canvas, img { border: 1px solid black; }
+  %body
+    %h1 Eine Tafel zum trainieren...
+    %h2#tex= @tex
+    %canvas#tafel{:width=>"100", :height=>"100"}
+      \...aber du siehst sie nicht
+    %a#train{:href => '#'} Trainieren!
+    #info
