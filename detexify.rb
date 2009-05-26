@@ -73,7 +73,7 @@ module Detexify
         def img2hu img
           puts "-"*80
           puts "computing hu moments"
-          #img.quantize(2, Magick::GRAYColorspace, Magick::NoDitherMethod)
+          # FIXME next statement uses opacity which is VERY STRANGE but it only works that way
           a = (0..(img.rows-1)).collect { |n| img.get_pixels(0,n,img.columns,1).collect { |p| p.opacity } }
           m = Matrix[*a]
           puts "panic!!!!!! zero matrix" if m == Matrix.zero(m.column_size)
