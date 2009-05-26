@@ -18,6 +18,11 @@ $(function(){
     clearCanvas(c);
     return false;
   });
+  $('#clear').click(function(){
+    clearCanvas(c);
+    return false;
+  });
   
   i.text("Bereit. Bitte malen!");
+  mathtran.init();
 });

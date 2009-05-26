@@ -6,9 +6,7 @@ require 'sinatra'
 
 load 'detexify.rb' 
 
-MATHTRANURL = 'http://www.mathtran.org/cgi-bin/mathtran?D=%s;tex=%s'
-
-Classifier = Detexify::Classifier.new # database_url
+classifier = Detexify::Classifier.new # database_url
 
 get '/' do
   haml :classify
@@ -24,12 +22,16 @@ get '/train' do
 end
 
 post '/train' do
+  # TODO sanity check in command list
   uri = URI.parse params[:url]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
        halt 401, "Only HTTP, FTP or Data!"
   end
   io = uri.open
-  Classifier.train params[:tex], io
+  puts "************ url length #{params[:url].length}"
+  puts "************ #{io.content_type} #{io.size}"
+  
+  classifier.train params[:tex], io
   halt 200
 end
 
@@ -50,10 +52,10 @@ get '/image' do
   #     response['Content-Length'] = f.size
   #     halt f
   #   end
-  redirect MATHTRANURL % [params[:"D"] || 1.to_s, params[:tex] || "foo"].map { |p| URI::escape(p) }
+  redirect 'http://www.mathtran.org/cgi-bin/mathtran?D=%s;tex=%s' % [params[:"D"] || 1.to_s, params[:tex] || "foo"].map { |p| URI::escape(p) }
 end
 
-get '/classify' do
+post '/classify' do
   uri = URI.parse params[:url]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
        halt 401, "Only HTTP, FTP or Data!"
@@ -65,7 +67,7 @@ get '/classify' do
   #   hits = f.readlines.map { |t| {:tex => t, :score => 'drölf' } } 
   # end
   
-  hits = Classifier.classify io
+  hits = classifier.classify io
   
   # sende { :url => url, :hits => [{:latex => latex, :score => score }, {:latex => latex, :score => score } ]  }
   JSON :url => params[:url], :hits => hits

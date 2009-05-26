@@ -12,7 +12,10 @@
   %body
     %h1 Eine Tafel zum trainieren...
     %h2#tex= @tex
-    %canvas#tafel{:width=>"100", :height=>"100"}
+    %h3
+      %img{:alt=>"tex:#{@tex}"}
+    %canvas#tafel{:width=>"400", :height=>"400"}
       \...aber du siehst sie nicht
-    %a#train{:href => '#'} Trainieren!
+    %a#train{:href => '#'} Trainieren
+    %a#clear{:href => '#'} L&ouml;schen
     #info
