@@ -109,7 +109,7 @@ module Detexify
       f = extract_features io.read
       ms = @samples.means
       # TODO use mahalanobis distance for commands with enough samples -> m[:count]
-      ms.map { |m| { :tex => m[:command], :score => Statistics.euclidean_distance(f, m[:mean]) } }.sort_by { |h| -h[:score] }
+      ms.map { |m| { :tex => m[:command], :score => Statistics.euclidean_distance(f, m[:mean]) } }.sort_by { |h| h[:score] }
     end
     
     def regenerate_features

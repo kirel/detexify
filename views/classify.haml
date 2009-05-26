@@ -9,10 +9,14 @@
     %script{:type => 'text/javascript', :src => "/js/classify"}
     %style
       canvas, img { border: 1px solid black; }
+      div#spinner { display: none; }
   %body
     %h1 Eine Tafel zum klassifizieren...
     %canvas#tafel{:width=>"400", :height=>"400"}
       \...aber du siehst sie nicht
     %a#clear{:href => '#'} L&ouml;schen
     #info
+    #spinner
+      /%img{:alt => 'Ajax spinner', :href => 'spinner.gif' }
+      Untersuche...
     %ul#hitlist
