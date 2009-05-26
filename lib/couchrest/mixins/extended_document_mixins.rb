@@ -1,0 +1,7 @@
+require File.join(File.dirname(__FILE__), 'properties')
+require File.join(File.dirname(__FILE__), 'document_queries')
+require File.join(File.dirname(__FILE__), 'views')
+require File.join(File.dirname(__FILE__), 'design_doc')
+require File.join(File.dirname(__FILE__), 'validation')
+require File.join(File.dirname(__FILE__), 'extended_attachments')
+require File.join(File.dirname(__FILE__), 'class_proxy')
