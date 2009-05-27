@@ -8,11 +8,15 @@
     %script{:type => 'text/javascript', :src => "/js/canvassify.js"}
     %script{:type => 'text/javascript', :src => "/js/train.js"}
     %style
-      canvas, img { border: 1px solid black; }
+      canvas { border: 1px solid black; }
+      canvas#tafel { display: block }
   %body
     %h1 Eine Tafel zum trainieren...
-    %h2#tex= @tex
-    %h3
+    %p
+      Oder geh
+      %a{:href => '/'} klassifizieren...
+    %h2
+      %span#tex= @tex
       %img{:alt=>"tex:#{@tex}"}
     %canvas#tafel{:width=>"400", :height=>"400"}
       \...aber du siehst sie nicht
