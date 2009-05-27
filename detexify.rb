@@ -8,7 +8,8 @@ require 'rmagick'
 module Detexify
     
   class Sample < CouchRest::ExtendedDocument
-    use_database CouchRest.new.database! 'samples' # FIXME database?
+    dburl = ENV['COUCH'] || "http://127.0.0.1:5984/samples"
+    use_database CouchRest.database! dburl
     property :command
     property :feature_vector
     
@@ -21,7 +22,7 @@ module Detexify
     # TODO view_by :covariance_matrix
             
     def source
-      read_attachment 'source'
+      fetch_attachment 'source'
     end
       
     def Sample.mean command
@@ -89,8 +90,8 @@ module Detexify
     end
       
   
-    def initialize database_url = 'http://127.0.0.1:5984'
-      @db = CouchRest.new(database_url).database! 'samples'
+    def initialize# database_url = 'http://127.0.0.1:5984'
+      #@db = CouchRest.new(database_url).database! 'samples'
       @samples = Sample#.on(@db) # FIXME
     end
   
@@ -100,8 +101,8 @@ module Detexify
       f = extract_features io.read
       io.rewind
       sample = @samples.new(:command => tex, :feature_vector => f.to_a)
-      sample.create_attachment(:name => 'source', :file => io, :content_type => io.content_type)
       sample.save
+      sample.put_attachment('source', io.read, :content_type => io.content_type)
     end
   
     # returns [{ :command => "foo", :score => "100", }]
