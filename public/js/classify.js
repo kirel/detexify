@@ -16,7 +16,7 @@ $(function(){
         //$('#classinatra').text('Es wurde '+json.url+' angefordert.');
         jQuery.each( json.hits, function() {
           $('#spinner').hide();        
-          $('#hitlist').append('<li><img alt="tex:'+this.tex+'"/> '+this.tex+' <span>Score: '+this.score+'</span></li>').show();
+          $('#hitlist').append('<li>'+this.tex+' <img alt="tex:'+this.tex+'"/> <span>Score: '+this.score+'</span></li>').show();
         });
         mathtran.init();
       }

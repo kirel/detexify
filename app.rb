@@ -21,7 +21,7 @@ get '/train' do
   haml :train
 end
 
-get '/all' do
+get '/symbols' do
   @tex = open('commands.txt') do |f|
     f.readlines
   end
