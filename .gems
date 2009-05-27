@@ -1,0 +1,5 @@
+mattetti-couchrest --source gems.github.com
+data-uri --source gems.github.com
+json
+sinatra
+rmagick
