@@ -28,31 +28,9 @@ post '/train' do
        halt 401, "Only HTTP, FTP or Data!"
   end
   io = uri.open
-  puts "************ url length #{params[:url].length}"
-  puts "************ #{io.content_type} #{io.size}"
   
   classifier.train params[:tex], io
   halt 200
-end
-
-get '/js/jquery' do
-  send_file 'js/jquery-1.3.2.min.js'
-end
-
-%w(mathtran canvassify classify train).each do |js|
-  get "/js/#{js}" do
-    send_file "js/#{js}.js"
-  end  
-end
-
-get '/image' do
-  # open(MATHTRANURL % [params[:"D"] || 1.to_s, params[:tex] || "foo"].map { |p| URI::escape(p) }) do |f|
-  #     content_type f.content_type || 'application/octet-stream'
-  #     last_modified f.last_modified
-  #     response['Content-Length'] = f.size
-  #     halt f
-  #   end
-  redirect 'http://www.mathtran.org/cgi-bin/mathtran?D=%s;tex=%s' % [params[:"D"] || 1.to_s, params[:tex] || "foo"].map { |p| URI::escape(p) }
 end
 
 post '/classify' do
@@ -71,4 +49,14 @@ post '/classify' do
   
   # sende { :url => url, :hits => [{:latex => latex, :score => score }, {:latex => latex, :score => score } ]  }
   JSON :url => params[:url], :hits => hits
+end
+
+get '/image' do
+  # open(MATHTRANURL % [params[:"D"] || 1.to_s, params[:tex] || "foo"].map { |p| URI::escape(p) }) do |f|
+  #     content_type f.content_type || 'application/octet-stream'
+  #     last_modified f.last_modified
+  #     response['Content-Length'] = f.size
+  #     halt f
+  #   end
+  redirect 'http://www.mathtran.org/cgi-bin/mathtran?D=%s;tex=%s' % [params[:"D"] || 1.to_s, params[:tex] || "foo"].map { |p| URI::escape(p) }
 end
