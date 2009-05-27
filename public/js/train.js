@@ -3,7 +3,7 @@
 $(function(){
     
   function train(tex, url) {
-    $.post("http://localhost:4567/train", { "tex": tex, "url": url });
+    $.post("/train", { "tex": tex, "url": url });
     c.clear
   }
   

@@ -10,7 +10,7 @@ $(function(){
     abort = false;
     var url = canvas.toDataURL();
     $('#spinner').show();
-    $.post("http://localhost:4567/classify", { "url": url }, function(json) {
+    $.post("/classify", { "url": url }, function(json) {
       if (!abort) {
         $('#hitlist').empty();
         //$('#classinatra').text('Es wurde '+json.url+' angefordert.');
