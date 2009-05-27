@@ -21,6 +21,13 @@ get '/train' do
   haml :train
 end
 
+get '/all' do
+  @tex = open('commands.txt') do |f|
+    f.readlines
+  end
+  haml :symbols
+end
+
 post '/train' do
   # TODO sanity check in command list
   uri = URI.parse params[:url]
