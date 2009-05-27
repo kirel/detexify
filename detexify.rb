@@ -1,4 +1,4 @@
-require 'lib/couchrest'
+require 'couchrest'
 require 'extended_enumerable'
 require 'matrix'
 require 'statistics'
