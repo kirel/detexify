@@ -3,7 +3,7 @@ require 'extended_enumerable'
 require 'matrix'
 require 'statistics'
 require 'image_moments'
-require 'rmagick'
+require 'RMagick'
 
 module Detexify
     
