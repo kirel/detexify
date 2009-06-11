@@ -12,6 +12,7 @@ module Detexify
     use_database CouchRest.database! dburl
     property :command
     property :feature_vector
+    property :strokes
     
     timestamps!
     
@@ -54,7 +55,7 @@ module Detexify
         module_function
         
         def extract data
-          img2hu(data2img(data))
+          h = img2hu(data2img(data))
         end
         
         def data2img data
@@ -96,6 +97,7 @@ module Detexify
     end
     
     def gimme_tex
+      # TODO refoactor so that it is prettier
       cmds = open('commands.txt') { |f| f.readlines }
       all = @samples.all
       cmdh = {}
@@ -140,7 +142,9 @@ module Detexify
     
     def regenerate_features
       puts "regenerating features"
-      @samples.each do |s|
+      # FIXME
+      #@samples.each do |s|
+      @samples.all.each do |s|
         f = extract_features(s.source, s.strokes)
         s.feature_vector = f.to_a
         s.save

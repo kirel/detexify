@@ -16,6 +16,8 @@ $(function(){
   $('#train').click(function(){
     train($('#tex').text(), c);
     clearCanvas(c);
+    // TODO do this dynamically
+    //window.location.reload();
     return false;
   });
   $('#clear').click(function(){

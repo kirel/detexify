@@ -14,17 +14,17 @@ module CouchRest
 
       module ClassMethods
         def batch(num = DEFAULT_BATCHSIZE, opts = {}, &block)
-          b = self.all(opts.merge!(:limit => num+1))
+          b = all(opts.merge!(:limit => num+1))
           while b.size == num+1
             this_batch, start = b[0..-2], b[-1]
             yield this_batch
-            b = self.by__id(opts.merge!(:limit => num+1, :startkey => start.id))
+            b = by__id(opts.merge!(:limit => num+1, :startkey => start.id))
           end
           yield b
         end
 
         def each(&block)
-          self.batch do |b|
+          batch do |b|
             b.each do |s|
               yield s
             end
