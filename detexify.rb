@@ -94,6 +94,22 @@ module Detexify
       #@db = CouchRest.new(database_url).database! 'samples'
       @samples = Sample#.on(@db) # FIXME
     end
+    
+    def gimme_tex
+      cmds = open('commands.txt') { |f| f.readlines }
+      all = @samples.all
+      cmdh = {}
+      cmds.each do |cmd|
+        cmdh[cmd.strip] = 0
+      end
+      p cmdh
+      all.each do |sample|
+        puts sample.command
+        cmdh[sample.command] += 1
+      end
+      p cmdh
+      cmdh.sort_by { |c,n| n }.first.first
+    end
   
     # train the classifier by adding io to symbol class tex
     def train tex, io, strokes
@@ -111,7 +127,7 @@ module Detexify
       # use nearest neighbour classification
       # TODO Store everything in memory instead of getting it from the DB all the time
       # @all ||= @samples.all.map do |sample|
-      all = @samples.all#.sort_by { |sample| Statistics.euclidean_distance(f, Vector.elements(sample.feature_vector)) }
+      all = @samples.all.sort_by { |sample| Statistics.euclidean_distance(f, Vector.elements(sample.feature_vector)) }
       neighbours = {}
       k = 10
       while !all.empty? && neighbours.size <= k

@@ -13,10 +13,7 @@ get '/' do
 end
 
 get '/train' do
-  @tex = open('commands.txt') do |f|
-    cmds = f.readlines
-    cmds[rand(cmds.size)]
-  end
+  @tex = classifier.gimme_tex
   
   haml :train
 end
