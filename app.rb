@@ -31,17 +31,19 @@ end
 post '/train' do
   # TODO sanity check in command list
   uri = URI.parse params[:url]
+  strokes = JSON params[:strokes]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
        halt 401, "Only HTTP, FTP or Data!"
   end
   io = uri.open
   
-  classifier.train params[:tex], io
+  classifier.train params[:tex], io, strokes
   halt 200
 end
 
 post '/classify' do
   uri = URI.parse params[:url]
+  strokes = JSON params[:strokes]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
        halt 401, "Only HTTP, FTP or Data!"
   end
@@ -52,7 +54,7 @@ post '/classify' do
   #   hits = f.readlines.map { |t| {:tex => t, :score => 'drölf' } } 
   # end
   
-  hits = classifier.classify io
+  hits = classifier.classify io, strokes
   
   # sende { :url => url, :hits => [{:latex => latex, :score => score }, {:latex => latex, :score => score } ]  }
   JSON :url => params[:url], :hits => hits

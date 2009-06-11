@@ -96,18 +96,18 @@ module Detexify
     end
   
     # train the classifier by adding io to symbol class tex
-    def train tex, io
+    def train tex, io, strokes
       # TODO offload feature extraction to a job queue
-      f = extract_features io.read
+      f = extract_features io.read, strokes
       io.rewind
-      sample = @samples.new(:command => tex, :feature_vector => f.to_a)
+      sample = @samples.new(:command => tex, :feature_vector => f.to_a, :strokes => strokes)
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type)
     end
   
     # returns [{ :command => "foo", :score => "100", }]
-    def classify io
-      f = extract_features io.read
+    def classify io, strokes
+      f = extract_features io.read, strokes
       ms = @samples.means
       # TODO use mahalanobis distance for commands with enough samples -> m[:count]
       ms.map { |m| { :tex => m[:command], :score => Statistics.euclidean_distance(f, m[:mean]) } }.sort_by { |h| h[:score] }.slice(0,5)
@@ -116,8 +116,7 @@ module Detexify
     def regenerate_features
       puts "regenerating features"
       @samples.each do |s|
-        data = s.source
-        f = extract_features(data)
+        f = extract_features(s.source, s.strokes)
         s.feature_vector = f.to_a
         s.save
       end
@@ -127,8 +126,7 @@ module Detexify
 
     protected
 
-    def extract_features data # String
-      # TODO use a fast C Library
+    def extract_features data, strokes # data is String
       Features::Hu.extract data # maybe use something different in the future
     end
         
