@@ -10,7 +10,8 @@ $(function(){
     abort = false;
     var url = canvas.toDataURL();
     $('#spinner').show();
-    $.post("/classify", { "url": url }, function(json) {
+    alert(JSON.stringify(canvas.strokes));
+    $.post("/classify", { "url": url, "fuck": "you", "strokes": JSON.stringify(canvas.strokes) }, function(json) {
       if (!abort) {
         $('#hitlist').empty();
         //$('#classinatra').text('Es wurde '+json.url+' angefordert.');

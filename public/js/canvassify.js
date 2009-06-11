@@ -5,6 +5,11 @@ function canvassify(canvas, callback) {
   ctx.strokeStyle = "rgb(0, 0, 0)";
   ctx.lineWidth = 5;
   var draw = false;
+  var current_stroke;
+  canvas.strokes = [];
+  var point = function(x,y) {
+    return {"x":x, "y":y, "time": (new Date()).getTime()};
+  }
   var start = function(evt) {
     draw = true;
     var x,y;
@@ -12,6 +17,7 @@ function canvassify(canvas, callback) {
     y = evt.pageY - $(this).offset().top;
     ctx.beginPath();
     ctx.moveTo(x, y);
+    current_stroke = [point(x,y)]; // initialize new stroke
   }
   var stroke = function(evt) {
     if (draw) {
@@ -20,13 +26,14 @@ function canvassify(canvas, callback) {
       y = evt.pageY - $(this).offset().top;
       ctx.lineTo(x, y);
       ctx.stroke();
+      current_stroke.push(point(x, y));
     }
   }
   var stop = function(evt) {
     if (draw) {
+      canvas.strokes.push(current_stroke);
       if (callback) callback(canvas);
       draw = false;
-      //ctx.beginPath();
     }
   }
   $(canvas).mousedown(start)
@@ -37,6 +44,7 @@ function canvassify(canvas, callback) {
 }
 
 function clearCanvas(canvas) {
+  canvas['strokes'] = [];
   var ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }

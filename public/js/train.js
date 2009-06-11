@@ -2,8 +2,8 @@
 
 $(function(){
     
-  function train(tex, url) {
-    $.post("/train", { "tex": tex, "url": url });
+  function train(tex, canvas) {
+    $.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": canvas.strokes });
     c.clear
   }
   
@@ -14,7 +14,7 @@ $(function(){
   canvassify(c);
   // Train if train button pressed
   $('#train').click(function(){
-    train($('#tex').text(), c.toDataURL());
+    train($('#tex').text(), c);
     clearCanvas(c);
     return false;
   });
