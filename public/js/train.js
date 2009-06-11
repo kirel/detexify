@@ -3,7 +3,7 @@
 $(function(){
     
   function train(tex, canvas) {
-    $.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": canvas.strokes });
+    $.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) });
     c.clear
   }
   
