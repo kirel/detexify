@@ -16,9 +16,9 @@ module Detexify
     timestamps!
     
     view_by :mean,
-      :map => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/mean-map.js')).read,
+      :map => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/command-vector-map.js')).read,
       :reduce => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/mean-reduce.js')).read
-    
+          
     # TODO view_by :covariance_matrix
             
     def source
@@ -108,9 +108,18 @@ module Detexify
     # returns [{ :command => "foo", :score => "100", }]
     def classify io, strokes
       f = extract_features io.read, strokes
-      ms = @samples.means
-      # TODO use mahalanobis distance for commands with enough samples -> m[:count]
-      ms.map { |m| { :tex => m[:command], :score => Statistics.euclidean_distance(f, m[:mean]) } }.sort_by { |h| h[:score] }.slice(0,5)
+      # use nearest neighbour classification
+      # TODO Store everything in memory instead of getting it from the DB all the time
+      # @all ||= @samples.all.map do |sample|
+      all = @samples.all#.sort_by { |sample| Statistics.euclidean_distance(f, Vector.elements(sample.feature_vector)) }
+      neighbours = {}
+      k = 10
+      while !all.empty? && neighbours.size <= k
+        sample = all.shift
+        neighbours[sample.command] ||= 0
+        neighbours[sample.command] += 1
+      end
+      neighbours.map { |command, num| { :tex => command, :score => num } }.sort_by { |h| -h[:score] }
     end
     
     def regenerate_features
