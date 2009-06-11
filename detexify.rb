@@ -129,8 +129,8 @@ module Detexify
       # @all ||= @samples.all.map do |sample|
       all = @samples.all.sort_by { |sample| Statistics.euclidean_distance(f, Vector.elements(sample.feature_vector)) }
       neighbours = {}
-      k = 10
-      while !all.empty? && neighbours.size <= k
+      k = 3
+      while !all.empty? && neighbours.size < k
         sample = all.shift
         neighbours[sample.command] ||= 0
         neighbours[sample.command] += 1
