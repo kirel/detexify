@@ -83,9 +83,45 @@ module Detexify
         def normalize strokes
           # TODO smooth out points
           # TODO chop heads and tails
-          # TODO maximally fit into [0,1]x[0,1]
-          # TODO convert to equidistant point distribution 0.1
-          strokes
+          
+          # TODO push this into preprocessors.rb
+          # maximally fit into [0,1]x[0,1]
+          first_point = strokes.first.first
+          left, right, top, bottom = %w(x x y y).map { |c| first_point[c] }  # TODO!
+          strokes.each do |stroke|
+            points.each do |point|
+              left   = point[x] if point[x] < left
+              right  = point[x] if point[x] > right
+              bottom = point[y] if point[y] < bottom
+              top    = point[y] if point[y] > top
+            end
+          end
+          
+          # computations for next step
+          height = top - bottom
+          width = right - left
+          ratio = width/height
+          long, short = ratio > 1 ? [width, height] : [height, width]
+          offset =  if ratio > 1
+                      { 'x' => 0 , 'y' => (1.0 - short)/2.0 }
+                    else
+                      { 'x' => (1.0 - short)/2.0 , 'y' => 0 }
+                    end
+          
+          # move left and bottom to zero, scale to fit and then center
+          strokes.each do |stroke|
+            stroke.each do |point|
+              point['x'] = (point['x'] - left) / long + offset['x']
+              point['y'] = (point['y'] - bottom) / long + offset['y']
+            end
+          end          
+          
+          # convert to equidistant point distributon
+          strokes = strokes.map do |stroke|
+            Preprocessors::EquidistantPoints.new(:distance => 0.01).process(stroke)            
+          end
+          
+          # FIXME I've lost the timestamps here. Dunno if I want to keep them
         end
         
       end
