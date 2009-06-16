@@ -73,28 +73,45 @@ module Detexify
         def extract strokes
           # normalize strokes
           # extract features
+          # - directional histogram features
+          # - start direction?
+          # - end direction?
+          # - aspect ratio
           Vector[] # TODO
+        end
+        
+        def normalize strokes
+          # TODO smooth out points
+          # TODO chop heads and tails
+          # TODO maximally fit into [0,1]x[0,1]
+          # TODO convert to equidistant point distribution 0.1
+          strokes
         end
         
       end
       
     end
-      
+    
+    ### class Classifier
   
     def initialize
       @samples = Sample
+      @all = @samples.all
+    end
+    
+    def reload
+      @all = @samples.all
     end
     
     def gimme_tex
       # TODO refoactor so that it is prettier
       cmds = open('commands.txt') { |f| f.readlines }
-      all = @samples.all
       cmdh = {}
       cmds.each do |cmd|
         cmdh[cmd.strip] = 0
       end
       p cmdh
-      all.each do |sample|
+      @all.each do |sample|
         puts sample.command
         cmdh[sample.command] += 1
       end
@@ -110,23 +127,27 @@ module Detexify
       sample = @samples.new(:command => tex, :feature_vector => f.to_a, :strokes => strokes)
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type)
+      reload
     end
   
     # returns [{ :command => "foo", :score => "100", }]
-    def classify io, strokes
+    def classify io, strokes # TODO modules KNN, Mean, etc. for different classifier types? 
       f = extract_features io.read, strokes
       # use nearest neighbour classification
-      # TODO Store everything in memory instead of getting it from the DB all the time
-      # @all ||= @samples.all.map do |sample|
-      all = @samples.all.sort_by { |sample| Statistics.euclidean_distance(f, Vector.elements(sample.feature_vector)) }
+      all = @all.sort_by { |sample| distance(f, Vector.elements(sample.feature_vector)) }
       neighbours = {}
-      k = 3
+      k = 3 # number of best matches we want in the list
       while !all.empty? && neighbours.size < k
         sample = all.shift
         neighbours[sample.command] ||= 0
         neighbours[sample.command] += 1
       end
       neighbours.map { |command, num| { :tex => command, :score => num } }.sort_by { |h| -h[:score] }
+    end
+    
+    def distance x, y
+      # TODO find a better distance function
+      Statistics.euclidean_distance(x, y)
     end
     
     def regenerate_features
