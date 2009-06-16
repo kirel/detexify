@@ -30,7 +30,7 @@ module Detexify
               n = Vector.elements(point.values_at('x', 'y'))
               v = n - p
               # add new point
-              norm = v.inner_product(vector)**0.5
+              norm = v.inner_product(v)**0.5
               if norm > distance_left
                 new_p = p + v * (distance_left/norm)
                 previous = {'x' => new_p[0], 'y' => new_p[1]}

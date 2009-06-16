@@ -71,32 +71,21 @@ module Detexify
         module_function
         
         def extract strokes
-          # normalize strokes
-          # extract features
-          # - directional histogram features
-          # - start direction?
-          # - end direction?
-          # - aspect ratio
-          Vector[] # TODO
-        end
-        
-        def normalize strokes
-          # TODO smooth out points
-          # TODO chop heads and tails
+          # preprocess strokes
           
-          # TODO push this into preprocessors.rb
-          # maximally fit into [0,1]x[0,1]
-          first_point = strokes.first.first
-          left, right, top, bottom = %w(x x y y).map { |c| first_point[c] }  # TODO!
-          strokes.each do |stroke|
-            points.each do |point|
-              left   = point[x] if point[x] < left
-              right  = point[x] if point[x] > right
-              bottom = point[y] if point[y] < bottom
-              top    = point[y] if point[y] > top
-            end
-          end
+          # TODO chop off heads and tails
+          # strokes = strokes.map do |stroke|
+          #   Preprocessors::Chop.new(:points => 5, :degree => 180).process(stroke)            
+          # end
+
+          # TODO smooth out points (avarage over three points)
+          # strokes = strokes.map do |stroke|
+          #   Preprocessors::Smooth.new.process(stroke)            
+          # end
+                    
+          left, right, top, bottom = Extractors::BoundingBox.new.extract(strokes)
           
+          # TODO push this into a preprocessor
           # computations for next step
           height = top - bottom
           width = right - left
@@ -122,6 +111,18 @@ module Detexify
           end
           
           # FIXME I've lost the timestamps here. Dunno if I want to keep them
+          
+          # extract features
+          # - directional histogram features
+          n, ne, e, se, s, sw, w, nw = Extractors::DirectionalHistogramFeatures.new.process(strokes)
+          # - start direction
+          # - end direction
+          # startdirection, enddirection = Extractors::StartEndDirection.new.process(strokes)
+          # - start/end position
+          # - point density
+          # - aspect ratio
+          # - number of strokes
+          Vector[] # TODO
         end
         
       end
