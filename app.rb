@@ -6,7 +6,7 @@ require 'sinatra'
 
 load 'detexify.rb' 
 
-classifier = Detexify::Classifier.new # database_url
+classifier = Detexify::Classifier.new
 
 get '/' do
   haml :classify
@@ -45,12 +45,7 @@ post '/classify' do
        halt 401, "Only HTTP, FTP or Data!"
   end
   io = uri.open
-  
-  # hits = nil
-  # open('commands.txt') do |f|
-  #   hits = f.readlines.map { |t| {:tex => t, :score => 'drölf' } } 
-  # end
-  
+    
   hits = classifier.classify io, strokes
   
   # sende { :url => url, :hits => [{:latex => latex, :score => score }, {:latex => latex, :score => score } ]  }

@@ -15,34 +15,11 @@ module Detexify
     property :strokes
     
     timestamps!
-    
-    view_by :mean,
-      :map => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/command-vector-map.js')).read,
-      :reduce => open(File.join(File.expand_path(File.dirname(__FILE__)), 'js/mean-reduce.js')).read
-          
-    # TODO view_by :covariance_matrix
-            
+                          
     def source
       fetch_attachment 'source'
     end
-      
-    def Sample.mean command
-      result = by_mean :key => command, :group => true, :reduce => true
-      Vector.elements result['rows'][0]['value']['mean']
-    end
     
-    def Sample.means
-      result = by_mean :group => true, :reduce => true
-      m = {}
-      result['rows'].map do |row|
-        {
-          :command => row['key'],
-          :mean => Vector.elements(row['value']['mean']),
-          :count => row['value']['count']
-        }
-      end
-    end
-        
   end
 
   class Classifier
@@ -88,12 +65,24 @@ module Detexify
         
       end
       
+      # extract online fetures
+      module Online
+        
+        module_function
+        
+        def extract strokes
+          # normalize strokes
+          # extract features
+          Vector[] # TODO
+        end
+        
+      end
+      
     end
       
   
-    def initialize# database_url = 'http://127.0.0.1:5984'
-      #@db = CouchRest.new(database_url).database! 'samples'
-      @samples = Sample#.on(@db) # FIXME
+    def initialize
+      @samples = Sample
     end
     
     def gimme_tex
@@ -142,7 +131,7 @@ module Detexify
     
     def regenerate_features
       puts "regenerating features"
-      # FIXME
+      # FIXME see extended_enumerable.rb
       #@samples.each do |s|
       @samples.all.each do |s|
         f = extract_features(s.source, s.strokes)

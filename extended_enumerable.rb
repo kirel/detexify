@@ -1,3 +1,4 @@
+# FIXME This needs tests!
 module CouchRest
   module Mixins
 
