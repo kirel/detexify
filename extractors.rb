@@ -22,7 +22,7 @@ module Detexify
               top    = point['y'] if point['y'] > top
             end
           end
-          return left, right, top, bottom
+          return [left, right, top, bottom].map { |i| i.to_f }
         end
 
       end

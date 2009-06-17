@@ -2,6 +2,8 @@ require 'couchrest'
 require 'extended_enumerable'
 require 'matrix'
 require 'math'
+require 'preprocessors'
+require 'extractors'
 require 'image_moments'
 require 'RMagick'
 
@@ -70,7 +72,8 @@ module Detexify
         
         module_function
         
-        def extract strokes
+        def extract s
+          strokes = s.map { |stroke| stroke.map { |point| point.dup } } # s.dup enough?
           # preprocess strokes
           
           # TODO chop off heads and tails
@@ -82,39 +85,66 @@ module Detexify
           # strokes = strokes.map do |stroke|
           #   Preprocessors::Smooth.new.process(stroke)            
           # end
-                    
-          left, right, top, bottom = Extractors::BoundingBox.new.extract(strokes)
+          
+          puts
+          puts "*"*10+ "Starting extraction:"
+          puts
+          puts strokes.inspect
+          
+          left, right, top, bottom = Detexify::Online::Extractors::BoundingBox.new.extract(strokes)
           
           # TODO push this into a preprocessor
           # computations for next step
           height = top - bottom
           width = right - left
+          puts "&&&&&&&&&&&&&&&&&&&& bb, H, B"
+          puts left, right, top, bottom, width, height
           ratio = width/height
           long, short = ratio > 1 ? [width, height] : [height, width]
           offset =  if ratio > 1
-                      { 'x' => 0 , 'y' => (1.0 - short)/2.0 }
+                      { 'x' => 0.0 , 'y' => (1.0 - short/long)/2.0 }
                     else
-                      { 'x' => (1.0 - short)/2.0 , 'y' => 0 }
+                      { 'x' => (1.0 - short/long)/2.0 , 'y' => 0.0 }
                     end
           
           # move left and bottom to zero, scale to fit and then center
           strokes.each do |stroke|
             stroke.each do |point|
-              point['x'] = (point['x'] - left) / long + offset['x']
-              point['y'] = (point['y'] - bottom) / long + offset['y']
+              point['x'] = ((point['x'] - left) / long) + offset['x']
+              point['y'] = ((point['y'] - bottom) / long) + offset['y']
             end
           end          
           
+          puts
+          puts "*"*10+ "After fitting to 0,1x0,1:"
+          puts
+          puts strokes.inspect
+          
+          left, right, top, bottom = Detexify::Online::Extractors::BoundingBox.new.extract(strokes)
+          
+          # TODO push this into a preprocessor
+          # computations for next step
+          height = top - bottom
+          width = right - left
+          puts "&&&&&&&&&&&&&&&&&&&& bb, H, B"
+          puts left, right, top, bottom, width, height
+          
+          
           # convert to equidistant point distributon
           strokes = strokes.map do |stroke|
-            Preprocessors::EquidistantPoints.new(:distance => 0.01).process(stroke)            
+            Detexify::Online::Preprocessors::EquidistantPoints.new(:distance => 0.01).process(stroke)            
           end
+          
+          puts
+          puts "*"*10+ "After rescaling:"
+          puts
+          puts strokes.inspect
           
           # FIXME I've lost the timestamps here. Dunno if I want to keep them
           
           # extract features
           # - directional histogram features
-          n, ne, e, se, s, sw, w, nw = Extractors::DirectionalHistogramFeatures.new.process(strokes)
+          n, ne, e, se, s, sw, w, nw = Detexify::Online::Extractors::DirectionalHistogramFeatures.new.extract(strokes)
           # - start direction
           # - end direction
           # startdirection, enddirection = Extractors::StartEndDirection.new.process(strokes)
@@ -122,7 +152,16 @@ module Detexify
           # - point density
           # - aspect ratio
           # - number of strokes
-          Vector[] # TODO
+          
+          # TODO add more features
+          
+          puts
+          puts "*"*10+ "Ending extraction:"
+          puts
+          puts strokes.inspect
+          
+          
+          Vector[n, ne, e, se, s, sw, w, nw]
         end
         
       end
@@ -184,7 +223,7 @@ module Detexify
     
     def distance x, y
       # TODO find a better distance function
-      Statistics.euclidean_distance(x, y)
+      MyMath.euclidean_distance(x, y)
     end
     
     def regenerate_features
@@ -193,6 +232,7 @@ module Detexify
       #@samples.each do |s|
       @samples.all.each do |s|
         f = extract_features(s.source, s.strokes)
+        puts f.inspect
         s.feature_vector = f.to_a
         s.save
       end
@@ -203,7 +243,7 @@ module Detexify
     protected
 
     def extract_features data, strokes # data is String
-      Features::Hu.extract data # maybe use something different in the future
+      Features::Online.extract strokes # maybe use something different in the future
     end
         
   end
