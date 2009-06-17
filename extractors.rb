@@ -15,11 +15,11 @@ module Detexify
           first_point = strokes.first.first
           left, right, top, bottom = %w(x x y y).map { |c| first_point[c] }  # TODO!
           strokes.each do |stroke|
-            points.each do |point|
-              left   = point[x] if point[x] < left
-              right  = point[x] if point[x] > right
-              bottom = point[y] if point[y] < bottom
-              top    = point[y] if point[y] > top
+            stroke.each do |point|
+              left   = point['x'] if point['x'] < left
+              right  = point['x'] if point['x'] > right
+              bottom = point['y'] if point['y'] < bottom
+              top    = point['y'] if point['y'] > top
             end
           end
           return left, right, top, bottom
