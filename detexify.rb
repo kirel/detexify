@@ -161,7 +161,7 @@ module Detexify
           puts strokes.inspect
           
           
-          Vector[n, ne, e, se, s, sw, w, nw]
+          Vector[n, ne, e, se, s, sw, w, nw, strokes.size]
         end
         
       end
@@ -212,7 +212,7 @@ module Detexify
       # use nearest neighbour classification
       all = @all.sort_by { |sample| distance(f, Vector.elements(sample.feature_vector)) }
       neighbours = {}
-      k = 3 # number of best matches we want in the list
+      k = 5 # number of best matches we want in the list
       while !all.empty? && neighbours.size < k
         sample = all.shift
         neighbours[sample.command] ||= 0
