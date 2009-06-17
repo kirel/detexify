@@ -1,3 +1,6 @@
+require 'matrix'
+require 'math'
+
 module Detexify
 
   module Online
@@ -16,30 +19,31 @@ module Detexify
         DEFAULT_OPTIONS = { :distance => 0.01 }
 
         def initialize options = {}
-          @options = DEAULT_OPTIONS.update(options)
+          @options = DEFAULT_OPTIONS.update(options)
         end
 
         def process stroke
           # convert to equidistant point distribution
           equidistant_stroke = [stroke.first] # need first point anyway
-          distance_left = distance
+          distance_left = @options[:distance]
           previous = nil
           stroke.each do |point|
             if previous
               p = Vector.elements(previous.values_at('x', 'y'))
               n = Vector.elements(point.values_at('x', 'y'))
               v = n - p
-              # add new point
-              norm = v.inner_product(v)**0.5
-              if norm > distance_left
-                new_p = p + v * (distance_left/norm)
-                previous = {'x' => new_p[0], 'y' => new_p[1]}
+              norm = v.r
+              # add new points
+              while norm > distance_left
+                p = p + v * (distance_left/norm)
+                previous = {'x' => p[0], 'y' => p[1]}
                 equidistant_stroke << previous
-                distance_left = distance
-              else
-                distance_left -= norm
-                previous = point
+                distance_left = @options[:distance]
+                v = n - p
+                norm = v.r            
               end
+              distance_left -= norm # NOTE this does not distribute equidistantly - exact solution needs square computations
+              previous = point
             else
               previous = point
             end
