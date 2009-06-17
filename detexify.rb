@@ -85,20 +85,13 @@ module Detexify
           # strokes = strokes.map do |stroke|
           #   Preprocessors::Smooth.new.process(stroke)            
           # end
-          
-          puts
-          puts "*"*10+ "Starting extraction:"
-          puts
-          puts strokes.inspect
-          
+                    
           left, right, top, bottom = Detexify::Online::Extractors::BoundingBox.new.extract(strokes)
           
           # TODO push this into a preprocessor
           # computations for next step
           height = top - bottom
           width = right - left
-          puts "&&&&&&&&&&&&&&&&&&&& bb, H, B"
-          puts left, right, top, bottom, width, height
           ratio = width/height
           long, short = ratio > 1 ? [width, height] : [height, width]
           offset =  if ratio > 1
@@ -115,31 +108,11 @@ module Detexify
             end
           end          
           
-          puts
-          puts "*"*10+ "After fitting to 0,1x0,1:"
-          puts
-          puts strokes.inspect
-          
-          left, right, top, bottom = Detexify::Online::Extractors::BoundingBox.new.extract(strokes)
-          
-          # TODO push this into a preprocessor
-          # computations for next step
-          height = top - bottom
-          width = right - left
-          puts "&&&&&&&&&&&&&&&&&&&& bb, H, B"
-          puts left, right, top, bottom, width, height
-          
-          
           # convert to equidistant point distributon
           strokes = strokes.map do |stroke|
             Detexify::Online::Preprocessors::EquidistantPoints.new(:distance => 0.01).process(stroke)            
           end
-          
-          puts
-          puts "*"*10+ "After rescaling:"
-          puts
-          puts strokes.inspect
-          
+                    
           # FIXME I've lost the timestamps here. Dunno if I want to keep them
           
           # extract features
@@ -154,13 +127,6 @@ module Detexify
           # - number of strokes
           
           # TODO add more features
-          
-          puts
-          puts "*"*10+ "Ending extraction:"
-          puts
-          puts strokes.inspect
-          
-          
           Vector[n, ne, e, se, s, sw, w, nw, strokes.size]
         end
         
@@ -188,7 +154,6 @@ module Detexify
       end
       p cmdh
       @all.each do |sample|
-        puts sample.command
         cmdh[sample.command] += 1
       end
       p cmdh
@@ -236,7 +201,6 @@ module Detexify
         s.feature_vector = f.to_a
         s.save
       end
-      puts
       puts "done."
     end
 

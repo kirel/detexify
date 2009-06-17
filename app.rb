@@ -41,7 +41,6 @@ end
 post '/classify' do
   uri = URI.parse params[:url]
   strokes = JSON params[:strokes]
-  puts strokes.inspect
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
        halt 401, "Only HTTP, FTP or Data!"
   end
