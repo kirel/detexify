@@ -11,7 +11,7 @@ module Detexify
     
   class Sample < CouchRest::ExtendedDocument
     dburl = ENV['COUCH'] || "http://127.0.0.1:5984/samples"
-    use_database CouchRest.database! dburl
+    use_database CouchRest.database!(dburl)
     property :command
     property :feature_vector
     property :strokes
