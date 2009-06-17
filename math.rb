@@ -7,12 +7,13 @@ module Enumerable
 end
 
 module Statistics
+
   module_function
-  
+
   def sample_mean *vectors
     vectors.sum * (1.0/vectors.size)
   end
-  
+
   ## for n dimensional data we need n+1 samples to have a regular covariance matrix
   def sample_covariance_matrix *vectors
     n = vectors.first.size - 1
@@ -28,16 +29,46 @@ module Statistics
     end
     c = Matrix[*a]
   end
-  
+
   def mahalanobis_distance x, *samples
     raise "sample covariance matrix will be singular - for dimension #{x.size} you need at least #{x.size+1} samples" if samples.size <= x.size
     m = sample_mean(*samples)
     ((x-m).inner_product(sample_covariance_matrix(*samples).inverse*(x-m)))**0.5
   end
-  
+
+end
+
+module MyMath
+
+  module_function
+
   def euclidean_distance x, y
-    v = x-y
-    v.inner_product(v)**0.5
+    (x-y).r
   end
-  
+
+  def orientation v
+    v = v*(1.0/v.r) # normalize
+    x, y = v.to_a
+    cos = Math::acos(x)*8.0/Math::PI
+    sin = Math::asin(y)*8.0/Math::PI
+    case
+    when cos > 3 && sin > 3 && sin < 5
+      :north
+    when cos > 1 && cos < 3 && sin > 1 && sin < 3
+      :northeast
+    when cos < 1 && sin < 1 && sin > -1
+      :east
+    when cos > 1 && cos < 3 && sin < -1 && sin > -3
+      :southeast
+    when cos > 3 && cos < 5 && sin < -3
+      :south
+    when cos > 5 && cos < 7 && sin > -3 && sin < -1
+      :southwest
+    when cos > 7 && sin > -1 && sin < 1
+      :west
+    when cos > 5 && cos < 7 && sin > 1 && sin < 3
+      :northwest
+    end
+  end
+
 end

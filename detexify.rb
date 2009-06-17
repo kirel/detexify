@@ -1,7 +1,7 @@
 require 'couchrest'
 require 'extended_enumerable'
 require 'matrix'
-require 'statistics'
+require 'math'
 require 'image_moments'
 require 'RMagick'
 
