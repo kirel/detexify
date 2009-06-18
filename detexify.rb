@@ -160,11 +160,14 @@ module Detexify
           cmds << command.sub(/\{\}/,"{#{char}}") 
         end
       end
+      puts '*'*20
+      p cmds
       cmds
     end
     
     def gimme_tex
       # TODO refoactor so that it is prettier
+      reload # FIXME this is slow!
       cmds = symbols
       cmdh = {}
       cmds.each do |cmd|
