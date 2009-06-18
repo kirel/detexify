@@ -3,6 +3,7 @@ require 'open-uri'
 require 'data-uri'
 require 'json'
 require 'sinatra'
+require 'haml'
 
 load 'detexify.rb' 
 
@@ -14,19 +15,17 @@ end
 
 get '/train' do
   @tex = classifier.gimme_tex
-  
   haml :train
 end
 
 get '/symbols' do
-  @tex = open('commands.txt') do |f|
-    f.readlines
-  end
+  @tex = classifier.symbols
   haml :symbols
 end
 
 post '/train' do
   # TODO sanity check in command list
+  p params
   uri = URI.parse params[:url]
   strokes = JSON params[:strokes]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
@@ -35,7 +34,8 @@ post '/train' do
   io = uri.open
   
   classifier.train params[:tex], io, strokes
-  halt 200
+  # halt 200 if xhr else
+  redirect '/train'
 end
 
 post '/classify' do

@@ -15,6 +15,7 @@ function canvassify(canvas, callback) {
     var x,y;
     x = evt.pageX - $(this).offset().left;
     y = evt.pageY - $(this).offset().top;
+    ctx.fillRect(x-2, y-2, 5, 5);
     ctx.beginPath();
     ctx.moveTo(x, y);
     current_stroke = [point(x,y)]; // initialize new stroke

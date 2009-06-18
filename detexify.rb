@@ -145,18 +145,38 @@ module Detexify
       @all = @samples.all
     end
     
+    def symbols
+      cmds, more = open('commands.txt') do |f|
+        f.readlines
+      end.reject do |c|
+        c =~ /\A#/
+      end.map do
+        |c| c.strip
+      end.partition do |c|
+        c !~ /\{\}/
+      end
+      more.each do |command|
+        (('a'..'z').to_a+('A'..'Z').to_a).each do |char|
+          cmds << command.sub(/\{\}/,"{#{char}}") 
+        end
+      end
+      cmds
+    end
+    
     def gimme_tex
       # TODO refoactor so that it is prettier
-      cmds = open('commands.txt') { |f| f.readlines }
+      cmds = symbols
       cmdh = {}
       cmds.each do |cmd|
-        cmdh[cmd.strip] = 0
+        cmdh[cmd] = 0
       end
-      p cmdh
       @all.each do |sample|
-        cmdh[sample.command] += 1
+        if cmdh[sample.command]
+          cmdh[sample.command] += 1
+        else
+          puts "****** Hilfe! Fremdes Symbol: #{sample.command}"
+        end
       end
-      p cmdh
       cmdh.sort_by { |c,n| n }.first.first
     end
   

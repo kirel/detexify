@@ -19,5 +19,6 @@
     %ul
       - @tex.each do |tex|
         %li
-          %span.tex= tex
+          %code.tex{:style => 'font-size:2em;'}= tex
+          \:
           %img{:alt=>"tex:#{tex}"}
