@@ -160,8 +160,6 @@ module Detexify
           cmds << command.sub(/\{\}/,"{#{char}}") 
         end
       end
-      puts '*'*20
-      p cmds
       cmds
     end
     
