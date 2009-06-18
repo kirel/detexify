@@ -1,4 +1,4 @@
-// requires canvassify, mathtran
+// requires canvassify, mathtex
 
 $(function(){
 
@@ -65,5 +65,5 @@ $(function(){
   });
 
   i.text("Bereit. Bitte malen!");
-  mathtran.init();
+  mathtex.init();
 });

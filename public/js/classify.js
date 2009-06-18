@@ -1,4 +1,4 @@
-// requires canvassify, mathtran
+// requires canvassify, mathtex
 
 $(function(){
   // requests to classinatra
@@ -18,7 +18,7 @@ $(function(){
           $('#spinner').hide();        
           $('#hitlist').append('<li><code style="font-size:2em;">'+this.tex+'</code> : <img alt="tex:'+this.tex+'"/> <span>Score: '+this.score+'</span></li>').show();
         });
-        mathtran.init();
+        mathtex.init();
       }
     }, 'json');
   }
