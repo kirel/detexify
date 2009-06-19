@@ -38,4 +38,5 @@ $(function(){
   i.text("Initialisiere Canvas...");
   canvassify(c, classify);
   i.text("Bereit. Bitte malen!");
+  mathtex.init();
 });
