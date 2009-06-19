@@ -16,9 +16,10 @@ $(function(){
         //$('#classinatra').text('Es wurde '+json.url+' angefordert.');
         jQuery.each( json.hits, function() {
           $('#spinner').hide();        
-          $('#hitlist').append('<li><code>'+this.tex+'</code> : <span><img alt="tex:'+this.tex+'"/></span> <span>Score: '+this.score+'</span></li>').show();
+          $('#hitlist').append('<tr><td><code>'+this.tex+'</code></td><td class="symbol"><img alt="tex:'+this.tex+'"/></td><td class="score">'+this.score+'</td></tr>').show();
         });
         mathtex.init();
+        $('#hitarea').show();
       }
     }, 'json');
   }
@@ -29,6 +30,7 @@ $(function(){
   $('#clear').click(function(){
     abort = true;
     clearCanvas(c);
+    $('#hitarea').hide();
     $('#hitlist').empty();
     $('#spinner').hide();    
     return false;

@@ -136,7 +136,7 @@ module Detexify
     
     ### class Classifier
     
-    K = 10
+    K = 5
   
     def initialize
       @samples = Sample

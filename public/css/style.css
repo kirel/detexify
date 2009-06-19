@@ -5,16 +5,20 @@ body, td {
 }
 
 code {
-	font-size: 2em;
+	font-size: 1.5em;
 }
 
 #everything {
+	position: relative;
+	width: 1000px;
 	margin: 0 auto;
 }
 
 #hitarea {
+	display: none;
 	position: absolute;
-	left: 500px;
+	left: 460px;
+	top: 80px;
 }
 
 canvas { border: 1px solid black; }
@@ -27,7 +31,7 @@ table.symbols {
 
 table.symbols th {
 	padding: .4em .5em;
-	font-size: 2em;
+	font-size: 1.5em;
 	text-align: center;
 }
 
@@ -35,7 +39,9 @@ table.symbols th:first-child {
 	text-align: left;
 }
 
-table.symbols td.symbol { text-align: center; }
+table.symbols td.symbol,
+table.symbols td.score
+{ text-align: center; }
 
 table.symbols td {
 	padding: 1em;
