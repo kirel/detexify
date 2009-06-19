@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Detexify - Latex Classifier
+    %title Detexify - Latex Symbolerkennung
     %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/json2.js"}
@@ -11,10 +11,10 @@
     %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/style.css"}
   %body#classify
     #everything
-      %h1 Detexify - Eine Tafel zum klassifizieren...
+      %h1 Detexify - Eine Tafel, die Symbole erkennt...
       %p
-        Oder geh
-        %a{:href => '/train'} trainieren...
+        Oder
+        %a{:href => '/train'} trainiert...
       
       #canvasarea
         %canvas#tafel{:width=>"400", :height=>"400"}
@@ -61,4 +61,14 @@
 
           Die Idee stammt von Philipp K&uuml;hl und programmiert hat es
           [Daniel Kirsch](http://kirelabs.org).
+          
+    :javascript
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+      try {
+      var pageTracker = _gat._getTracker("UA-8668142-2");
+      pageTracker._trackPageview();
+      } catch(err) {}
           
