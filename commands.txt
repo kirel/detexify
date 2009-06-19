@@ -113,6 +113,7 @@
 \doteq
 \frown
 \in
+\notin
 \ni
 \propto
 =
@@ -269,13 +270,13 @@
 |
 \|
 # Large Delimiters
-\rmoustache
-\lmoustache
-\rgroup
-\lgroup
-\arrowvert
-\Arrowvert
-\bracevert
+\left\right\rmoustache
+\left\right\lmoustache
+\left\right\rgroup
+\left\right\lgroup
+\left\right\arrowvert
+\left\right\Arrowvert
+\left\right\bracevert
 # Math mode accents
 # TODO with every char!
 # IDEA preprocess \hat{} -> \hat{a}, \hat{b}, etc
@@ -303,6 +304,8 @@
 # $f'$
 # \frac{abc}{xyz}
 # mathbb stuff
+\mathbb{N}
 \mathbb{Z}
+\mathbb{Q}
 \mathbb{R}
 \mathbb{C}
