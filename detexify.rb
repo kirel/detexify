@@ -144,7 +144,7 @@ module Detexify
     end
     
     def reload
-      @all = @samples.all
+      @all = @samples.all.select { |s| symbols.member? s.command }
     end
     
     def symbols
