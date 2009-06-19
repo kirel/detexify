@@ -2,7 +2,7 @@
 %html
   %head
     %title Detexify - Latex Classifier
-    /%script{:src => "http://www.google.com/jsapi"}
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/jquery.domec-1.0.0.js"}
     %script{:type => 'text/javascript', :src => "/js/json2.js"}
@@ -15,7 +15,7 @@
       canvas#tafel { display: block }
   %body#train
     #everything
-      %h1 Eine Tafel zum trainieren...
+      %h1 Detexify - Eine Tafel zum trainieren...
       %p
         Oder geh
         %a{:href => '/'} klassifizieren...
@@ -29,9 +29,13 @@
           \...aber du siehst sie nicht
         %a#trainpattern{:href => '#'} Trainieren
         %a#clear{:href => '#'} L&ouml;schen
+        #canvasinfo Fehler! Der Canvas tuts nicht.
         
       #info
-        %p
-          Welche
-          %a{:href => '/symbols'} Symbole
-          gibt es denn?
+        :markdown
+          ## Wieso trainieren?
+          
+          Diese Anwendung basiert auf maschinellem Lernen. Ohne einige Vergleichsmuster
+          kann der Erkennungsalgorithmus keine Schlüsse ziehen und keine Treffer anbieten.
+          Darum muss das System jedes Symbol einige Male vorgesagt bekommen, damit es daraus ein
+          Muster für zukünftige Symbole ableiten kann.

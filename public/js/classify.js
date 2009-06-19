@@ -26,7 +26,7 @@ $(function(){
   
   // Canvas
   var c = $("#tafel").get(0);
-  var i = $("#info");
+  var i = $("#canvasinfo");
   $('#clear').click(function(){
     abort = true;
     clearCanvas(c);

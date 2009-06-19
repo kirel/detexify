@@ -2,6 +2,7 @@
 %html
   %head
     %title Detexify - Latex Classifier
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/json2.js"}
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
@@ -10,7 +11,7 @@
     %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/style.css"}
   %body#classify
     #everything
-      %h1 Eine Tafel zum klassifizieren...
+      %h1 Detexify - Eine Tafel zum klassifizieren...
       %p
         Oder geh
         %a{:href => '/train'} trainieren...
@@ -19,8 +20,8 @@
         %canvas#tafel{:width=>"400", :height=>"400"}
           \...aber du siehst sie nicht
         %a#clear{:href => '#'} L&ouml;schen
-        #info
-        #spinner
+        #canvasinfo Fehler! Der Canvas tuts nicht.
+        %span#spinner
           /%img{:alt => 'Ajax spinner', :href => 'spinner.gif' }
           Untersuche...
       
@@ -33,7 +34,31 @@
               %th Score
           %tbody#hitlist
       #info
-        %p
-          Welche
-          %a{:href => '/symbols'} Symbole
-          gibt es denn?    
+        :markdown
+          ## Was ist das hier?
+          
+          Jeder, der mit LaTeX arbeitet, weiss, wie aufw&auml;ndig es sein kann in
+          [symbols-a4.pdf](http://www.ctan.org/tex-archive/info/symbols/comprehensive/)
+          nach einem Symbol zu suchen, das man sich einfach nicht merken kann. Diese Webapp
+          soll diese Suche vereinfachen.
+          
+          ## Wie geht das?
+          
+          Male einfach das gesuchte Symbol mit der Maus oben in das Rechteck und schau, was passiert!
+          
+          ## Mein Symbol wird nicht gefunden!
+          
+          Das tut mir natürlich sehr leid. Entweder das Symbol ist nicht gut genug [trainert](/train)
+          oder es ist noch gar nicht in der Liste der verfügbaren [Symbole](/symbols).
+          
+          ## Ich find das toll! Kann ich helfen?
+          
+          Ja. Du kannst dir etwas Zeit nehmen den Klassifizierer zu [trainieren](/train). Du kannst
+          dir auch den [Sourcecode](http://github.com/danishkirel/detexify) ansehen und wenn du denkst
+          etwas beitragen zu können, dann nur zu!
+                    
+          ## Wer steckt hinter Detexify?
+
+          Die Idee stammt von Philipp K&uuml;hl und programmiert hat es
+          [Daniel Kirsch](http://kirelabs.org).
+          

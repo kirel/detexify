@@ -2,7 +2,7 @@
 %html
   %head
     %title Detexify - Latex Classifier
-    /%script{:src => "http://www.google.com/jsapi"}
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
     %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/style.css"}
@@ -12,22 +12,30 @@
       });
   %body#symbols
     #everything
-      %h1 Was gibts bisher so?
+      %h1 Detexify - Symboltabelle
       %p
         Geh
-        %a{:href => '/train'} trainieren
+        %a{:href => '/'} klassifizieren
         oder geh
-        %a{:href => '/'} klassifizieren...
-      %ul
-        %table.symbols
-          %thead
+        %a{:href => '/train'} trainieren...
+      
+      #info
+        :markdown
+          ## Was ist das hier?
+          
+          Dies ist die Liste der Symbole, die dem System bekannt sind. Diese Symbole können
+          [trainiert](/train) und [erkannt](/) werden. Falls etwas Wichtiges fehlt, dann schreib doch
+          bitte eine [Email](mailto:danishkirel@gmail.com)!
+    
+      %table.symbols
+        %thead
+          %tr
+            %th Command
+            %th Symbol
+        %tbody
+          - @tex.each do |tex|
             %tr
-              %th Command
-              %th Symbol
-          %tbody
-            - @tex.each do |tex|
-              %tr
-                %td.command
-                  %code.tex{:style => 'font-size:2em;'}= tex
-                %td.symbol
-                  %img{:alt=>"tex:#{tex}"}
+              %td.command
+                %code.tex{:style => 'font-size:2em;'}= tex
+              %td.symbol
+                %img{:alt=>"tex:#{tex}"}

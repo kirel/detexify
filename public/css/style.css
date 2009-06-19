@@ -4,6 +4,14 @@ body, td {
 	font-family: sans-serif;
 }
 
+#info h2 {
+	font-size: 1.2em;
+}
+
+#canvasarea a:link {
+	padding-right: .5em;
+}
+
 code {
 	font-size: 1.5em;
 }
@@ -12,6 +20,16 @@ code {
 	position: relative;
 	width: 1000px;
 	margin: 0 auto;
+}
+
+#classify #info,
+#train #info
+{
+	width: 402px;
+}
+
+#spinner {
+	display: none;
 }
 
 #hitarea {

@@ -48,7 +48,7 @@ $(function(){
 
   // Canvas
   var c = $("#tafel").get(0);
-  var i = $("#info");
+  var i = $("#canvasinfo");
   i.text("Initialisiere Canvas...");
   canvassify(c);
   // Train if train button pressed
