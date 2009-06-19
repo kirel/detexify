@@ -9,24 +9,29 @@
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
     %script{:type => 'text/javascript', :src => "/js/canvassify.js"}
     %script{:type => 'text/javascript', :src => "/js/train.js"}
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/style.css"}
     %style
       canvas { border: 1px solid black; }
       canvas#tafel { display: block }
-  %body
-    %h1 Eine Tafel zum trainieren...
-    %p
-      Oder geh
-      %a{:href => '/'} klassifizieren...
-    %h2
-      %code#tex{:style => 'font-size:2em;'}= @tex
-      \:
-      %img{:alt=>"tex:#{@tex}"}
-    %canvas#tafel{:width=>"400", :height=>"400"}
-      \...aber du siehst sie nicht
-    %a#train{:href => '#'} Trainieren
-    %a#clear{:href => '#'} L&ouml;schen
-    #info
-    %p
-      Welche
-      %a{:href => '/symbols'} Symbole
-      gibt es denn?
+  %body#train
+    #everything
+      %h1 Eine Tafel zum trainieren...
+      %p
+        Oder geh
+        %a{:href => '/'} klassifizieren...
+      %h2
+        %code#tex{:style => 'font-size:2em;'}= @tex
+        \:
+        %img{:alt=>"tex:#{@tex}"}
+      
+      #canvasarea
+        %canvas#tafel{:width=>"400", :height=>"400"}
+          \...aber du siehst sie nicht
+        %a#trainpattern{:href => '#'} Trainieren
+        %a#clear{:href => '#'} L&ouml;schen
+        
+      #info
+        %p
+          Welche
+          %a{:href => '/symbols'} Symbole
+          gibt es denn?

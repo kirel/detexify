@@ -1,0 +1,43 @@
+/* @override http://localhost:4567/css/style.css */
+
+body, td {
+	font-family: sans-serif;
+}
+
+code {
+	font-size: 2em;
+}
+
+#everything {
+	margin: 0 auto;
+}
+
+#hitarea {
+	position: absolute;
+	left: 500px;
+}
+
+canvas { border: 1px solid black; }
+div#spinner { display: none; }
+canvas#tafel { display: block; }
+
+table.symbols {
+	border-collapse: collapse;
+}
+
+table.symbols th {
+	padding: .4em .5em;
+	font-size: 2em;
+	text-align: center;
+}
+
+table.symbols th:first-child {
+	text-align: left;
+}
+
+table.symbols td.symbol { text-align: center; }
+
+table.symbols td {
+	padding: 1em;
+	border-top: solid 1px #aaa;
+}

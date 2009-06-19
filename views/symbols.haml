@@ -5,20 +5,29 @@
     /%script{:src => "http://www.google.com/jsapi"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/style.css"}
     :javascript
       $(function(){
         mathtex.init();
       });
-  %body
-    %h1 Was gibts bisher so?
-    %p
-      Geh
-      %a{:href => '/train'} trainieren
-      oder geh
-      %a{:href => '/'} klassifizieren...
-    %ul
-      - @tex.each do |tex|
-        %li
-          %code.tex{:style => 'font-size:2em;'}= tex
-          \:
-          %img{:alt=>"tex:#{tex}"}
+  %body#symbols
+    #everything
+      %h1 Was gibts bisher so?
+      %p
+        Geh
+        %a{:href => '/train'} trainieren
+        oder geh
+        %a{:href => '/'} klassifizieren...
+      %ul
+        %table.symbols
+          %thead
+            %tr
+              %th Command
+              %th Symbol
+          %tbody
+            - @tex.each do |tex|
+              %tr
+                %td.command
+                  %code.tex{:style => 'font-size:2em;'}= tex
+                %td.symbol
+                  %img{:alt=>"tex:#{tex}"}

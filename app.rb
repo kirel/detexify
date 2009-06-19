@@ -32,7 +32,9 @@ post '/train' do
   io = uri.open
   
   # TODO sanity check in command list
-  classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
+  if strokes && !strokes.empty? && !strokes.first.empty?
+    classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
+  end
   # halt 200 if xhr else
   redirect '/train'
 end

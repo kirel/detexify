@@ -7,25 +7,28 @@
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
     %script{:type => 'text/javascript', :src => "/js/canvassify.js"}
     %script{:type => 'text/javascript', :src => "/js/classify.js"}
-    %style
-      canvas { border: 1px solid black; }
-      div#spinner { display: none; }
-      canvas#tafel { display: block }
-  %body
-    %h1 Eine Tafel zum klassifizieren...
-    %p
-      Oder geh
-      %a{:href => '/train'} trainieren...
-    %canvas#tafel{:width=>"400", :height=>"400"}
-      \...aber du siehst sie nicht
-    %a#clear{:href => '#'} L&ouml;schen
-    #info
-    #spinner
-      /%img{:alt => 'Ajax spinner', :href => 'spinner.gif' }
-      Untersuche...
-    %ul#hitlist
-    %p
-      Welche
-      %a{:href => '/symbols'} Symbole
-      gibt es denn?
-    
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/style.css"}
+  %body#classify
+    #everything
+      %h1 Eine Tafel zum klassifizieren...
+      %p
+        Oder geh
+        %a{:href => '/train'} trainieren...
+      
+      #canvasarea
+        %canvas#tafel{:width=>"400", :height=>"400"}
+          \...aber du siehst sie nicht
+        %a#clear{:href => '#'} L&ouml;schen
+        #info
+        #spinner
+          /%img{:alt => 'Ajax spinner', :href => 'spinner.gif' }
+          Untersuche...
+      
+      #hitarea
+        %ul#hitlist
+
+      #info
+        %p
+          Welche
+          %a{:href => '/symbols'} Symbole
+          gibt es denn?    

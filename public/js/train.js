@@ -52,7 +52,7 @@ $(function(){
   i.text("Initialisiere Canvas...");
   canvassify(c);
   // Train if train button pressed
-  $('#train').click(function(){
+  $('#trainpattern').click(function(){
     train($('#tex').text(), c);
     //clearCanvas(c);
     // TODO do this dynamically

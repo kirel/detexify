@@ -135,6 +135,8 @@ module Detexify
     end
     
     ### class Classifier
+    
+    K = 10
   
     def initialize
       @samples = Sample
@@ -183,6 +185,7 @@ module Detexify
   
     # train the classifier by adding io to symbol class tex
     def train tex, io, strokes
+      # TODO reject illegal input e.g. empty strokes
       # TODO offload feature extraction to a job queue
       f = extract_features io.read, strokes
       io.rewind
@@ -198,8 +201,8 @@ module Detexify
       # use nearest neighbour classification
       all = @all.sort_by { |sample| distance(f, Vector.elements(sample.feature_vector)) }
       neighbours = {}
-      k = 5 # number of best matches we want in the list
-      while !all.empty? && neighbours.size < k
+      # K is number of best matches we want in the list
+      while !all.empty? && neighbours.size < K
         sample = all.shift
         neighbours[sample.command] ||= 0
         neighbours[sample.command] += 1

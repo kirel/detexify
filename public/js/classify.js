@@ -16,7 +16,7 @@ $(function(){
         //$('#classinatra').text('Es wurde '+json.url+' angefordert.');
         jQuery.each( json.hits, function() {
           $('#spinner').hide();        
-          $('#hitlist').append('<li><code style="font-size:2em;">'+this.tex+'</code> : <img alt="tex:'+this.tex+'"/> <span>Score: '+this.score+'</span></li>').show();
+          $('#hitlist').append('<li><code>'+this.tex+'</code> : <span><img alt="tex:'+this.tex+'"/></span> <span>Score: '+this.score+'</span></li>').show();
         });
         mathtex.init();
       }
