@@ -24,8 +24,6 @@ get '/symbols' do
 end
 
 post '/train' do
-  # TODO sanity check in command list
-  p params
   uri = URI.parse params[:url]
   strokes = JSON params[:strokes]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
@@ -33,7 +31,8 @@ post '/train' do
   end
   io = uri.open
   
-  classifier.train params[:tex], io, strokes
+  # TODO sanity check in command list
+  classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
   # halt 200 if xhr else
   redirect '/train'
 end

@@ -1,3 +1,6 @@
+# Contains all commands that can come up in the training interface
+# {} will be replaced with {char} for char in a-z, A-Z for every symbol that contains {}
+# TODO add AMS stuff
 # Greek Letters
 \alpha
 \theta
