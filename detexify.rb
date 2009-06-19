@@ -140,7 +140,7 @@ module Detexify
   
     def initialize
       @samples = Sample
-      @all = @samples.all
+      @all = reload
     end
     
     def reload
