@@ -10,7 +10,6 @@
 \pi
 \upsilon
 \gamma
-\gamma
 \varpi
 \iota
 \phi
