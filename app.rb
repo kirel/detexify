@@ -15,11 +15,13 @@ end
 
 get '/train' do
   @tex = classifier.gimme_tex
+  @samples = classifier.count_samples(@tex)
   haml :train
 end
 
 get '/symbols' do
-  @tex = classifier.symbols_hash
+  @tex = classifier.symbols
+  @count = classifier.count_hash
   haml :symbols
 end
 

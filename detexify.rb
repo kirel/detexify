@@ -165,7 +165,7 @@ module Detexify
       cmds
     end
     
-    def symbols_hash
+    def count_hash
       h = {}
       symbols.each do |sym|
         h[sym] = 0
@@ -192,6 +192,10 @@ module Detexify
         end
       end
       cmdh.sort_by { |c,n| n }.first.first
+    end
+    
+    def count_samples tex
+      @all.count { |s| s.command == tex }
     end
   
     # train the classifier by adding io to symbol class tex

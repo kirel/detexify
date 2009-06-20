@@ -30,18 +30,18 @@
       %table.symbols
         %thead
           %tr
-            %th Command
+            %th Befehl
             %th Symbol
-            %th Samples
+            %th Muster
         %tbody
-          - @tex.each do |tex, samp|
+          - @tex.each do |tex|
             %tr
               %td.command
                 %code.tex{:style => 'font-size:2em;'}= tex
               %td.symbol
                 %img{:alt=>"tex:#{tex}"}
               %td.samples
-                = samp
+                = @count[tex]
                 
     :javascript
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
