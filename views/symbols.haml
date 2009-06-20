@@ -32,13 +32,16 @@
           %tr
             %th Command
             %th Symbol
+            %th Samples
         %tbody
-          - @tex.each do |tex|
+          - @tex.each do |tex, samp|
             %tr
               %td.command
                 %code.tex{:style => 'font-size:2em;'}= tex
               %td.symbol
                 %img{:alt=>"tex:#{tex}"}
+              %td.samples
+                = samp
                 
     :javascript
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

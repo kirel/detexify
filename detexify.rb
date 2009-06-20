@@ -165,6 +165,17 @@ module Detexify
       cmds
     end
     
+    def symbols_hash
+      h = {}
+      symbols.each do |sym|
+        h[sym] = 0
+      end
+      @all.each do |s|
+        h[s.command] += 1
+      end
+      h
+    end
+    
     def gimme_tex
       # TODO refoactor so that it is prettier
       reload # FIXME this is slow!

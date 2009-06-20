@@ -19,7 +19,7 @@ get '/train' do
 end
 
 get '/symbols' do
-  @tex = classifier.symbols
+  @tex = classifier.symbols_hash
   haml :symbols
 end
 
