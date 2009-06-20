@@ -195,7 +195,8 @@ module Detexify
     end
     
     def count_samples tex
-      @all.count { |s| s.command == tex }
+      #@all.count { |s| s.command == tex }
+      @all.select { |s| s.command == tex }.size
     end
   
     # train the classifier by adding io to symbol class tex
