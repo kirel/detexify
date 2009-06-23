@@ -26,6 +26,7 @@ get '/symbols' do
 end
 
 post '/train' do
+  halt 401, "I want tex!" unless params[:tex]
   uri = URI.parse params[:url]
   strokes = JSON params[:strokes]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }

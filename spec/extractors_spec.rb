@@ -26,3 +26,16 @@ end
 describe Detexify::Online::Extractors::DirectionalHistogramFeatures do
     
 end
+
+describe Detexify::Online::Extractors::PointDensity do
+  
+  before do
+    @ex = Detexify::Online::Extractors::PointDensity.new({'x' => (0..1), 'y' => (0..1) }, {'x' => (1..2), 'y' => (1..2) })
+  end
+  
+  it "should calculate the point density" do
+    strokes = [[{'x'=>0.5,'y'=>0.5}], [{'x'=>1.5,'y'=>1.5}], [{'x'=>0.5,'y'=>1.5}], [{'x'=>1.5,'y'=>1.5}]]
+    @ex.extract(strokes).should == [1,2]
+  end
+    
+end

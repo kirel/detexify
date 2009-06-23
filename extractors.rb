@@ -27,6 +27,26 @@ module Detexify
 
       end
 
+      class PointDensity
+        
+        def initialize *boxes # box = { 'x' => left..right, 'y' => bottom..top }
+          @boxes = boxes
+        end
+
+        def extract strokes
+          count = [0] * @boxes.size
+          strokes.each do |stroke|
+            stroke.each do |point|
+              @boxes.each_with_index do |box, i|
+                count[i] += 1 if box['x'].include?(point['x']) && box['y'].include?(point['y'])
+              end
+            end
+          end
+          return count.map { |i| i.to_f }
+        end
+
+      end
+
       class DirectionalHistogramFeatures
         # return startdirection, enddirection, #N, #NE, #E, ...
 
