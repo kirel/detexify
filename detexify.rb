@@ -123,11 +123,23 @@ module Detexify
           # startdirection, enddirection = Extractors::StartEndDirection.new.process(strokes)
           # - start/end position
           # - point density
+          boxes = [
+            {'x' => (0...0.4), 'y' => (0..1)},
+            {'x' => (0.4...0.6), 'y' => (0..1)},
+            {'x' => (0.6..1), 'y' => (0..1)},
+            {'y' => (0...0.4), 'x' => (0..1)},
+            {'y' => (0.4...0.6), 'x' => (0..1)},
+            {'y' => (0.6..1), 'x' => (0..1)},
+          ]
+          vl, vm, vr, hu, hm, hd = Detexify::Online::Extractors::PointDensity.new(*boxes).extract(strokes)
           # - aspect ratio
           # - number of strokes
           
           # TODO add more features
-          Vector[n, ne, e, se, s, sw, w, nw, strokes.size]
+          # TODO add extractors to an array and iterate over that
+          # extractors = ...
+          # return Vector.elements extractors.map { |e| e.call(strokes) }.flatten
+          Vector[n, ne, e, se, s, sw, w, nw, vl, vm, vr, hu, hm, hd, strokes.size]
         end
         
       end
