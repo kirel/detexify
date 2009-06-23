@@ -137,7 +137,7 @@ module Detexify
           # - number of strokes
           extractors << Proc.new { |s| (s.size*10).to_f }
           # TODO add more features
-          return Vector.elements extractors.map { |e| e.call(strokes) }.flatten
+          return Vector.elements(extractors.map { |e| e.call(strokes) }.flatten)
         end
         
       end
