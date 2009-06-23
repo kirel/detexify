@@ -86,7 +86,7 @@ module Detexify
           #   Preprocessors::Smooth.new.process(stroke)            
           # end
                     
-          left, right, top, bottom = Detexify::Online::Extractors::BoundingBox.new.extract(strokes)
+          left, right, top, bottom = Detexify::Online::Extractors::BoundingBox.new.call(strokes)
           
           # TODO push this into a preprocessor
           # computations for next step
@@ -115,9 +115,10 @@ module Detexify
                     
           # FIXME I've lost the timestamps here. Dunno if I want to keep them
           
+          extractors = []
           # extract features
           # - directional histogram features
-          n, ne, e, se, s, sw, w, nw = Detexify::Online::Extractors::DirectionalHistogramFeatures.new.extract(strokes)
+          extractors << Detexify::Online::Extractors::DirectionalHistogramFeatures.new
           # - start direction
           # - end direction
           # startdirection, enddirection = Extractors::StartEndDirection.new.process(strokes)
@@ -131,15 +132,12 @@ module Detexify
             {'y' => (0.4...0.6), 'x' => (0..1)},
             {'y' => (0.6..1), 'x' => (0..1)},
           ]
-          vl, vm, vr, hu, hm, hd = Detexify::Online::Extractors::PointDensity.new(*boxes).extract(strokes)
+          extractors << Detexify::Online::Extractors::PointDensity.new(*boxes)
           # - aspect ratio
           # - number of strokes
-          
+          extractors << Proc.new { |s| (s.size*10).to_f }
           # TODO add more features
-          # TODO add extractors to an array and iterate over that
-          # extractors = ...
-          # return Vector.elements extractors.map { |e| e.call(strokes) }.flatten
-          Vector[n, ne, e, se, s, sw, w, nw, vl, vm, vr, hu, hm, hd, strokes.size]
+          return Vector.elements extractors.map { |e| e.call(strokes) }.flatten
         end
         
       end

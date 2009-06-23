@@ -9,7 +9,7 @@ module Detexify
 
       class BoundingBox
 
-        def extract strokes
+        def call strokes
           # TODO push this into preprocessors.rb
           # maximally fit into [0,1]x[0,1]
           first_point = strokes.first.first
@@ -33,7 +33,7 @@ module Detexify
           @boxes = boxes
         end
 
-        def extract strokes
+        def call strokes
           count = [0] * @boxes.size
           strokes.each do |stroke|
             stroke.each do |point|
@@ -50,7 +50,7 @@ module Detexify
       class DirectionalHistogramFeatures
         # return startdirection, enddirection, #N, #NE, #E, ...
 
-        def extract strokes
+        def call strokes
           chaincodes = {
             :north => 0,
             :northeast => 1,
@@ -80,7 +80,7 @@ module Detexify
               end # if
             end # stroke.each
           end # strokes.each
-          res
+          res.map { |i| i.to_f }
         end # def
 
       end # class DirectionalHistogramFeatures
