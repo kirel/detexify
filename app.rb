@@ -3,11 +3,33 @@ require 'open-uri'
 require 'data-uri'
 require 'json'
 require 'sinatra'
+require 'sinatra/r18n'
 require 'haml'
 
 load 'detexify.rb' 
 
 classifier = Detexify::Classifier.new
+
+enable :sessions
+
+before do
+  if params[:locale]
+    session[:locale] = params[:locale]
+  end
+  unless session[:locale]
+    session[:locale] = request.env["HTTP_ACCEPT_LANGUAGE"][0,2]
+  end
+end
+
+get '/locale' do
+  session[:locale]
+end
+
+get '/i18n' do
+  out = ''
+  out << i18n.inspect
+  out << i18n.translations.inspect
+end
 
 get '/' do
   haml :classify
