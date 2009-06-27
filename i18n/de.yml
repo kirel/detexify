@@ -11,7 +11,7 @@ training: Trainieren
 classify:
   title: Detexify - Latex Symbolerkennung
   header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole erkennt...'
-  subheader: 'Oder [trainiert](/train)...'
+  subheader: 'Oder [trainiert](/de/train)...'
   info: |
     ## Was ist das hier?
     
@@ -26,12 +26,12 @@ classify:
     
     ## Mein Symbol wird nicht gefunden!
     
-    Entweder das Symbol ist nicht gut genug [trainert](/train)
-    oder es ist noch gar nicht in der Liste der verfügbaren [Symbole](/symbols).
+    Entweder das Symbol ist nicht gut genug [trainert](/de/train)
+    oder es ist noch gar nicht in der Liste der verfügbaren [Symbole](/de/symbols).
     
     ## Ich find das toll! Kann ich helfen?
     
-    Ja. Du kannst dir etwas Zeit nehmen Detexify zu [trainieren](/train). Du kannst
+    Ja. Du kannst dir etwas Zeit nehmen Detexify zu [trainieren](/de/train). Du kannst
     dir auch den [Sourcecode](http://github.com/danishkirel/detexify) ansehen und wenn du denkst
     etwas beitragen zu können, dann nur zu!
               
@@ -42,23 +42,23 @@ classify:
 train:
   title: Detexify - Latex Symbolerkennung
   header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole trainiert...'
-  subheader: 'Oder [erkennt](/)...'
+  subheader: 'Oder [erkennt](/de/classify)...'
   info: |
     ## Wieso trainieren?
     
     Diese Anwendung basiert auf maschinellem Lernen. Ohne einige Vergleichsmuster
     kann der Erkennungsalgorithmus keine Schlüsse ziehen und keine Treffer anbieten.
-    Darum muss das System jedes [Symbol](/symbols) einige Male vorgesagt bekommen,
+    Darum muss das System jedes [Symbol](/de/symbols) einige Male vorgesagt bekommen,
     damit es daraus ein
-    Muster für [zukünftige Symbole](/) ableiten kann.
+    Muster für [zukünftige Symbole](/de/classify) ableiten kann.
 symbols:
   title: Detexify - Latex Symbolerkennung
   header: Detexify - Symboltabelle
-  subheader: 'Symbole [erkennen](/) oder [trainieren](/train)...'
+  subheader: 'Symbole [erkennen](/de/classify) oder [trainieren](/de/train)...'
   info: |
     ## Was ist das hier?
     
     Dies ist die Liste der Symbole, die dem System bekannt sind. Diese Symbole können
-    [trainiert](/train) und [erkannt](/) werden. Falls etwas Wichtiges fehlt, dann schreib doch
+    [trainiert](/de/train) und [erkannt](/de/classify) werden. Falls etwas Wichtiges fehlt, dann schreib doch
     bitte eine [Email](mailto:danishkirel@gmail.com)!
     

@@ -14,6 +14,10 @@
       %h1= i18n.classify.header
       :markdown
         #{i18n.classify.subheader}
+      %ul
+      - i18n.translations.each_pair do |locale, title|
+        %li
+          %a{ :href => "/#{locale}/classify" }= title
       
       #canvasarea
         %canvas#tafel{:width=>"400", :height=>"400"}

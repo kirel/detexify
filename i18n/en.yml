@@ -11,7 +11,7 @@ training: Train
 classify:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Recognizer'
-  subheader: '[Train](/train) Symbols...'
+  subheader: '[Train](/en/train) Symbols...'
   info: |
     ## What is this?
     
@@ -26,12 +26,12 @@ classify:
     
     ## My Symbol isn't found!
     
-    The symbol may not be [trained](/train) enough
-    or it is not yet in the list of [supported symbols](/symbols).
+    The symbol may not be [trained](/en/train) enough
+    or it is not yet in the list of [supported symbols](/en/symbols).
     
     ## I like this. How can I help?
     
-    You could spare some time [training](/train) Detexify. You could also
+    You could spare some time [training](/en/train) Detexify. You could also
     look at the [source](http://github.com/danishkirel/detexify) and if you want to
     contribute you're welcome.
               
@@ -42,7 +42,7 @@ classify:
 train:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Trainer'
-  subheader: '[Recognize](/) Symbols...'
+  subheader: '[Recognize](/en/classify) Symbols...'
   info: |
     ## Why?
     
@@ -51,10 +51,10 @@ train:
 symbols:
   title: Detexify - Latex Symbol Recognition
   header: Detexify - Symbol table
-  subheader: '[Recognize](/) or [train](/train) symbols...'
+  subheader: '[Recognize](/en/classify) or [train](/en/train) symbols...'
   info: |
     ## What is this?
     
     This is the list of symbols currently known by detexify. These can be
-    [trainiert](/trained) and [recognized](/). If something is missing please
+    [trainiert](/en/trained) and [recognized](/en/classify). If something is missing please
     send me an [email](mailto:danishkirel@gmail.com)!
