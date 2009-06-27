@@ -6,7 +6,7 @@ symbol: Symbol
 command: Befehl
 score: Wertung
 patterns: Muster
-delete: Löschen
+clear: Löschen
 training: Trainieren
 classify:
   title: Detexify - Latex Symbolerkennung
