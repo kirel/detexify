@@ -22,6 +22,10 @@ code {
 	margin: 0 auto;
 }
 
+h1 img {
+  height:1.5em; margin-bottom:-.5em;
+}
+
 #classify #info,
 #train #info
 {

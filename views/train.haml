@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Detexify - Latex Symbolerkennung
+    %title= i18n.train.title
     %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/jquery.domec-1.0.0.js"}
@@ -15,32 +15,25 @@
       canvas#tafel { display: block }
   %body#train
     #everything
-      %h1 Detexify - Eine Tafel, die <img alt="tex:\LaTeX" style="height:1.5em; margin-bottom:-.5em;">-Symbole trainiert...
-      %p
-        Oder
-        %a{:href => '/'} erkennt...
+      %h1= i18n.train.header
+      :markdown
+        #{i18n.train.subheader}
       %h2
         %code#tex{:style => 'font-size:2em;'}= @tex
-        %small= " (#{@samples} Muster)"
+        %small= " (#{@samples} #{i18n.patterns})"
         \:
         %img{:alt=>"tex:#{@tex}"}
       
       #canvasarea
         %canvas#tafel{:width=>"400", :height=>"400"}
-          \...aber du siehst sie nicht
-        %a#trainpattern{:href => '#'} Trainieren
-        %a#clear{:href => '#'} L&ouml;schen
-        #canvasinfo Fehler! Der Canvas tuts nicht.
+          = i18n.canvas.nocanvas
+        %a#trainpattern{:href => '#'}= i18n.training
+        %a#clear{:href => '#'}= i18n.delete
+        #canvasinfo= i18n.canvas.info
         
       #info
         :markdown
-          ## Wieso trainieren?
-          
-          Diese Anwendung basiert auf maschinellem Lernen. Ohne einige Vergleichsmuster
-          kann der Erkennungsalgorithmus keine Schlüsse ziehen und keine Treffer anbieten.
-          Darum muss das System jedes [Symbol](/symbols) einige Male vorgesagt bekommen,
-          damit es daraus ein
-          Muster für [zukünftige Symbole](/) ableiten kann.
+          #{i18n.train.info}
           
     :javascript
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
