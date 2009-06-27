@@ -47,8 +47,10 @@ $(function(){
       $('#trainingpattern #numsamples').text(json.samples);
       $('#trainingpattern img').attr('alt','tex:'+json.tex).removeAttr('src');
       mathtex.init(); // TODO make this better
+      canvas.init();
       $('#spinner').hide();
       $('#trainingpattern').effect('highlight');
+      $('#trainpattern').click(trainclick); // FIXME awful names!
     }, 'json');
   }
 
@@ -56,16 +58,18 @@ $(function(){
   var c = $("#tafel").get(0);
   canvassify(c);
   // Train if train button pressed
-  $('#trainpattern').click(function(){
+  var trainclick = function() { // FIXME auwful name
+    $('#trainpattern').unbind('click', trainclick)
     $('#spinner').show();
     // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
     train($('#tex').text(), c);
-    clearCanvas(c);
+    c.block();
     // TODO do this dynamically
     return false;
-  });
+  }
+  $('#trainpattern').click(trainclick);
   $('#clear').click(function(){
-    clearCanvas(c);
+    c.clear();
     return false;
   });
 

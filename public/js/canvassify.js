@@ -37,15 +37,22 @@ function canvassify(canvas, callback) {
       draw = false;
     }
   }
-  $(canvas).mousedown(start)
-    .mousemove(stroke)
-    .mouseup(stop)
-    .mouseout(stop);
+  // canvas addons
+  canvas.clear = function() {
+    canvas['strokes'] = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  canvas.init = function() {
+    canvas.clear();
+    $(canvas).mousedown(start)
+      .mousemove(stroke)
+      .mouseup(stop)
+      .mouseout(stop);    
+  }
+  canvas.block = function() {
+    canvas.clear();
+    $(canvas).unbind();
+  }
+  canvas.init();
   return canvas;    
-}
-
-function clearCanvas(canvas) {
-  canvas['strokes'] = [];
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
