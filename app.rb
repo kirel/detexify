@@ -3,23 +3,44 @@ require 'open-uri'
 require 'data-uri'
 require 'json'
 require 'sinatra'
+require 'sinatra/r18n'
 require 'haml'
 
 load 'detexify.rb' 
 
 classifier = Detexify::Classifier.new
 
+enable :sessions
+
+# TODO url helper!
+
 get '/' do
+  # can i put this in a filter?
+  unless params[:locale]
+    if lang = request.env["HTTP_ACCEPT_LANGUAGE"]
+      lang = lang.split(",").map do |l|
+        l += ';q=1.0' unless l =~ /;q=\d+\.\d+$/
+        l.split(';q=')
+      end.first
+      params[:locale] = lang.first.split("-").first
+    else
+      params[:locale] = i18n.default
+    end
+  end
+  redirect "/#{params[:locale]}/classify"
+end
+
+get '/:locale/classify' do
   haml :classify
 end
 
-get '/train' do
+get '/:locale/train' do
   @tex = classifier.gimme_tex
   @samples = classifier.count_samples(@tex)
   haml :train
 end
 
-get '/symbols' do
+get '/:locale/symbols' do
   @tex = classifier.symbols
   @count = classifier.count_hash
   haml :symbols
@@ -38,8 +59,10 @@ post '/train' do
   if strokes && !strokes.empty? && !strokes.first.empty?
     classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
   end
-  # halt 200 if xhr else
-  redirect '/train'
+  # get new tex and build json response
+  tex = classifier.gimme_tex
+  samples = classifier.count_samples(@tex)
+  JSON :tex => tex, :samples => samples
 end
 
 post '/classify' do

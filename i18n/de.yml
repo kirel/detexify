@@ -1,0 +1,64 @@
+canvas:
+  nocanvas: ...aber du siehst sie nicht
+  error: Fehler. Der Canvas ist kaputt.
+  spinner: Untersuche...
+symbol: Symbol
+command: Befehl
+score: Wertung
+patterns: Muster
+clear: Löschen
+training: Trainieren
+classify:
+  title: Detexify - Latex Symbolerkennung
+  header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole erkennt...'
+  subheader: 'Oder [trainiert](/de/train)...'
+  info: |
+    ## Was ist das hier?
+    
+    Jeder, der mit LaTeX arbeitet, weiss, wie aufwändig es sein kann in
+    [symbols-a4.pdf](http://www.ctan.org/tex-archive/info/symbols/comprehensive/)
+    nach einem Symbol zu suchen, das man sich einfach nicht merken kann. Detexify
+    soll diese Suche vereinfachen.
+    
+    ## Wie geht das?
+    
+    Male einfach das gesuchte Symbol mit der Maus oben in das Rechteck und schau, was passiert!
+    
+    ## Mein Symbol wird nicht gefunden!
+    
+    Entweder das Symbol ist nicht gut genug [trainert](/de/train)
+    oder es ist noch gar nicht in der Liste der verfügbaren [Symbole](/de/symbols).
+    
+    ## Ich find das toll! Kann ich helfen?
+    
+    Ja. Du kannst dir etwas Zeit nehmen Detexify zu [trainieren](/de/train). Du kannst
+    dir auch den [Sourcecode](http://github.com/danishkirel/detexify) ansehen und wenn du denkst
+    etwas beitragen zu können, dann nur zu!
+              
+    ## Wer steckt hinter Detexify?
+    
+    Die Idee stammt von Philipp Kühl und die Umsetzung von
+    [Daniel Kirsch](http://kirelabs.org).
+train:
+  title: Detexify - Latex Symbolerkennung
+  header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole trainiert...'
+  subheader: 'Oder [erkennt](/de/classify)...'
+  info: |
+    ## Wieso trainieren?
+    
+    Diese Anwendung basiert auf maschinellem Lernen. Ohne einige Vergleichsmuster
+    kann der Erkennungsalgorithmus keine Schlüsse ziehen und keine Treffer anbieten.
+    Darum muss das System jedes [Symbol](/de/symbols) einige Male vorgesagt bekommen,
+    damit es daraus ein
+    Muster für [zukünftige Symbole](/de/classify) ableiten kann.
+symbols:
+  title: Detexify - Latex Symbolerkennung
+  header: Detexify - Symboltabelle
+  subheader: 'Symbole [erkennen](/de/classify) oder [trainieren](/de/train)...'
+  info: |
+    ## Was ist das hier?
+    
+    Dies ist die Liste der Symbole, die dem System bekannt sind. Diese Symbole können
+    [trainiert](/de/train) und [erkannt](/de/classify) werden. Falls etwas Wichtiges fehlt, dann schreib doch
+    bitte eine [Email](mailto:danishkirel@gmail.com)!
+    

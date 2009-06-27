@@ -1,9 +1,7 @@
 // requires canvassify, mathtex
 
 $(function(){
-  // requests to classinatra
-  $('#classinatra').text('Lade...');
-  
+  // requests to classinatra  
   var abort;
     
   function classify(canvas) {
@@ -26,7 +24,6 @@ $(function(){
   
   // Canvas
   var c = $("#tafel").get(0);
-  var i = $("#canvasinfo");
   $('#clear').click(function(){
     abort = true;
     clearCanvas(c);
@@ -35,8 +32,7 @@ $(function(){
     $('#spinner').hide();    
     return false;
   });
-  i.text("Initialisiere Canvas...");
   canvassify(c, classify);
-  i.text("Bereit. Bitte malen!");
+  $("#canvaserror").hide();
   mathtex.init();
 });

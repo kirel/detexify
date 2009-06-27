@@ -41,22 +41,27 @@ $(function(){
   }
 
   function train(tex, canvas) {
-    //$.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) });
-    post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) });
-    //c.clear
+    $.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, function(json) {
+      // receive new training string
+      $('#trainingpattern code').text(json.tex);
+      $('#trainingpattern #numsamples').text(json.samples);
+      $('#trainingpattern img').attr('alt','tex:'+json.tex).removeAttr('src');
+      mathtex.init(); // TODO make this better
+      $('#spinner').hide();
+      $('#trainingpattern').effect('highlight');
+    }, 'json');
   }
 
   // Canvas
   var c = $("#tafel").get(0);
-  var i = $("#canvasinfo");
-  i.text("Initialisiere Canvas...");
   canvassify(c);
   // Train if train button pressed
   $('#trainpattern').click(function(){
+    $('#spinner').show();
+    // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
     train($('#tex').text(), c);
-    //clearCanvas(c);
+    clearCanvas(c);
     // TODO do this dynamically
-    //window.location.reload();
     return false;
   });
   $('#clear').click(function(){
@@ -64,6 +69,6 @@ $(function(){
     return false;
   });
 
-  i.text("Bereit. Bitte malen!");
+  $("#canvaserror").hide();
   mathtex.init();
 });

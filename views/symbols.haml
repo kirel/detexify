@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Detexify - Latex Symbolerkennung
+    %title = i18n.symbols.title
     %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
@@ -12,27 +12,20 @@
       });
   %body#symbols
     #everything
-      %h1 Detexify - Symboltabelle
-      %p
-        Symbole
-        %a{:href => '/'} erkennen
-        oder
-        %a{:href => '/train'} trainieren...
+      %h1= i18n.symbols.header
+      :markdown
+        #{i18n.symbols.subheader}
       
       #info
         :markdown
-          ## Was ist das hier?
+          #{i18n.symbols.info}
           
-          Dies ist die Liste der Symbole, die dem System bekannt sind. Diese Symbole können
-          [trainiert](/train) und [erkannt](/) werden. Falls etwas Wichtiges fehlt, dann schreib doch
-          bitte eine [Email](mailto:danishkirel@gmail.com)!
-    
       %table.symbols
         %thead
           %tr
-            %th Befehl
-            %th Symbol
-            %th Muster
+            %th= i18n.command
+            %th= i18n.symbol
+            %th= i18n.patterns
         %tbody
           - @tex.each do |tex|
             %tr
