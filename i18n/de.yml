@@ -1,6 +1,6 @@
 canvas:
   nocanvas: ...aber du siehst sie nicht
-  info: Fehler. Der Canvas tut nichts.
+  error: Fehler. Der Canvas ist kaputt.
   spinner: Untersuche...
 symbol: Symbol
 command: Befehl

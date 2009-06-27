@@ -48,8 +48,6 @@ $(function(){
 
   // Canvas
   var c = $("#tafel").get(0);
-  var i = $("#canvasinfo");
-  i.text("Initialisiere Canvas...");
   canvassify(c);
   // Train if train button pressed
   $('#trainpattern').click(function(){
@@ -64,6 +62,6 @@ $(function(){
     return false;
   });
 
-  i.text("Bereit. Bitte malen!");
+  $("#canvaserror").hide();
   mathtex.init();
 });
