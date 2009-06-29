@@ -48,7 +48,7 @@ $(function(){
       $('#trainingpattern img').attr('alt','tex:'+json.tex).removeAttr('src');
       mathtex.init(); // TODO make this better
       canvas.init();
-      $('#spinner').hide();
+      $('#spinner').hide('scale');
       $('#trainingpattern').effect('highlight');
       $('#trainpattern').click(trainclick); // FIXME awful names!
     }, 'json');
@@ -60,7 +60,7 @@ $(function(){
   // Train if train button pressed
   var trainclick = function() { // FIXME auwful name
     $('#trainpattern').unbind('click', trainclick)
-    $('#spinner').show();
+    $('#spinner').show('scale');
     // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
     train($('#tex').text(), c);
     c.block();

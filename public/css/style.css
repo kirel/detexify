@@ -8,8 +8,18 @@ body, td {
 	font-size: 1.2em;
 }
 
+#canvasarea {
+  position: relative;
+}
+
 #canvasarea a:link {
 	padding-right: .5em;
+}
+
+#train #spinner {
+  position: absolute;
+  top: 185px;
+  left: 185px;
 }
 
 code {

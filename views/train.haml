@@ -36,9 +36,7 @@
         %a#clear{:href => '#'}= i18n.clear
         #canvaserror= i18n.canvas.error
         %span#spinner
-          /%img{:alt => 'Ajax spinner', :href => 'spinner.gif' }
-          = i18n.canvas.spinner
-        
+          %img{:alt => i18n.canvas.spinner, :src => '/images/spinner.gif' }        
       #info
         :markdown
           #{i18n.train.info}
