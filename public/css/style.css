@@ -42,7 +42,6 @@ ul#lang li:before, ul#nav li:before {
   content: "› ";
 }
 
-
 code {
 	font-size: 1.5em;
 }
@@ -72,6 +71,13 @@ h1 img {
 	position: absolute;
 	left: 460px;
 	top: 80px;
+}
+
+#hittip {
+  display: none;
+  padding: 10px;
+/*  width: 150px;*/
+  background: gray;
 }
 
 canvas { border: 1px solid black; }

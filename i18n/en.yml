@@ -15,6 +15,7 @@ training: Train
 classify:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Recognizer'
+  hittip: Tis is it!
   info: |
     ## What is this?
     
