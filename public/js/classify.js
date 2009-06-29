@@ -7,7 +7,7 @@ $(function(){
   function train(tex, canvas) {
     $.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, function() {
       $('#spinner').hide('scale'); // TODO use different spinner   
-      alert('Danke!'); // TODO make this better
+      alert('Thanks for training!'); // TODO make this better
     });
   }
   
