@@ -2,6 +2,10 @@ canvas:
   nocanvas: ...aber du siehst sie nicht
   error: Fehler. Der Canvas ist kaputt.
   spinner: Untersuche...
+nav:
+  classify: Erkennen
+  train: Trainieren
+  symbols: Symboltabelle
 symbol: Symbol
 command: Befehl
 score: Wertung
@@ -11,7 +15,6 @@ training: Trainieren
 classify:
   title: Detexify - Latex Symbolerkennung
   header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole erkennt...'
-  subheader: 'Oder [trainiert](/de/train)...'
   info: |
     ## Was ist das hier?
     
@@ -42,7 +45,6 @@ classify:
 train:
   title: Detexify - Latex Symbolerkennung
   header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole trainiert...'
-  subheader: 'Oder [erkennt](/de/classify)...'
   info: |
     ## Wieso trainieren?
     
@@ -54,7 +56,6 @@ train:
 symbols:
   title: Detexify - Latex Symbolerkennung
   header: Detexify - Symboltabelle
-  subheader: 'Symbole [erkennen](/de/classify) oder [trainieren](/de/train)...'
   info: |
     ## Was ist das hier?
     

@@ -2,6 +2,10 @@ canvas:
   nocanvas: ...but you don't see it
   error: Error. The Canvas is FAIL.
   spinner: Examining...
+nav:
+  classify: Recognize
+  train: Train
+  symbols: Symbol table
 symbol: Symbol
 command: Command
 score: Score
@@ -11,7 +15,6 @@ training: Train
 classify:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Recognizer'
-  subheader: '[Train](/en/train) Symbols...'
   info: |
     ## What is this?
     
@@ -42,7 +45,6 @@ classify:
 train:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Trainer'
-  subheader: '[Recognize](/en/classify) Symbols...'
   info: |
     ## Why?
     
@@ -51,7 +53,6 @@ train:
 symbols:
   title: Detexify - Latex Symbol Recognition
   header: Detexify - Symbol table
-  subheader: '[Recognize](/en/classify) or [train](/en/train) symbols...'
   info: |
     ## What is this?
     

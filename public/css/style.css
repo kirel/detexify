@@ -22,6 +22,27 @@ body, td {
   left: 185px;
 }
 
+#classify #spinner {
+  position: absolute;
+  top: 370px;
+  left: 370px;
+}
+
+ul#lang, ul#nav {
+  display: inline;
+  list-style: none;
+  padding: 0 2em 0 0;
+}
+
+ul#lang li, ul#nav li {
+  display: inline;
+}
+
+ul#lang li:before, ul#nav li:before {
+  content: "› ";
+}
+
+
 code {
 	font-size: 1.5em;
 }

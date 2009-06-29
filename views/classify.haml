@@ -4,6 +4,7 @@
     %title= i18n.classify.title
     %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %script{:type => 'text/javascript', :src => "/js/jquery-1.3.2.min.js"}
+    %script{:type => 'text/javascript', :src => "/js/jquery-ui-1.7.2.custom.min.js"}
     %script{:type => 'text/javascript', :src => "/js/json2.js"}
     %script{:type => 'text/javascript', :src => "/js/mathtex.js"}
     %script{:type => 'text/javascript', :src => "/js/canvassify.js"}
@@ -12,12 +13,16 @@
   %body#classify
     #everything
       %h1= i18n.classify.header
-      :markdown
-        #{i18n.classify.subheader}
-      %ul
-      - i18n.translations.each_pair do |locale, title|
+      %ul#nav
         %li
-          %a{ :href => "/#{locale}/classify" }= title
+          %a{ :href => "/#{i18n.locale['code']}/train" }= i18n.nav.train
+        %li
+          %a{ :href => "/#{i18n.locale['code']}/symbols" }= i18n.nav.symbols
+          
+      %ul#lang
+        - i18n.translations.each_pair do |locale, title|
+          %li
+            %a{ :href => "/#{locale}/classify" }= title
       
       #canvasarea
         %canvas#tafel{:width=>"400", :height=>"400"}
@@ -25,8 +30,7 @@
         %a#clear{:href => '#'}= i18n.clear
         #canvaserror= i18n.canvas.error
         %span#spinner
-          /%img{:alt => 'Ajax spinner', :href => 'spinner.gif' }
-          = i18n.canvas.spinner
+          %img{:alt => i18n.canvas.spinner, :src => '/images/spinner.gif' }        
       
       #hitarea
         %table.symbols

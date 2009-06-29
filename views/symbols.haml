@@ -13,8 +13,16 @@
   %body#symbols
     #everything
       %h1= i18n.symbols.header
-      :markdown
-        #{i18n.symbols.subheader}
+      %ul#nav
+        %li
+          %a{ :href => "/#{i18n.locale['code']}/classify" }= i18n.nav.classify
+        %li
+          %a{ :href => "/#{i18n.locale['code']}/train" }= i18n.nav.train
+          
+      %ul#lang
+        - i18n.translations.each_pair do |locale, title|
+          %li
+            %a{ :href => "/#{locale}/classify" }= title
       
       #info
         :markdown
