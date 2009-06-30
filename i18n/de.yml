@@ -15,6 +15,7 @@ training: Trainieren
 classify:
   title: Detexify - Latex Symbolerkennung
   header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole erkennt...'
+  choosehit: Bitte klicke das richtige Symbol an!
   hittip: Das ist es!
   more: Nicht dabei? Gib mir mehr Symbole!
   info: |

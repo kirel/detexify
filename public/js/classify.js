@@ -17,12 +17,13 @@ $(function(){
     $('#spinner').show('scale');
     $.post("/classify", { "url": url, "strokes": JSON.stringify(canvas.strokes) }, function(json) {
       if (!abort) {
-        $('#spinner').hide('scale');        
+        $('#spinner').hide('scale');    
         $('#hitlist').empty();
         //$('#classinatra').text('Es wurde '+json.url+' angefordert.');
         jQuery.each( json.hits, function() {
           $('#hitlist').append('<tr class="tiptrigger"><td><code>'+this.tex+'</code></td><td class="symbol"><img alt="tex:'+this.tex+'"/></td><td class="score">'+this.score+'</td></tr>').show();
         });
+        $('#more').show();
         // now add tooltip behavior
         var setuptips = function() {
           $('#hitlist .tiptrigger').tooltip(
@@ -43,7 +44,8 @@ $(function(){
         mathtex.init();
         $('#hitarea').show();
         // setup all list
-        $('#more').unbind('click').click(function(){
+        $('#more a').unbind('click').click(function(){
+          $('#more').hide();
           $('#hitlist').empty();
           jQuery.each( json.all, function() {
             $('#hitlist').append('<tr class="tiptrigger"><td><code>'+this.tex+'</code></td><td class="symbol"><img alt="tex:'+this.tex+'"/></td><td class="score">'+this.score+'</td></tr>').show();

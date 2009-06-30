@@ -87,6 +87,11 @@ h1 img {
   background: white;
 }
 
+#choosehit {
+  font-size: 0.8em;
+  padding-left: 5em;
+}
+
 canvas { border: 1px solid black; }
 div#spinner { display: none; }
 canvas#tafel { display: block; }

@@ -15,6 +15,7 @@ training: Train
 classify:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Recognizer'
+  choosehit: Please click the correct symbol!
   hittip: This is it!
   more: Not in the list? Gimme more symbols!
   info: |

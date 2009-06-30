@@ -43,7 +43,9 @@
               %th= i18n.symbol
               %th= i18n.score
           %tbody#hitlist
-        %a#more{:href => '#'}= i18n.classify.more
+        #more
+          =i18n.classify.choosehit
+          %a#more{:href => '#'}= i18n.classify.more
             
       #info
         :markdown
