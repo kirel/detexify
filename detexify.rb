@@ -153,6 +153,8 @@ module Detexify
       @all = reload
     end
     
+    # This is expensive
+    # TODO load only { Vector => command } Hash (via CoucDB map)
     def reload
       @all = @samples.all.select { |s| symbols.member? s.command }
     end
@@ -188,7 +190,7 @@ module Detexify
     
     def gimme_tex
       # TODO refoactor so that it is prettier
-      reload # FIXME this is slow!
+      # reload # FIXME this is slow!
       cmds = symbols
       cmdh = {}
       cmds.each do |cmd|
@@ -218,7 +220,7 @@ module Detexify
       sample = @samples.new(:command => tex, :feature_vector => f.to_a, :strokes => strokes)
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type)
-      reload
+      # reload
     end
   
     # returns [{ :command => "foo", :score => "100", }]
