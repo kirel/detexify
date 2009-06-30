@@ -87,11 +87,6 @@ h1 img {
   background: white;
 }
 
-#choosehit {
-  font-size: 0.8em;
-  padding-left: 5em;
-}
-
 canvas { border: 1px solid black; }
 div#spinner { display: none; }
 canvas#tafel { display: block; }
@@ -120,49 +115,4 @@ table.symbols td.samples
 table.symbols td {
 	padding: 1em;
 	border-top: solid 1px #aaa;
-}
-
-/* the overlayed element */ 
-div.overlay { 
-     
-    /* growing background image */ 
-    background-image:url(/images/overlay/white.png); 
-     
-    /* dimensions after the growing animation finishes  */ 
-    /* width:800px; */
-    /* height:470px; */
-     
-    /* initially overlay is hidden */ 
-    display:none; 
-     
-    /* some padding to layout nested elements nicely  */ 
-    padding:55px; 
-} 
- 
-/* default close button positioned on upper right corner */ 
-div.overlay div.close { 
-    background-image:url(/images/overlay/close.png); 
-    position:absolute; 
-    right:5px; 
-    top:5px; 
-    cursor:pointer; 
-    height:35px; 
-    width:35px; 
-} 
- 
- 
-/* black */ 
-div.overlay.black { 
-    background:url(/images/overlay/transparent.png) no-repeat !important; 
-    color:#fff; 
-} 
- 
-/* petrol */ 
-div.overlay.petrol { 
-    background:url(/images/overlay/petrol.png) no-repeat !important; 
-    color:#fff; 
-} 
- 
-div.black h2, div.petrol h2 { 
-    color:#ddd;         
 }
