@@ -61,9 +61,11 @@ post '/train' do
   end
   # get new tex and build json response
   # TODO unless I don't want one
-  tex = classifier.gimme_tex
-  samples = classifier.count_samples(@tex)
-  JSON :tex => tex, :samples => samples
+  if params[:newtex]
+    tex = classifier.gimme_tex
+    samples = classifier.count_samples(tex)
+    JSON :tex => tex, :samples => samples
+  end
 end
 
 post '/classify' do

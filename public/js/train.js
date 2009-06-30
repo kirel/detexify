@@ -3,7 +3,7 @@
 $(function(){
 
   function train(tex, canvas) {
-    $.post("/train", { "tex": tex, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, function(json) {
+    $.post("/train", { "tex": tex, "newtex": true, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, function(json) {
       // receive new training string
       $('#trainingpattern code').text(json.tex);
       $('#trainingpattern #numsamples').text(json.samples);
