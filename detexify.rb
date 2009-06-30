@@ -225,15 +225,22 @@ module Detexify
     def classify io, strokes # TODO modules KNN, Mean, etc. for different classifier types? 
       f = extract_features io.read, strokes
       # use nearest neighbour classification
-      all = @all.sort_by { |sample| distance(f, Vector.elements(sample.feature_vector)) }
-      neighbours = {}
+      # sort by distance and find minimal distance for each command
+      nearest = {}
+      all = @all.sort_by do |sample|
+        d = distance(f, Vector.elements(sample.feature_vector))
+        nearest[sample.command] = d if !nearest[sample.command] || nearest[sample.command] > d
+        d
+      end
+      neighbours = {} # holds nearest distance of each command to the pattern
       # K is number of best matches we want in the list
       while !all.empty? && neighbours.size < K
         sample = all.shift
         neighbours[sample.command] ||= 0
         neighbours[sample.command] += 1
       end
-      neighbours.map { |command, num| { :tex => command, :score => num } }.sort_by { |h| -h[:score] }
+      return [neighbours.map { |command, num| { :tex => command, :score => num } }.sort_by { |h| -h[:score] },
+              nearest.map { |command, dist| { :tex => command, :score => dist} }.sort_by{ |h| h[:score] }]
     end
     
     def distance x, y
