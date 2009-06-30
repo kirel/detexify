@@ -74,8 +74,8 @@ post '/classify' do
   end
   io = uri.open
     
-  hits = classifier.classify io, strokes
+  hits, all = classifier.classify io, strokes
   
   # sende { :url => url, :hits => [{:latex => latex, :score => score }, {:latex => latex, :score => score } ]  }
-  JSON :url => params[:url], :hits => hits
+  JSON :url => params[:url], :hits => hits, :all => all
 end

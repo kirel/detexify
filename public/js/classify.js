@@ -24,28 +24,37 @@ $(function(){
           $('#hitlist').append('<tr class="tiptrigger"><td><code>'+this.tex+'</code></td><td class="symbol"><img alt="tex:'+this.tex+'"/></td><td class="score">'+this.score+'</td></tr>').show();
         });
         // now add tooltip behavior
-        $('#hitlist .tiptrigger').tooltip(
-          {
-            tip: '#hittip', position: ['center', 'right'],
-            delay: 0, effect: 'toggle', offset: [0,-100],
-            onBeforeShow: function() {
-              var trigger = this.getTrigger();
-              $('a', this.getTip()).unbind('click').click(function(){
-                $('#spinner').show('scale'); // TODO use different spinner   
-                train($('code', trigger).text(), canvas);
-              });
+        var setuptips = function() {
+          $('#hitlist .tiptrigger').tooltip(
+            {
+              tip: '#hittip', position: ['center', 'right'],
+              delay: 0, effect: 'toggle', offset: [0,-100],
+              onBeforeShow: function() {
+                var trigger = this.getTrigger();
+                $('a', this.getTip()).unbind('click').click(function(){
+                  $('#spinner').show('scale'); // TODO use different spinner   
+                  train($('code', trigger).text(), canvas);
+                });
+              }
             }
-          }
-        );
-        // and add training behavior
-        // TODO
+          );
+        }
+        setuptips();
         mathtex.init();
         $('#hitarea').show();
+        // setup all list
+        $('#more').unbind('click').click(function(){
+          $('#hitlist').empty();
+          jQuery.each( json.all, function() {
+            $('#hitlist').append('<tr class="tiptrigger"><td><code>'+this.tex+'</code></td><td class="symbol"><img alt="tex:'+this.tex+'"/></td><td class="score">'+this.score+'</td></tr>').show();
+          });          
+          setuptips();
+          mathtex.init();
+        });
       }
     }, 'json');
   }
   
-  $("#chooselink").overlay();
   // Canvas
   var c = $("#tafel").get(0);
   $('#clear').click(function(){

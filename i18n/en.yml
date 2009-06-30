@@ -16,7 +16,7 @@ classify:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Recognizer'
   hittip: This is it!
-  choose: Not in the list? Choose from the symbol table!
+  more: Not in the list? Gimme more symbols!
   info: |
     ## What is this?
     
@@ -37,7 +37,7 @@ classify:
     ## I like this. How can I help?
     
     You could spare some time [training](/en/train) Detexify. You could also
-    look at the [source](http://github.com/danishkirel/detexify) and if you want to
+    look at the [source](http://github.com/kirel/detexify) and if you want to
     contribute you're welcome.
               
     ## Who created Detexify?

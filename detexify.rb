@@ -239,8 +239,10 @@ module Detexify
         neighbours[sample.command] ||= 0
         neighbours[sample.command] += 1
       end
+      # we are adding everything that is not in the nearest list with LARGE distance
+      missing = symbols - nearest.keys
       return [neighbours.map { |command, num| { :tex => command, :score => num } }.sort_by { |h| -h[:score] },
-              nearest.map { |command, dist| { :tex => command, :score => dist} }.sort_by{ |h| h[:score] }]
+              nearest.map { |command, dist| { :tex => command, :score => dist } }.sort_by{ |h| h[:score] } + missing.map { |command| { :tex => command, :score => 999999} } ]
     end
     
     def distance x, y

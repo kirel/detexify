@@ -16,7 +16,7 @@ classify:
   title: Detexify - Latex Symbolerkennung
   header: 'Detexify - Eine Tafel, die <img alt="tex:\LaTeX">-Symbole erkennt...'
   hittip: Das ist es!
-  choose: Nicht dabei? In der Tabelle suchen!
+  more: Nicht dabei? Gib mir mehr Symbole!
   info: |
     ## Was ist das hier?
     
@@ -37,7 +37,7 @@ classify:
     ## Ich find das toll! Kann ich helfen?
     
     Ja. Du kannst dir etwas Zeit nehmen Detexify zu [trainieren](/de/train). Du kannst
-    dir auch den [Sourcecode](http://github.com/danishkirel/detexify) ansehen und wenn du denkst
+    dir auch den [Sourcecode](http://github.com/kirel/detexify) ansehen und wenn du denkst
     etwas beitragen zu können, dann nur zu!
               
     ## Wer steckt hinter Detexify?
