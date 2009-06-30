@@ -221,6 +221,7 @@ module Detexify
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type)
       # reload
+      @all << sample
     end
   
     # returns [{ :command => "foo", :score => "100", }]

@@ -58,7 +58,6 @@ post '/train' do
   # TODO sanity check in command list
   if strokes && !strokes.empty? && !strokes.first.empty?
     classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
-    classifier.reload
   end
   # get new tex and build json response
   # TODO unless I don't want one
