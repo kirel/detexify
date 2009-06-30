@@ -47,7 +47,7 @@ get '/:locale/symbols' do
 end
 
 post '/train' do
-  halt 401, "I want tex!" unless params[:tex]
+  halt 401, "I want tex!" unless params[:tex] && classifier.symbols.include?(params[:tex])
   uri = URI.parse params[:url]
   strokes = JSON params[:strokes]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
@@ -60,6 +60,7 @@ post '/train' do
     classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
   end
   # get new tex and build json response
+  # TODO unless I don't want one
   tex = classifier.gimme_tex
   samples = classifier.count_samples(@tex)
   JSON :tex => tex, :samples => samples

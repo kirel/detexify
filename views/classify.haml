@@ -43,6 +43,18 @@
               %th= i18n.symbol
               %th= i18n.score
           %tbody#hitlist
+        %a#chooselink{:href => '#', :rel => '#choose'}= i18n.classify.choose
+      
+      #choose.overlay
+        %h1 Foo
+        %table.symbols
+          %thead
+            %tr
+              %th= i18n.command
+              %th= i18n.symbol
+              %th= i18n.patterns
+          %tbody#symbollist
+      
       #info
         :markdown
           #{i18n.classify.info}

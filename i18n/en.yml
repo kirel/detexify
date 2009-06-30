@@ -16,6 +16,7 @@ classify:
   title: Detexify - Latex Symbol Recognition
   header: 'Detexify - <img alt="tex:\LaTeX">-Symbol Recognizer'
   hittip: This is it!
+  choose: Not in the list? Choose from the symbol table!
   info: |
     ## What is this?
     

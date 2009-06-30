@@ -44,7 +44,8 @@ $(function(){
       }
     }, 'json');
   }
-    
+  
+  $("#chooselink").overlay();
   // Canvas
   var c = $("#tafel").get(0);
   $('#clear').click(function(){
