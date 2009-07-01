@@ -249,16 +249,16 @@
 # Math mode accents
 # TODO with every char!
 # IDEA preprocess \hat{} -> \hat{a}, \hat{b}, etc
-\hat{}
-\acute{}
-\bar{}
-\dot{}
-\breve{}
-\check{}
-\grave{}
-\vec{}
-\ddot{}
-\tilde{}
+# \hat{}
+# \acute{}
+# \bar{}
+# \dot{}
+# \breve{}
+# \check{}
+# \grave{}
+# \vec{}
+# \ddot{}
+# \tilde{}
 # Some other constructions
 # \widetilde{abc}
 # \widehat{abc}
