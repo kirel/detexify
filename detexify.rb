@@ -190,7 +190,6 @@ module Detexify
     
     def gimme_tex
       # TODO refoactor so that it is prettier
-      # reload # FIXME this is slow!
       cmds = symbols
       cmdh = {}
       cmds.each do |cmd|
@@ -220,7 +219,6 @@ module Detexify
       sample = @samples.new(:command => tex, :feature_vector => f.to_a, :strokes => strokes)
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type)
-      # reload
       @all << sample
     end
   
