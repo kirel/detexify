@@ -150,13 +150,13 @@ module Detexify
   
     def initialize
       @samples = Sample
-      @all = reload
+      # all = reload # doing this lazily
     end
     
     # This is expensive
     # TODO load only { Vector => command } Hash (via CoucDB map)
-    def reload
-      @all = @samples.all.select { |s| symbols.member? s.command }
+    def samples
+      @all ||= @samples.all.select { |s| symbols.member? s.command }
     end
     
     def symbols
@@ -182,7 +182,7 @@ module Detexify
       symbols.each do |sym|
         h[sym] = 0
       end
-      @all.each do |s|
+      samples.each do |s|
         h[s.command] += 1
       end
       h
@@ -195,7 +195,7 @@ module Detexify
       cmds.each do |cmd|
         cmdh[cmd] = 0
       end
-      @all.each do |sample|
+      samples.each do |sample|
         if cmdh[sample.command]
           cmdh[sample.command] += 1
         else
@@ -206,8 +206,8 @@ module Detexify
     end
     
     def count_samples tex
-      #@all.count { |s| s.command == tex }
-      @all.select { |s| s.command == tex }.size
+      #samples.count { |s| s.command == tex }
+      samples.select { |s| s.command == tex }.size
     end
   
     # train the classifier by adding io to symbol class tex
@@ -219,7 +219,7 @@ module Detexify
       sample = @samples.new(:command => tex, :feature_vector => f.to_a, :strokes => strokes)
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type)
-      @all << sample
+      samples << sample
     end
   
     # returns [{ :command => "foo", :score => "100", }]
@@ -228,7 +228,7 @@ module Detexify
       # use nearest neighbour classification
       # sort by distance and find minimal distance for each command
       nearest = {}
-      all = @all.sort_by do |sample|
+      all = samples.sort_by do |sample|
         d = distance(f, Vector.elements(sample.feature_vector))
         nearest[sample.command] = d if !nearest[sample.command] || nearest[sample.command] > d
         d
