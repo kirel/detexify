@@ -1,5 +1,5 @@
 mattetti-couchrest --version '>= 0.29' --source gems.github.com
-danishkirel-data-uri --source gems.github.com
+kirel-data-uri --source gems.github.com
 haml
 bluecloth
 sinatra-r18n
