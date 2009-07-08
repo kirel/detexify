@@ -1,5 +1,4 @@
 require 'couchrest'
-require 'extended_enumerable'
 require 'matrix'
 require 'math'
 require 'preprocessors'
@@ -253,8 +252,6 @@ module Detexify
     
     def regenerate_features
       puts "regenerating features"
-      # FIXME see extended_enumerable.rb
-      #@samples.each do |s|
       @samples.all.each do |s|
         f = extract_features(s.source, s.strokes)
         puts f.inspect
