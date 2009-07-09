@@ -1,0 +1,160 @@
+# Table 2: Predeﬁned LATEX 2ε Text-mode Commands
+- \textasciicircum
+- \textless
+- \textasciitilde
+- \textordfeminine
+- \textasteriskcentered
+- \textordmasculine
+- \textbackslash
+- \textparagraph
+- \textbar
+- \textperiodcentered
+- \textbraceleft
+- \textquestiondown
+- \textbraceright
+- \textquotedblleft
+- \textbullet
+- \textquotedblright
+- \textcopyright
+- \textquoteleft
+- \textdagger
+- \textquoteright
+- \textdaggerdbl
+- \textregistered
+- \textdollar
+- \textsection
+- \textellipsis
+- \textsterling
+- \textemdash
+- \texttrademark
+- \textendash
+- \textunderscore
+- \textexclamdown
+- \textvisiblespace
+- \textgreater
+# Table 3: LATEX 2ε Commands Deﬁned to Work in Both Math and Text Mode
+- bothmodes:
+  - \$
+  - \_
+  - \ddag 
+  - \{ 
+  - \P 
+  - \copyright
+  - \dots
+  - \} 
+  - \S 
+  - \dag 
+  - \pounds
+# Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
+- package: amssymb
+  bothmodes:
+    - \checkmark
+    - \circledR
+    - \maltese
+# Table 5: Non-ASCII Letters (Excluding Accented Letters) 
+- \aa
+- \L
+- \o
+- \ss
+- \AA
+- \l
+- \O
+- \SS
+- \AE
+- \OE
+- \ae
+- \oe
+- fontenc: T1
+  textmode:
+    - \DH
+    - \dh
+    - \DJ
+    - \dj
+    - \NG
+    - \ng
+    - \TH
+    - \th
+# Table 6: Letters Used to Typeset African Languages 
+- fontenc: T4
+  textmode:
+    - \B{D}
+    - \m{c}
+    - \m{f}
+    - \m{k}
+    - \M{t}
+    - \m{Z}
+    - \B{d}
+    - \m{D}
+    - \m{F}
+    - \m{N}
+    - \M{T}
+    - \T{E}
+    - \B{H}
+    - \M{d}
+    - \m{G}
+    - \m{n}
+    - \m{t}
+    - \T{e}
+    - \B{h}
+    - \M{D}
+    - \m{g}
+    - \m{o}
+    - \m{T}
+    - \T{O}
+    - \B{t}
+    - \m{d}
+    - \m{I}
+    - \m{O}
+    - \m{u}
+    - \T{o}
+    - \B{T}
+    - \m{E}
+    - \m{i}
+    - \m{P}
+    - \m{U}
+    - \m{b}
+    - \m{e}
+    - \m{J}
+    - \m{p}
+    - \m{Y}
+    - \m{B}
+    - \M{E}
+    - \m{j}
+    - \m{s}
+    - \m{y}
+    - \m{C}
+    - \M{e}
+    - \m{K}
+    - \m{S}
+    - \m{z}
+# Table 7: Letters Used to Typeset Vietnamese
+# TODO: get vntex
+# - package: vntex
+#   fontenc: T5
+#   symbols:
+#     - \OHORN
+#     - \ohorn
+#     - \UHORN
+#     - \uhorn
+# Table 8: Punctuation Marks Not Found in OT1
+- fontenc: T1
+  textmode:
+    - \guillemotleft
+    - \guilsinglleft
+    - \quotedblbase
+    - \textquotedbl
+    - \guillemotright
+    - \guilsinglright
+    - \quotesinglbase
+# more
+- mathmode:
+    - \alpha
+- package: textcomp
+  textmode:
+    - \textlira
+- package: marvosym
+  textmode:
+    - \Denarius
+- package: wasysym
+  textmode:
+    - \cent
