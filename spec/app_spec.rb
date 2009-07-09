@@ -10,5 +10,8 @@ describe 'The Sinatra classifier' do
 
   it "classifies"
   
-  it "can train"
+  it "trains"
+  
+  it "lists symbols as json"
+  
 end
