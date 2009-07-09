@@ -9,9 +9,8 @@ describe Detexify::Sample do
     @strokes = [[{'x'=>1,'y'=>1}]]
   end
   
-  it "can be created and found thereafter" do
-    sample = Detexify::Sample.new '_id' => @symbol.id, :strokes => @strokes, :feature_vector => []
-    sample.create
-    Detexify::Sample.get(@symbol.id).should === sample
+  it "can be created" do
+    sample = Detexify::Sample.new :strokes => @strokes, :feature_vector => [], :symbol_id => @symbol.id
+    lambda { sample.create! }.should_not raise_error     
   end
 end

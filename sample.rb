@@ -5,11 +5,16 @@ module Detexify
     use_database CouchRest.database!(DB)
     property :feature_vector
     property :strokes
+    property :symbol_id
     
-    timestamps!
+    #timestamps!
                           
     def source
       fetch_attachment 'source'
+    end
+    
+    def symbol
+      Latex::Symbol[symbol_id]
     end
     
     def ===(other)

@@ -1,6 +1,7 @@
 module Latex
 
   class Symbol
+        
     #:nodoc:
     A = [:command, :package, :fontenc, :mathmode, :textmode]
     
@@ -22,6 +23,10 @@ module Latex
       send k if A.include?(k) || k == :id
     end
     
+    # def ==(other)
+    #   id == other.id
+    # end
+    
     def to_s
       "#{command} (#{package || 'latex2e'}, #{fontenc || 'OT1'})"
     end
@@ -32,13 +37,13 @@ module Latex
       h[:id] = self[:id]
       h
     end
-            
+    
     symbols = File.open( File.join(File.expand_path(File.dirname(__FILE__)),'symbols.yaml') ) { |f| YAML::load( f ) }
 
     List = symbols.map do |s|
       case s
       when String
-        new :command => s
+        new(:command => s)
       when Hash
         { 
           'textmode' => { :textmode => true, :mathmode => false},
@@ -53,5 +58,10 @@ module Latex
         end.compact # remove nil elements    
       end
     end.flatten    
+    
+    def self.[](id)
+      List.find { |symbol| symbol.id == id }
+    end
+            
   end
 end
