@@ -1,9 +1,9 @@
 require File.join(File.expand_path(File.dirname(__FILE__)), '../extractors')
 
-describe Detexify::Online::Extractors::BoundingBox do
+describe Detexify::Extractors::Strokes::BoundingBox do
   
   before do
-    @ex = Detexify::Online::Extractors::BoundingBox.new
+    @ex = Detexify::Extractors::Strokes::BoundingBox.new
   end
   
   it "should calculate the bounding box of one stroke" do
@@ -23,14 +23,14 @@ describe Detexify::Online::Extractors::BoundingBox do
     
 end
 
-describe Detexify::Online::Extractors::DirectionalHistogramFeatures do
+describe Detexify::Extractors::Strokes::DirectionalHistogramFeatures do
     
 end
 
-describe Detexify::Online::Extractors::PointDensity do
+describe Detexify::Extractors::Strokes::PointDensity do
   
   before do
-    @ex = Detexify::Online::Extractors::PointDensity.new({'x' => (0..1), 'y' => (0..1) }, {'x' => (1..2), 'y' => (1..2) })
+    @ex = Detexify::Extractors::Strokes::PointDensity.new({'x' => (0..1), 'y' => (0..1) }, {'x' => (1..2), 'y' => (1..2) })
   end
   
   it "should calculate the point density" do

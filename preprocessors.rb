@@ -3,16 +3,16 @@ require 'math'
 
 module Detexify
 
-  module Online
+  module Preprocessors
 
-    module Preprocessors
-      
+    module Strokes
+
       # TODO class FitInside
       #   DEFAULT_OPTIONS = { :x => 0.0..1.0, :y => 0.0..1.0 }
       #   def process strokes
-      
+
       # TODO class LineDensity 
-      
+
       # TODO Tests needed!
       class EquidistantPoints
 
@@ -53,8 +53,8 @@ module Detexify
 
       end # class EquidistantPoints
 
-    end # module Preprocessors
+    end # module Strokes
 
-  end # module Online
+  end # module Preprocessors
 
 end

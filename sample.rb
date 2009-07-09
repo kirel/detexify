@@ -16,11 +16,7 @@ module Detexify
     def symbol
       Latex::Symbol[symbol_id]
     end
-    
-    def ===(other)
-      self.rev === other.rev && self.id === other.id
-    end
-    
+        
   end
 
 end
