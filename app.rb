@@ -34,7 +34,7 @@ post '/train' do
     halt 403, "Strokes scrambled"
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
-    CLASSIFIER.train params[:id], io, strokes
+    CLASSIFIER.train params[:id], strokes, io
   else
     halt 403, "These strokes look suspicious"
   end
@@ -51,6 +51,6 @@ post '/classify' do
     halt 401, "Only HTTP, FTP or Data!"
   end
   io = uri.open
-  best, all = CLASSIFIER.classify io, strokes  
+  best, all = CLASSIFIER.classify strokes, io
   JSON :best => best, :all => all
 end

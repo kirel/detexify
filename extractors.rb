@@ -1,5 +1,5 @@
-require 'matrix'
 require 'math'
+require 'matrix'
 require 'preprocessors'
 
 module Detexify
@@ -153,7 +153,7 @@ module Detexify
           # - number of strokes
           extractors << Proc.new { |s| (s.size*10).to_f }
           # TODO add more features
-          return Vector.elements(extractors.map { |e| e.call(strokes) }.flatten)
+          return extractors.map { |e| e.call(strokes) }.flatten
         end
 
       end # class OnlineFeatures

@@ -46,7 +46,7 @@ module Detexify
     end
   
     # train the classifier
-    def train id, io, strokes
+    def train id, strokes, io
       # TODO reject illegal input e.g. empty strokes
       # TODO offload feature extraction to a job queue
       f = extract_features io.read, strokes
@@ -57,13 +57,13 @@ module Detexify
       samples << sample
     end
   
-    def classify io, strokes # TODO modules KNN, Mean, etc. for different classifier types? 
+    def classify strokes, io # TODO modules KNN, Mean, etc. for different classifier types? 
       f = extract_features io.read, strokes
       # use nearest neighbour classification
       # sort by distance and find minimal distance for each command
       nearest = {}
       all = samples.sort_by do |sample|
-        d = distance(f, Vector.elements(sample.feature_vector))
+        d = distance(Vector.elements(f), Vector.elements(sample.feature_vector))
         nearest[sample.symbol_id] = d if !nearest[sample.symbol_id] || nearest[sample.symbol_id] > d
         d
       end
@@ -91,7 +91,7 @@ module Detexify
       Sample.all.each do |s|
         f = extract_features(s.source, s.strokes)
         puts f.inspect
-        s.feature_vector = f.to_a
+        s.feature_vector = f
         s.save
       end
       puts "done."
@@ -101,7 +101,7 @@ module Detexify
       features = []
       features << @stroke_extractor.call(strokes) if @stroke_extractor
       features << @data_extractor.call(data) if @data_extractor
-      Vector.elements(features)
+      features
     end
         
   end
