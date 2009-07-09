@@ -27,7 +27,7 @@ describe 'The Sinatra classifier' do
     sample.create!
   end
 
-  it "classifies" do
+  it "classifies a wellformed request" do
     post '/classify', :url => @uri, :strokes => JSON(@strokes)
     last_response.should be_ok
     # verify structure of response
@@ -46,13 +46,40 @@ describe 'The Sinatra classifier' do
     end
   end
   
-  it "trains" do
+  it "trains a wellformed request" do
     post '/train', {:id => @symbol.id, :url => @uri, :strokes => JSON(@strokes)}
-    puts last_response.body
     last_response.should be_ok
   end
   
-  it "won't train illegal ids"
+  it "won't train illegal ids" do
+    post '/train', {:id => 'bullshit', :url => @uri, :strokes => JSON(@strokes)}
+    last_response.status.should == 403
+  end
+
+  it "won't train without strokes" do
+    post '/train', {:id => @symbol.id, :url => @uri}
+    last_response.status.should == 403
+  end
+
+  it "won't train malformed strokes" do
+    post '/train', {:id => @symbol.id, :url => @uri, :strokes => 'malformed'}
+    last_response.status.should == 403
+  end
+
+  it "won't train without url" do
+    post '/train', {:id => @symbol.id, :strokes => JSON(@strokes)}
+    last_response.status.should == 403
+  end
+
+  it "won't train malformed url" do
+    post '/train', {:id => @symbol.id, :url => 'malformed', :strokes => JSON(@strokes)}
+    last_response.status.should == 403
+  end
+
+  it "won't train unreachable url" do
+    post '/train', {:id => @symbol.id, :url => 'http://un.reach.able/url', :strokes => JSON(@strokes)}
+    last_response.status.should == 403
+  end
   
   it "lists symbols as json" do
     get '/symbols'
