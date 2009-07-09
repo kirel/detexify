@@ -1,5 +1,5 @@
 require 'spec/rake/spectask'
-require 'classifier'
+require 'app'
 require 'storage'
 
 task :default => [:spec]
@@ -19,8 +19,7 @@ namespace :features do
 
   desc "regenerate all feature vectors"
   task :regenerate do
-    c = Detexify::Classifier.new(Detexify::Extractors::Strokes::Features.new, nil)
-    c.regenerate_features
+    CLASSIFIER.regenerate_features
   end
   
 end
