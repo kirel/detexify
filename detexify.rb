@@ -3,69 +3,14 @@ require 'matrix'
 require 'math'
 require 'preprocessors'
 require 'extractors'
-require 'image_moments'
-require 'RMagick'
+require 'symbols'
 
 module Detexify
     
-  class Sample < CouchRest::ExtendedDocument
-    dburl = ENV['COUCH'] || "http://127.0.0.1:5984/samples"
-    use_database CouchRest.database!(dburl)
-    property :command
-    property :feature_vector
-    property :strokes
-    
-    timestamps!
-                          
-    def source
-      fetch_attachment 'source'
-    end
-    
-  end
-
   class Classifier
     
     module Features
-      
-      module Hu
-        extend ImageMoments
-        
-        module_function
-        
-        def extract data
-          h = img2hu(data2img(data))
-        end
-        
-        def data2img data
-          img = Magick::Image::from_blob(data).first
-          puts img.inspect
-          puts "-"*80
-          puts "got image"
-          puts "  Format: #{img.format}"
-          puts "  Geometry: #{img.columns}x#{img.rows}"
-          puts "  Depth: #{img.depth} bits-per-pixel"
-          puts "  Colors: #{img.number_colors}"
-          puts "  Filesize: #{img.filesize}"
-          puts "-"*80
-          img
-        end
-
-        def img2hu img
-          puts "-"*80
-          puts "computing hu moments"
-          # FIXME next statement uses opacity which is VERY STRANGE but it only works that way
-          a = (0..(img.rows-1)).collect { |n| img.get_pixels(0,n,img.columns,1).collect { |p| p.opacity } }
-          m = Matrix[*a]
-          puts "panic!!!!!! zero matrix" if m == Matrix.zero(m.column_size)
-          h = hu_vector(m, 0..(m.column_size-1), 0..(m.row_size-1) )
-          puts "hu moments"
-          puts "  #{h.inspect}"
-          puts "-"*80
-          h
-        end
-        
-      end
-      
+            
       # extract online fetures
       module Online
         
