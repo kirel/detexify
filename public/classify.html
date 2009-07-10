@@ -13,7 +13,7 @@
     <script type='text/javascript' src="js/classify.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <body id="classify">
+  <body class="classify">
     <div id="everything">
       <h1>Detexify</h1>
       <ul class="nav">
@@ -22,17 +22,19 @@
       </ul>    
       
       <div id="canvasarea">
+        <div id="canvascontainer">
         <canvas id="tafel" width="400" height="400">
           Your browser must support the &lt;canvas&gt; element in order
           to use this site.
         </canvas>
+        <div id="canvasspinner" class="spinner">
+          <img alt='Loading...' src='/images/spinner.gif'>
+        </div>
+        </div>
         <div id="canvascontrols">
           <a id="clear" href='#'>clear</a>
         </div>
         <div id="canvaserror">This canvas is fubar :(</div>
-        <div id="canvasspinner" class="spinner">
-          <img alt='Loading...' src='/images/spinner.gif'>
-        </div>
       </div>
 
       <div id="infoarea">

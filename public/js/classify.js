@@ -21,7 +21,7 @@ $(function(){
             .click(function(){
               $(this).tooltip(0).hide();
               $('#canvasspinner').show('scale');            
-              train(this.alt.substring(7), canvas, function(){ $('#canvasspinner').hide('scale'); alert('Thanks!'); }); return false;
+              train($(this).attr('alt').substring(7), canvas, function(){ $('#canvasspinner').hide('scale'); alert('Thanks!'); }); return false;
               });
         }
         setuptraining();

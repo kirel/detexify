@@ -32,4 +32,29 @@ $(function(){
     $('#spinner').hide();
     });
 
+    // wire the canvas
+      
+  // Canvas
+  var c = $("#tafel").get(0);
+  canvassify(c);
+  // Train if train button pressed
+  var trainClicked = function() {
+    // get the image from the previous li
+    img = $(this).closest("li").prev().find('img');
+    $(img).tooltip(0).hide();
+    $('#canvasspinner').show('scale');            
+    train(img.attr('alt').substring(7), c, function(){ $('#canvasspinner').hide('scale'); alert('Thanks!'); return false; });
+    // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
+    c.clear();
+    // c.block();
+    return false;
+  }
+  $('#train').click(trainClicked);
+  $('#clear').click(function(){
+    c.clear();
+    return false;
+  });
+
+  $("#canvaserror").hide();  
+
   });
