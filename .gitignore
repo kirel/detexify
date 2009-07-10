@@ -2,3 +2,5 @@
 .svn
 *~
 /spec/tmp
+/coverage
+/tmp
