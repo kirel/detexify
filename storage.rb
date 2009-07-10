@@ -24,23 +24,23 @@ module Latex
     \\end{document}
     LATEX
 
-    INDEX = ERB.new <<-HTML.gsub(/^  /,'')
-    <html>
-    <body>
-      <h1>Symbole</h1>
-      <table>
-        <% for s in @symbols %>
-        <tr>
-          <td><%= s.command %></td><td><img src='<%= s.id %>.png'></td>
-        </tr>
-        <% end %>
-      </table>
-    </body>
-    </html>
-    HTML
+    # INDEX = ERB.new <<-HTML.gsub(/^  /,'')
+    # <html>
+    # <body>
+    #   <h1>Symbole</h1>
+    #   <table>
+    #     <% for s in @symbols %>
+    #     <tr>
+    #       <td><%= s.command %></td><td><img src='<%= s.id %>.png'></td>
+    #     </tr>
+    #     <% end %>
+    #   </table>
+    # </body>
+    # </html>
+    # HTML
 
     TMP = File.join(File.expand_path(File.dirname(__FILE__)),'tmp')
-    OUT = File.join(File.expand_path(File.dirname(__FILE__)),'out')
+    OUT = File.join(File.expand_path(File.dirname(__FILE__)), 'public', 'images', 'symbols')
 
     module_function
 
@@ -77,9 +77,9 @@ module Latex
       dpi = ENV['DPI'] || 600
       gamma = ENV['GAMMA'] || 1
 
-      L.debug 'Creating image...'
+      L.debug "Creating image... #{file}.png"
       # TODO check collisions
-      system("dvipng -bg Transparent -T tight -v -D #{dpi} --gamma #{gamma} #{dvi} -o #{file}.png")
+      system("dvipng -bg Transparent -T tight -v -D #{dpi} --gamma #{gamma} #{dvi} -o #{file}.png >/dev/null")
 
       File.delete(dvi)
     end
@@ -90,14 +90,14 @@ module Latex
       end
     end
 
-    def index
-      prepare
-      L.debug 'Creating html index...'
-      File.new(File.join(OUT, 'index.html'), 'w+') do |f|
-        @symbols = Latex::Symbol::List
-        f.puts INDEX.result(binding)        
-      end
-    end
+    # def index
+    #   prepare
+    #   L.debug 'Creating html index...'
+    #   File.new(File.join(OUT, 'index.html'), 'w+') do |f|
+    #     @symbols = Latex::Symbol::List
+    #     f.puts INDEX.result(binding)        
+    #   end
+    # end
 
     private
     

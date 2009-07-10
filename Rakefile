@@ -9,10 +9,13 @@ Spec::Rake::SpecTask.new do |t|
   t.rcov = true
 end
 
-desc "create images from symbols.yaml"
-task :create do
-   Latex::Storage::create_all
-   Latex::Storage::index
+namespace :images do
+
+  desc "create images from symbols.yaml"
+  task :create do
+    Latex::Storage::create_all
+  end
+
 end
 
 namespace :features do
@@ -21,5 +24,5 @@ namespace :features do
   task :regenerate do
     CLASSIFIER.regenerate_features
   end
-  
+
 end
