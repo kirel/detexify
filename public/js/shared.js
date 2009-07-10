@@ -48,8 +48,8 @@ function populateSymbolList(symbols) {
       info += '<br><span class="texmode">textmode & mathmode</span>';
     }
     $('#symbols').append(
-      '<li><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
-      '<div class="info">'+info+'</div></li>'
+      '<li><div class="symbolsentry"><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
+      '<div class="info">'+info+'</div></div></li>'
       );
   });
   latex.init();

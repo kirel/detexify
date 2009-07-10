@@ -95,12 +95,15 @@ ul.symbols {
 
 ul.symbols li {
   border-top: 1px dotted gray;
-  text-align: center;
+  display: block;
   clear: both;
   list-style: none;
   margin: 0;
   padding: 0;
-  height: 100%;
+  overflow: hidden;
+}
+
+ul.symbols li .symbolsentry {
   display: table;
 }
 
@@ -128,6 +131,19 @@ ul.symbols li .symbol img {
 
 ul.symbols li:hover {
   background-color: #eee;
+}
+
+#trainingarea {
+  width: 400px;
+  margin: 10px auto;
+}
+
+#trainingarea, #trainingli {
+  display: none;
+}
+
+#trainingli:hover {
+  background-color: transparent;
 }
 
 ul.symbols li .info .fontenc, ul.symbols li .info .package, ul.symbols li .info .texmode {

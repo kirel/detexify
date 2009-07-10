@@ -4,8 +4,12 @@
     <title>Detexify symbol table</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script type='text/javascript' src="js/jquery-1.3.2.min.js"></script>
+    <script type='text/javascript' src="js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type='text/javascript' src="js/tools.tooltip-1.0.2.js"></script>
     <script type='text/javascript' src="js/jquery.md5.js"></script>
+    <script type='text/javascript' src="js/json2.js"></script>
     <script type='text/javascript' src="js/shared.js"></script>
+    <script type='text/javascript' src="js/canvassify.js"></script>
     <script type='text/javascript' src="js/symbols.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
@@ -26,6 +30,22 @@
       </span>
       <ul id="symbols" class="symbols">
       </ul>
+      <div id="trainingarea">
+        <canvas id="tafel" width="400" height="400">
+          Your browser must support the &lt;canvas&gt; element in order
+          to use this site.
+        </canvas>
+        <div id="canvascontrols">
+          <a id="clear" href='#'>clear</a>
+        </div>
+        <div id="canvaserror">This canvas is fubar :(</div>
+        <div id="canvasspinner" class="spinner">
+          <img alt='Loading...' src='/images/spinner.gif'>
+        </div>
+      </div>
+      <div id="traintip" class="tooltip">
+        Please <strong>click</strong> to train!
+      </div>
     </div>
   </body>
 </html>
