@@ -63,6 +63,7 @@ module Detexify
       # sort by distance and find minimal distance for each command
       nearest = {}
       all = samples.sort_by do |sample|
+        # FIXME catch exception Dimension mismatch here
         d = distance(Vector.elements(f), Vector.elements(sample.feature_vector))
         nearest[sample.symbol_id] = d if !nearest[sample.symbol_id] || nearest[sample.symbol_id] > d
         d
@@ -101,7 +102,7 @@ module Detexify
       features = []
       features << @stroke_extractor.call(strokes) if @stroke_extractor
       features << @data_extractor.call(data) if @data_extractor
-      features
+      features.flatten
     end
         
   end

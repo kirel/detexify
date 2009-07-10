@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Detexify symbol classifier</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type='text/javascript' src="js/jquery-1.3.2.min.js"></script>
+    <script type='text/javascript' src="js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type='text/javascript' src="js/tools.tooltip-1.0.2.js"></script>
+    <script type='text/javascript' src="js/jquery.md5.js"></script>
+    <script type='text/javascript' src="js/json2.js"></script>
+    <script type='text/javascript' src="js/shared.js"></script>
+    <script type='text/javascript' src="js/canvassify.js"></script>
+    <script type='text/javascript' src="js/classify.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body id="classify">
+    <div id="everything">
+      <h1>Detexify</h1>
+      <ul class="nav">
+        <li><a href="/classify.html">classify</a></li>
+        <li><a href="/symbols.html">symbols</a></li>
+      </ul>    
+      
+      <div id="canvasarea">
+        <canvas id="tafel" width="400" height="400">
+          Your browser must support the &lt;canvas&gt; element in order
+          to use this site.
+        </canvas>
+        <div id="canvascontrols">
+          <a id="clear" href='#'>clear</a>
+        </div>
+        <div id="canvaserror">This canvas is fubar :(</div>
+        <div id="canvasspinner" class="spinner">
+          <img alt='Loading...' src='/images/spinner.gif'>
+        </div>
+      </div>
+
+      <div id="infoarea">
+        <p>
+          Gotta write somethin'...
+        </p>
+      </div>
+      
+      <div id="hitarea">
+        <ul id="symbols" class="symbols">
+        </ul>
+        <div id="morearea">
+          The symbol is not in the list?
+          <a id="more" href='#'> i18n.classify.more</a>
+        </div>
+        <div id="traintip" class="tooltip">
+          Is this the right symbol? Please <strong>click</strong> to train!
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

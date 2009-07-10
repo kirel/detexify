@@ -13,7 +13,7 @@ latex.init = function () {
       // See http://xkr.us/articles/javascript/encode-compare/
       this.src = latex.assetHost + $.md5(id) + '.png';
       // Append TEX to the class of the IMG.
-      $(this).addClass('symbol');
+      //$(this).addClass('symbol');
     }
   });
 }
@@ -47,10 +47,17 @@ function populateSymbolList(symbols) {
       info += '<br><span class="texmode">textmode & mathmode</span>';
     }
     $('#symbols').append(
-      '<li class="tiptrigger"><img alt="symbol:'+symbol.id+'"><div class="info">'+info+'</div></li>'
+      '<li><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
+      '<div class="info">'+info+'</div></li>'
       );
   });
   latex.init();
 }
+
+// Train the symbol in canvas to id and call callback on return
+function train(id, canvas, callback) {
+  $.post("/train", { "id": id, "newtex": true, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, callback);
+}
+
 
 $(function(){latex.init()});
