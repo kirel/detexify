@@ -47,6 +47,9 @@ function populateSymbolList(symbols) {
     else if (symbol.textmode && symbol.mathmode) {
       info += '<br><span class="texmode">textmode & mathmode</span>';
     }
+    if (symbol.samples) {
+      info += '<br><span class="samples">Samples: '+symbol.samples+'</span><br>';
+    }
     $('#symbols').append(
       '<li><div class="symbolsentry"><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
       '<div class="info">'+info+'</div></div></li>'

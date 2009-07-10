@@ -7,7 +7,9 @@ require 'classifier.rb'
 
 CLASSIFIER = Detexify::Classifier.new(Detexify::Extractors::Strokes::Features.new, nil)
 
-# mabye get '/symbol'
+get '/' do
+  redirect '/classify.html'
+end
 
 get '/symbols' do
   symbols = CLASSIFIER.symbols.map { |s| s.to_hash }
@@ -15,8 +17,6 @@ get '/symbols' do
   sample_counts = CLASSIFIER.sample_counts
   JSON symbols.map { |symbol| symbol.update(:samples => sample_counts[symbol[:id]]) }
 end
-
-
 
 post '/train' do
   halt 403, "Illegal id" unless params[:id] && CLASSIFIER.symbol(params[:id])

@@ -12,15 +12,24 @@ body, td {
   position: relative;
 }
 
-#canvasarea a:link, #trainingarea a:link {
-	font-weight: bold;
-	font-size: 1.1em;
-}
-
 body.classify #canvasspinner, body.symbols #canvasspinner {
   position: absolute;
   top: 370px;
   left: 370px;
+}
+
+#canvascontrols #clear {
+  font-weight: bold;
+  font-size: 16px;
+  padding-left: 18px;
+  background: url(/images/delete.png) no-repeat;
+}
+
+#canvascontrols #train {
+  font-weight: bold;
+  font-size: 16px;
+  padding-left: 18px;
+  background: url(/images/add.png) no-repeat;
 }
 
 ul.nav {
@@ -47,7 +56,7 @@ h1 img {
   height:1.5em; margin-bottom:-.5em;
 }
 
-body.classify .infoarea
+body.classify #infoarea
 {
 	width: 402px;
 }
@@ -136,6 +145,10 @@ ul.symbols li:hover, ul.symbols li.active {
   background-color: #eee;
 }
 
+.samples {
+  font-size: .8em;
+}
+
 #trainingarea {
   width: 400px;
   margin: 10px auto;
@@ -147,6 +160,11 @@ ul.symbols li:hover, ul.symbols li.active {
 
 #trainingli:hover {
   background-color: transparent;
+}
+
+#adsense {
+  width: 468px;
+  margin: auto;
 }
 
 ul.symbols li .info .fontenc, ul.symbols li .info .package, ul.symbols li .info .texmode {
