@@ -4,7 +4,7 @@ body, td {
 	font-family: sans-serif;
 }
 
-#info h2 {
+#infoarea h2 {
 	font-size: 1.2em;
 }
 
@@ -47,8 +47,7 @@ h1 img {
   height:1.5em; margin-bottom:-.5em;
 }
 
-#classify #info,
-#train #info
+body.classify .infoarea
 {
 	width: 402px;
 }
@@ -58,10 +57,19 @@ h1 img {
 }
 
 #hitarea {
-	display: none;
 	position: absolute;
 	left: 460px;
 	top: 80px;
+}
+
+body.symbols #infoarea {
+  position: absolute;
+  top: 80px;
+  left: 560px;
+}
+
+#hitarea {
+  	display: none;
 }
 
 #hittip {
@@ -77,6 +85,10 @@ h1 img {
 canvas { border: 1px solid black; }
 div#spinner { display: none; }
 canvas#tafel { display: block; }
+
+body.symbols .infoarea {
+  
+}
 
 ul.symbols {
   width: 500px;
