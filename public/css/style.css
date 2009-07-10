@@ -48,7 +48,7 @@ code {
 
 #everything {
 	position: relative;
-	width: 1064px;
+	width: 964px;
 	margin: 0 auto;
 }
 
@@ -71,10 +71,6 @@ h1 img {
 	position: absolute;
 	left: 460px;
 	top: 80px;
-}
-
-#classify #choose {
-  display: none;
 }
 
 #hittip {
