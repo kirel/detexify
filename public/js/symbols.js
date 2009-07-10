@@ -12,16 +12,19 @@ $(function(){
       .tooltip({ tip: '#traintip' })
       .click(function(){
         $(this).tooltip(0).hide();
-        //$('#canvasspinner').show('scale');            
-        //train(this.alt.substring(7), canvas, function(){ $('#canvasspinner').hide('scale'); alert('Thanks!'); }); return false;
         if ($('#trainingli').is(":hidden")) {
+          $('#trainingli').prev().removeClass('active');
           $('#trainingli').insertAfter($(this).closest("li")).slideDown('slow');
+          $('#trainingli').prev().addClass('active');
         } else {
           var that = this;
+          $('#trainingli').prev().removeClass('active');
           $('#trainingli').slideUp('slow', function(){
             $(this).insertAfter($(that).closest("li")).slideDown('slow');
+            $('#trainingli').prev().addClass('active');
           });
         }
+        return false;
         });
     
     // push the canvas inside the symbol list

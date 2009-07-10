@@ -129,7 +129,7 @@ ul.symbols li .symbol img {
 	max-height: 100px;
 }
 
-ul.symbols li:hover {
+ul.symbols li:hover, ul.symbols li.active {
   background-color: #eee;
 }
 
