@@ -16,6 +16,8 @@ get '/symbols' do
   JSON symbols.map { |symbol| symbol.update(:samples => sample_counts[symbol[:id]]) }
 end
 
+
+
 post '/train' do
   halt 403, "Illegal id" unless params[:id] && CLASSIFIER.symbol(params[:id])
   halt 403, 'I want some payload' unless params[:strokes] && params[:url]
