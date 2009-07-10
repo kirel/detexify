@@ -19,6 +19,7 @@ latex.init = function () {
 }
 
 function populateSymbolList(symbols) {
+  $('#symbols').empty();
   jQuery.each(symbols, function() {
     var symbol;
     if (this.symbol) {
