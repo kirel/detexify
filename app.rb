@@ -3,81 +3,56 @@ require 'open-uri'
 require 'data-uri'
 require 'json'
 require 'sinatra'
-require 'sinatra/r18n'
-require 'haml'
+require 'classifier.rb' 
 
-load 'detexify.rb' 
-
-classifier = Detexify::Classifier.new
-
-enable :sessions
-
-# TODO url helper!
+CLASSIFIER = Detexify::Classifier.new(Detexify::Extractors::Strokes::Features.new, nil)
 
 get '/' do
-  # can i put this in a filter?
-  unless params[:locale]
-    if lang = request.env["HTTP_ACCEPT_LANGUAGE"]
-      lang = lang.split(",").map do |l|
-        l += ';q=1.0' unless l =~ /;q=\d+\.\d+$/
-        l.split(';q=')
-      end.first
-      params[:locale] = lang.first.split("-").first
-    else
-      params[:locale] = i18n.default
-    end
-  end
-  redirect "/#{params[:locale]}/classify"
+  redirect '/classify.html'
 end
 
-get '/:locale/classify' do
-  haml :classify
-end
-
-get '/:locale/train' do
-  @tex = classifier.gimme_tex
-  @samples = classifier.count_samples(@tex)
-  haml :train
-end
-
-get '/:locale/symbols' do
-  @tex = classifier.symbols
-  @count = classifier.count_hash
-  haml :symbols
+get '/symbols' do
+  symbols = CLASSIFIER.symbols.map { |s| s.to_hash }
+  # update with counts
+  sample_counts = CLASSIFIER.sample_counts
+  JSON symbols.map { |symbol| symbol.update(:samples => sample_counts[symbol[:id]]) }
 end
 
 post '/train' do
-  halt 401, "I want tex!" unless params[:tex] && classifier.symbols.include?(params[:tex])
-  uri = URI.parse params[:url]
-  strokes = JSON params[:strokes]
-  unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
-       halt 401, "Only HTTP, FTP or Data!"
+  halt 403, "Illegal id" unless params[:id] && CLASSIFIER.symbol(params[:id])
+  halt 403, 'I want some payload' unless params[:strokes] && params[:url]
+  begin
+    uri = URI.parse params[:url]
+    unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
+         raise "Only HTTP, FTP or Data!"
+    end
+    io = uri.open
+  rescue
+    halt 403, "Url scrambled"
   end
-  io = uri.open
-  
-  # TODO sanity check in command list
+  begin
+    strokes = JSON params[:strokes]
+  rescue
+    halt 403, "Strokes scrambled"
+  end
   if strokes && !strokes.empty? && !strokes.first.empty?
-    classifier.train params[:tex], io, strokes # if symbols.contain? params[:tex]
+    CLASSIFIER.train params[:id], strokes, io
+  else
+    halt 403, "These strokes look suspicious"
   end
-  # get new tex and build json response
-  # TODO unless I don't want one
-  if params[:newtex]
-    tex = classifier.gimme_tex
-    samples = classifier.count_samples(tex)
-    JSON :tex => tex, :samples => samples
-  end
+  # TODO sanity check in command list
+  halt 200
+  # TODO return new list of symbols and counts
 end
 
 post '/classify' do
-  uri = URI.parse params[:url]
+  halt 401, 'I want some payload' unless params[:strokes] && params[:url]
   strokes = JSON params[:strokes]
+  uri = URI.parse params[:url]
   unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
-       halt 401, "Only HTTP, FTP or Data!"
+    halt 401, "Only HTTP, FTP or Data!"
   end
   io = uri.open
-    
-  hits, all = classifier.classify io, strokes
-  
-  # sende { :url => url, :hits => [{:latex => latex, :score => score }, {:latex => latex, :score => score } ]  }
-  JSON :url => params[:url], :hits => hits, :all => all
+  best, all = CLASSIFIER.classify strokes, io
+  JSON :best => best, :all => all
 end

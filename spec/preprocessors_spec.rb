@@ -1,6 +1,6 @@
 require File.join(File.expand_path(File.dirname(__FILE__)), '../preprocessors')
 
-describe Detexify::Online::Preprocessors::EquidistantPoints do
+describe Detexify::Preprocessors::Strokes::EquidistantPoints do
   
   def distance p1, p2
     MyMath::euclidean_distance(Vector.elements(p1.values_at('x','y')), Vector.elements(p2.values_at('x','y')))
@@ -8,7 +8,7 @@ describe Detexify::Online::Preprocessors::EquidistantPoints do
   
   before do
     @distance = 0.01
-    @pre = Detexify::Online::Preprocessors::EquidistantPoints.new :distance => @distance
+    @pre = Detexify::Preprocessors::Strokes::EquidistantPoints.new :distance => @distance
     @stroke = [{'x'=>1,'y'=>1}, {'x'=>-1,'y'=>-3}, {'x'=>-1,'y'=>-1}]
   end
   

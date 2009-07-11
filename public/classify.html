@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Detexify symbol classifier</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type='text/javascript' src="js/jquery-1.3.2.min.js"></script>
+    <script type='text/javascript' src="js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type='text/javascript' src="js/tools.tooltip-1.0.2.js"></script>
+    <script type='text/javascript' src="js/jquery.md5.js"></script>
+    <script type='text/javascript' src="js/json2.js"></script>
+    <script type='text/javascript' src="js/shared.js"></script>
+    <script type='text/javascript' src="js/canvassify.js"></script>
+    <script type='text/javascript' src="js/classify.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body class="classify">
+    <div id="everything">
+      <h1>Detexify<sup>2</sup> - Latex symbol classifier</h1>
+      
+      <ul class="nav">
+        <li><a href="/classify.html">classify</a></li>
+        <li><a href="/symbols.html">symbols</a></li>
+      </ul>    
+      
+      <div id="canvasarea">
+        <img id="drawhere" alt="Draw here!" src="images/draw_here.png">
+        <div id="canvascontainer">
+        <canvas id="tafel" width="400" height="400">
+          Your browser must support the &lt;canvas&gt; element in order
+          to use this site.
+        </canvas>
+        <div id="canvasspinner" class="spinner">
+          <img alt='Loading...' src='/images/spinner.gif'>
+        </div>
+        </div>
+        <div id="canvascontrols">
+          <a id="clear" href='#'>clear</a>
+        </div>
+        <div id="canvaserror">This canvas is fubar :(</div>
+      </div>
+
+      <div id="infoarea">
+        <h2>What is this?</h2>
+        <p>
+          Anyone who works with LaTeX knows how time-consuming it can be
+          to find a symbol in
+          <a href="http://www.ctan.org/tex-archive/info/symbols/comprehensive/">symbols-a4.pdf</a>
+          that you just can't memorize. Detexify is an attempt to simplify this search.
+        </p>
+        <h2>Who does it work?</h2>
+        <p>
+          Just draw the symbol you are looking for into the square area above and look what happens!
+        </p>
+        <h2>My Symbol isn't found!</h2>
+        <p>
+          The symbol may not be trained enough
+          or it is not yet in the list of supported symbols.
+          In the first case you can do the training yourself.
+          In the second case just drop me a line (danishkirel@gmail.com)!
+        </p>
+        <h2>I like this. How can I help?</h2>
+        <p>
+          You could spare some time training Detexify. You could also
+          look at the source on <a href="http://github.com/kirel/detexify">GitHub</a>
+          and if you want to contribute you're welcome.
+        <p>
+        <h2>Who created Detexify?</h2>
+        <p>
+          Philipp Kühl had the initial idea and
+          <a href='http://kirelabs.org'>Daniel Kirsch</a> made it happen.
+        </p>
+      </div>
+      
+      <div id="hitarea">
+        <div id="adsense">
+        <script type="text/javascript"><!--
+        google_ad_client = "pub-7217292717360456";
+        /* in den Ergebnissen */
+        google_ad_slot = "0785038537";
+        google_ad_width = 468;
+        google_ad_height = 60;
+        //-->
+        </script>
+        <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+        </div>
+        <ul id="symbols" class="symbols">
+        </ul>
+        <div id="morearea">
+          The symbol is not in the list?
+          <a id="more" href='#'>Select from the complete list!</a>
+        </div>
+        <div id="traintip" class="tooltip">
+          Is this the right symbol? Please <strong>click</strong> to train!
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

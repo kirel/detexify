@@ -1,11 +1,12 @@
-require 'matrix'
 require 'math'
+require 'matrix'
+require 'preprocessors'
 
 module Detexify
 
-  module Online
+  module Extractors
 
-    module Extractors
+    module Strokes
 
       class BoundingBox
 
@@ -28,7 +29,7 @@ module Detexify
       end
 
       class PointDensity
-        
+
         def initialize *boxes # box = { 'x' => left..right, 'y' => bottom..top }
           @boxes = boxes
         end
@@ -85,8 +86,80 @@ module Detexify
 
       end # class DirectionalHistogramFeatures
 
-    end # module Extractors
+      class Features
 
-  end # module Online
+        def call strokes
+          strokes = strokes.map { |st| st.map { |p| p.dup } } # s.dup enough?
+          # preprocess strokes
+
+          # TODO chop off heads and tails
+          # strokes = strokes.map do |stroke|
+          #   Preprocessors::Chop.new(:points => 5, :degree => 180).process(stroke)            
+          # end
+
+          # TODO smooth out points (avarage over three points)
+          # strokes = strokes.map do |stroke|
+          #   Preprocessors::Smooth.new.process(stroke)            
+          # end
+
+          left, right, top, bottom = Detexify::Extractors::Strokes::BoundingBox.new.call(strokes)
+
+          # TODO push this into a preprocessor
+          # computations for next step
+          height = top - bottom
+          width = right - left
+          ratio = width/height
+          long, short = ratio > 1 ? [width, height] : [height, width]
+          offset =  if ratio > 1
+            { 'x' => 0.0 , 'y' => (1.0 - short/long)/2.0 }
+          else
+            { 'x' => (1.0 - short/long)/2.0 , 'y' => 0.0 }
+          end
+
+          # move left and bottom to zero, scale to fit and then center
+          strokes.each do |stroke|
+            stroke.each do |point|
+              point['x'] = ((point['x'] - left) / long) + offset['x']
+              point['y'] = ((point['y'] - bottom) / long) + offset['y']
+            end
+          end          
+
+          # convert to equidistant point distributon
+          strokes = strokes.map do |stroke|
+            Detexify::Preprocessors::Strokes::EquidistantPoints.new(:distance => 0.01).process(stroke)            
+          end
+
+          # FIXME I've lost the timestamps here. Dunno if I want to keep them
+
+          extractors = []
+          # extract features
+          # - directional histogram features
+          extractors << Detexify::Extractors::Strokes::DirectionalHistogramFeatures.new
+          # - start direction
+          # - end direction
+          # startdirection, enddirection = Extractors::StartEndDirection.new.process(strokes)
+          # - start/end position
+          # - point density
+          boxes = [
+            {'x' => (0...0.4), 'y' => (0..1)},
+            {'x' => (0.4...0.6), 'y' => (0..1)},
+            {'x' => (0.6..1), 'y' => (0..1)},
+            {'y' => (0...0.4), 'x' => (0..1)},
+            {'y' => (0.4...0.6), 'x' => (0..1)},
+            {'y' => (0.6..1), 'x' => (0..1)},
+          ]
+          extractors << Detexify::Extractors::Strokes::PointDensity.new(*boxes)
+          # - aspect ratio
+          # - number of strokes
+          extractors << Proc.new { |s| (s.size*10).to_f }
+          # TODO add more features
+          return extractors.map { |e| e.call(strokes) }.flatten
+        end
+
+      end # class OnlineFeatures
+
+    end # module Strokes
+
+  end # module Extractors
 
 end
