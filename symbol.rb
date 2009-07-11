@@ -7,7 +7,7 @@ module Latex
     
     attr_reader *A
     attr_reader :id
-    
+
     def initialize args = {}
       raise ArgumentError.new('You need at least a command for a LaTeX symbol.') unless args[:command]
       # defauls

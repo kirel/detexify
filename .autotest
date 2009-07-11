@@ -1,0 +1,12 @@
+Autotest.add_hook(:initialize) {|at|
+  at.add_exception %r{^\.git}  # ignore Version Control System
+  at.add_exception %r{^./tmp}  # ignore temp files, lest autotest will run again, and again...
+  #  at.clear_mappings         # take out the default (test/test*rb)
+  at.add_mapping(%r%^([^/]*)\.rb$%) { |_, m|
+      ["spec/#{m[1]}_spec.rb"]
+  }
+  at.add_mapping(%r{^.*\.yaml$}) {
+    at.files_matching(/^.*symbol_spec.rb$/)
+  }
+  nil
+}

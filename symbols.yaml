@@ -45,6 +45,7 @@
   - \S 
   - \dag 
   - \pounds
+  
 # Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
 - package: amssymb
   bothmodes:
