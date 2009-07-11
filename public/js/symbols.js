@@ -6,6 +6,15 @@ $(function(){
   // Canvas
   var c = $("#tafel").get(0);
   canvassify(c);
+  
+  function colorcode(num) {
+    var n = parseInt($(num).text());
+    if (n < 26) {
+      $(num).css('color','rgb('+(255-n*10)+','+(n*10)+',0)');
+    } else {
+      $(num).css('color','green');
+    }    
+  }
 
   $.getJSON("/symbols", function(json) {
     json.sort(function(a,b){ return (''+a.command).localeCompare(''+b.command); })
@@ -13,12 +22,7 @@ $(function(){
     latex.init();
     // color code training numbers
     var num = $('#symbols li .info .samples .number').each(function(){
-      var n = parseInt($(this).text());
-      if (n < 26) {
-        $(this).css('color','rgb('+(255-n*10)+','+(n*10)+',0)');
-      } else {
-        $(this).css('color','green');
-      }
+      colorcode(this);
       });
     // setup training
     $('#symbols li .symbol img')
@@ -56,9 +60,15 @@ $(function(){
   var trainClicked = function() {
     // get the image from the previous li
     img = $(this).closest("li").prev().find('img');
+    num = $(this).closest("li").prev().find('.info .samples .number');
     $(img).tooltip(0).hide();
     $('#canvasspinner').show('scale');            
-    train(img.attr('alt').substring(7), c, function(){ $('#canvasspinner').hide('scale'); alert('Thanks!'); return false; });
+    train(img.attr('alt').substring(7), c, function(){
+      num.text(parseInt(num.text())+1);
+      colorcode(num);
+      $('#canvasspinner').hide('scale');
+      alert('Thanks!');
+      });
     // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
     c.clear();
     // c.block();
