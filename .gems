@@ -1,5 +1,2 @@
 couchrest
 kirel-data-uri --source gems.github.com
-haml
-bluecloth
-sinatra-r18n
