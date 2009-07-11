@@ -45,7 +45,6 @@
   - \S 
   - \dag 
   - \pounds
-  
 # Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
 - package: amssymb
   bothmodes:
@@ -76,58 +75,58 @@
     - \TH
     - \th
 # Table 6: Letters Used to Typeset African Languages 
-- fontenc: T4
-  textmode:
-    - \B{D}
-    - \m{c}
-    - \m{f}
-    - \m{k}
-    - \M{t}
-    - \m{Z}
-    - \B{d}
-    - \m{D}
-    - \m{F}
-    - \m{N}
-    - \M{T}
-    - \T{E}
-    - \B{H}
-    - \M{d}
-    - \m{G}
-    - \m{n}
-    - \m{t}
-    - \T{e}
-    - \B{h}
-    - \M{D}
-    - \m{g}
-    - \m{o}
-    - \m{T}
-    - \T{O}
-    - \B{t}
-    - \m{d}
-    - \m{I}
-    - \m{O}
-    - \m{u}
-    - \T{o}
-    - \B{T}
-    - \m{E}
-    - \m{i}
-    - \m{P}
-    - \m{U}
-    - \m{b}
-    - \m{e}
-    - \m{J}
-    - \m{p}
-    - \m{Y}
-    - \m{B}
-    - \M{E}
-    - \m{j}
-    - \m{s}
-    - \m{y}
-    - \m{C}
-    - \M{e}
-    - \m{K}
-    - \m{S}
-    - \m{z}
+# - fontenc: T4
+#   textmode:
+#     - \B{D}
+#     - \m{c}
+#     - \m{f}
+#     - \m{k}
+#     - \M{t}
+#     - \m{Z}
+#     - \B{d}
+#     - \m{D}
+#     - \m{F}
+#     - \m{N}
+#     - \M{T}
+#     - \T{E}
+#     - \B{H}
+#     - \M{d}
+#     - \m{G}
+#     - \m{n}
+#     - \m{t}
+#     - \T{e}
+#     - \B{h}
+#     - \M{D}
+#     - \m{g}
+#     - \m{o}
+#     - \m{T}
+#     - \T{O}
+#     - \B{t}
+#     - \m{d}
+#     - \m{I}
+#     - \m{O}
+#     - \m{u}
+#     - \T{o}
+#     - \B{T}
+#     - \m{E}
+#     - \m{i}
+#     - \m{P}
+#     - \m{U}
+#     - \m{b}
+#     - \m{e}
+#     - \m{J}
+#     - \m{p}
+#     - \m{Y}
+#     - \m{B}
+#     - \M{E}
+#     - \m{j}
+#     - \m{s}
+#     - \m{y}
+#     - \m{C}
+#     - \M{e}
+#     - \m{K}
+#     - \m{S}
+#     - \m{z}
 # Table 7: Letters Used to Typeset Vietnamese
 # TODO: get vntex
 # - package: vntex
@@ -147,15 +146,862 @@
     - \guillemotright
     - \guilsinglright
     - \quotesinglbase
-# more
-- mathmode:
-    - \alpha
+    
+# Table 10: tipa Phonetic Symbols
+- package: tipa
+  textmode:
+    - \textbabygamma
+    - \textglotstop
+    - \textrtailn
+    - \textbarb
+    - \texthalflength
+    - \textrtailr
+    - \textbarc
+    - \texthardsign
+    - \textrtails
+    - \textbard
+    - \texthooktop
+    - \textrtailt
+    - \textbardotlessj
+    - \texthtb
+    - \textrtailz
+    - \textbarg
+    - \texthtbardotlessj
+    - \textrthook
+    - \textbarglotstop
+    - \texthtc
+    - \textsca
+    - \textbari
+    - \texthtd
+    - \textscb
+    - \textbarl
+    - \texthtg
+    - \textsce
+    - \textbaro
+    - \texthth
+    - \textscg
+    - \textbarrevglotstop
+    - \texththeng
+    - \textsch
+    - \textbaru
+    - \texthtk
+    - \textschwa
+    - \textbeltl
+    - \texthtp
+    - \textsci
+    - \textbeta
+    - \texthtq
+    - \textscj
+    - \textbullseye
+    - \texthtrtaild
+    - \textscl
+    - \textceltpal
+    - \texthtscg
+    - \textscn
+    - \textchi
+    - \texthtt
+    - \textscoelig
+    - \textcloseepsilon
+    - \texthvlig
+    - \textscomega
+    - \textcloseomega
+    - \textinvglotstop
+    - \textscr
+    - \textcloserevepsilon
+    - \textinvscr
+    - \textscripta
+    - \textcommatailz
+    - \textiota
+    - \textscriptg
+    - \textcorner
+    - \textlambda
+    - \textscriptv
+    - \textcrb
+    - \textlengthmark
+    - \textscu
+    - \textcrd
+    - \textlhookt
+    - \textscy
+    - \textcrg
+    - \textlhtlongi
+    - \textsecstress
+    - \textcrh
+    - \textlhtlongy
+    - \textsoftsign
+    - \textcrinvglotstop
+    - \textlonglegr
+    - \textstretchc
+    - \textcrlambda
+    - \textlptr
+    - \texttctclig
+    - \textcrtwo
+    - \textltailm
+    - \textteshlig
+    - \textctc
+    - \textltailn
+    - \texttheta
+    - \textctd
+    - \textltilde
+    - \textthorn
+    - \textctdctzlig
+    - \textlyoghlig
+    - \texttoneletterstem
+    - \textctesh
+    - \textObardotlessj
+    - \texttslig
+    - \textctj
+    - \textOlyoghlig
+    - \textturna
+    - \textctn
+    - \textomega
+    - \textturncelig
+    - \textctt
+    - \textopencorner
+    - \textturnh
+    - \textcttctclig
+    - \textopeno
+    - \textturnk
+    - \textctyogh
+    - \textpalhook
+    - \textturnlonglegr
+    - \textctz
+    - \textphi
+    - \textturnm
+    - \textdctzlig
+    - \textpipe
+    - \textturnmrleg
+    - \textdoublebaresh
+    - \textprimstress
+    - \textturnr
+    - \textdoublebarpipe
+    - \textraiseglotstop
+    - \textturnrrtail
+    - \textdoublebarslash
+    - \textraisevibyi
+    - \textturnscripta
+    - \textdoublepipe
+    - \textramshorns
+    - \textturnt
+    - \textdoublevertline
+    - \textrevapostrophe
+    - \textturnv
+    - \textdownstep
+    - \textreve
+    - \textturnw
+    - \textdyoghlig
+    - \textrevepsilon
+    - \textturny
+    - \textdzlig
+    - \textrevglotstop
+    - \textupsilon
+    - \textepsilon
+    - \textrevyogh
+    - \textupstep
+    - \textesh
+    - \textrhookrevepsilon
+    - \textvertline
+    - \textfishhookr
+    - \textrhookschwa
+    - \textvibyi
+    - \textg
+    - \textrhoticity
+    - \textvibyy
+    - \textgamma
+    - \textrptr
+    - \textwynn
+    - \textglobfall
+    - \textrtaild
+    - \textyogh
+    - \textglobrise
+    - \textrtaill
+# Table 11: tipx Phonetic Symbols 
+# - package: tipx
+#   textmode:
+#     - \textaolig
+#     - \texthtbardotlessjvar
+#     - \textrthooklong
+#     - \textbenttailyogh
+#     - \textinvomega
+#     - \textscaolig
+#     - \textbktailgamma
+#     - \textinvsca
+#     - \textscdelta
+#     - \textctinvglotstop
+#     - \textinvscripta
+#     - \textscf
+#     - \textctjvar
+#     - \textlfishhookrlig
+#     - \textsck
+#     - \textctstretchc
+#     - \textlhookfour
+#     - \textscm
+#     - \textctstretchcvar
+#     - \textlhookp
+#     - \textscp
+#     - \textctturnt
+#     - \textlhti
+#     - \textscq
+#     - \textdblig
+#     - \textlooptoprevesh
+#     - \textspleftarrow
+#     - \textdoublebarpipevar
+#     - \textnrleg
+#     - \textstretchcvar
+#     - \textdoublepipevar
+#     - \textObullseye
+#     - \textsubdoublearrow
+#     - \textdownfullarrow
+#     - \textpalhooklong
+#     - \textsubrightarrow
+#     - \textfemale
+#     - \textpalhookvar
+#     - \textthornvari
+#     - \textfrbarn
+#     - \textpipevar
+#     - \textthornvarii
+#     - \textfrhookd
+#     - \textqplig
+#     - \textthornvariii
+#     - \textfrhookdvar
+#     - \textrectangle
+#     - \textthornvariv
+#     - \textfrhookt
+#     - \textretractingvar
+#     - \textturnglotstop
+#     - \textfrtailgamma
+#     - \textrevscl
+#     - \textturnsck
+#     - \textglotstopvari
+#     - \textrevscr
+#     - \textturnscu
+#     - \textglotstopvarii
+#     - \textrhooka
+#     - \textturnthree
+#     - \textglotstopvariii
+#     - \textrhooke
+#     - \textturntwo
+#     - \textgrgamma
+#     - \textrhookepsilon
+#     - \textuncrfemale
+#     - \textheng
+#     - \textrhookopeno
+#     - \textupfullarrow
+#     - \texthmlig
+#     - \textrtailhth
+# Table 29: textcomp Currency Symbols
 - package: textcomp
   textmode:
+    - \textbaht
+    - \textdollar
+    - \textguarani
+    - \textwon
+    - \textcent
+    - \textdollaroldstyle
     - \textlira
+    - \textyen
+    - \textcentoldstyle
+    - \textdong
+    - \textnaira
+    - \textcolonmonetary
+    - \texteuro
+    - \textpeso
+    - \textcurrency
+    - \textflorin
+    - \textsterling
+# Table 30: marvosym Currency Symbols
 - package: marvosym
   textmode:
     - \Denarius
+    - \EUR
+    - \EURdig
+    - \EURtm
+    - \Pfund
+    - \Ecommerce
+    - \EURcr
+    - \EURhv
+    - \EyesDollar
+    - \Shilling
+# Table 31: wasysym Currency Symbols
 - package: wasysym
   textmode:
     - \cent
+    - \currency
+# Table 33: textcomp Legal Symbols
+- package: textcomp
+  textmode:
+    - \textcircledP
+    - \textcopyright
+    - \textservicemark
+    - \textcopyleft
+    - \textregistered
+    - \texttrademark
+# Table 36: Miscellaneous textcomp Symbols 
+    - \textasteriskcentered
+    - \textordfeminine
+    - \textbardbl
+    - \textordmasculine
+    - \textbigcircle
+    - \textparagraph
+    - \textblank
+    - \textperiodcentered
+    - \textbrokenbar
+    - \textpertenthousand
+    - \textbullet
+    - \textperthousand
+    - \textdagger
+    - \textpilcrow
+    - \textdaggerdbl
+    - \textquotesingle
+    - \textdblhyphen
+    - \textquotestraightbase
+    - \textdblhyphenchar
+    - \textquotestraightdblbase
+    - \textdiscount
+    - \textrecipe
+    - \textestimated
+    - \textreferencemark
+    - \textinterrobang
+    - \textsection
+    - \textinterrobangdown
+    - \textthreequartersemdash
+    - \textmusicalnote
+    - \texttildelow
+    - \textnumero
+    - \texttwelveudash
+    - \textopenbullet
+# Table 37: Miscellaneous wasysym Text-mode Symbols 
+- package: wasysym
+  textmode:
+    - \permil
+############################
+### Mathematical symbols ###
+############################
+# Table 38: Math-Mode Versions of Text Symbols
+- mathmode:
+    - \mathdollar
+    - \mathparagraph
+    - \mathsterling
+    - \mathellipsis
+    - \mathsection
+    - \mathunderscore
+# Table 40: Binary Operators 
+    - \amalg
+    - \cup
+    - \oplus
+    - \times
+    - \ast
+    - \dagger
+    - \oslash
+    - \triangleleft
+    - \bigcirc
+    - \ddagger
+    - \otimes
+    - \triangleright
+    - \bigtriangledown
+    - \diamond
+    - \pm
+    - \bigtriangleup
+    - \div
+    - \bullet
+    - \setminus
+    - \uplus
+    - \cap
+    - \mp
+    - \sqcap
+    - \vee
+    - \cdot
+    - \odot
+    - \sqcup
+    - \wedge
+    - \circ
+    - \ominus
+    - \star
+    - \wr
+# Table 41: AMS Binary Operators
+- package: amssymb
+  mathmode:
+    - \barwedge
+    - \circledcirc
+    - \intercal
+    - \boxdot
+    - \circleddash
+    - \leftthreetimes
+    - \boxminus
+    - \Cup
+    - \ltimes
+    - \boxplus
+    - \curlyvee
+    - \rightthreetimes
+    - \boxtimes
+    - \curlywedge
+    - \rtimes
+    - \Cap
+    - \divideontimes
+    - \smallsetminus
+    - \centerdot
+    - \dotplus
+    - \veebar
+    - \circledast
+    - \doublebarwedge
+# Table 43: wasysym Binary Operators 
+- package: wasysym
+  mathmode:
+    - \lhd
+    - \ocircle
+    - \RHD
+    - \unrhd
+    - \LHD
+    - \rhd
+    - \unlhd
+# Table 52: Variable-sized Math Operators
+- mathmode:
+    - \bigcap
+    - \bigotimes
+    - \bigwedge
+    - \prod
+    - \bigcup
+    - \bigsqcup
+    - \coprod
+    - \sum
+    - \bigodot
+    - \biguplus
+    - \int
+    - \bigoplus
+    - \bigvee
+    - \oint
+# Table 53: AMS Variable-sized Math Operators
+- package: amsmath
+  mathmode:
+    - \iint
+    - \iiint
+    - \iiiint
+    - \idotsint
+# Table 62: Binary Relations 
+- mathmode:
+    - \approx
+    - \equiv
+    - \perp
+    - \smile
+    - \asymp
+    - \frown
+    - \prec
+    - \succ
+    - \bowtie
+#    - \Join
+    - \preceq
+    - \succeq
+    - \cong
+    - \mid
+    - \propto
+    - \vdash
+    - \dashv
+    - \models
+    - \sim
+    - \doteq
+    - \parallel
+    - \simeq
+# Table 63: AMS Binary Relations
+- package: amssymb
+  mathmode:
+    - \approxeq
+    - \eqcirc
+    - \succapprox
+    - \backepsilon
+    - \fallingdotseq
+    - \succcurlyeq
+    - \backsim
+    - \multimap
+    - \succsim
+    - \backsimeq
+    - \pitchfork
+    - \therefore
+    - \because
+    - \precapprox
+    - \thickapprox
+    - \between
+    - \preccurlyeq
+    - \thicksim
+    - \Bumpeq
+    - \precsim
+    - \varpropto
+    - \bumpeq
+    - \risingdotseq
+    - \Vdash
+    - \circeq
+    - \shortmid
+    - \vDash
+    - \curlyeqprec
+    - \shortparallel
+    - \Vvdash
+    - \curlyeqsucc
+    - \smallfrown
+    - \doteqdot
+    - \smallsmile
+# Table 64: AMS Negated Binary Relations
+    - \ncong
+    - \nshortparallel
+    - \nVDash
+    - \nmid
+    - \nsim
+    - \precnapprox
+    - \nparallel
+    - \nsucc
+    - \precnsim
+    - \nprec
+    - \nsucceq
+    - \succnapprox
+    - \npreceq
+    - \nvDash
+    - \succnsim
+    - \nshortmid
+    - \nvdash
+# Table 78: Subset and Superset Relations 
+- mathmode:
+    - \sqsupseteq
+    - \supset
+    - \sqsubseteq
+    - \subset
+    - \supseteq
+    - \subseteq
+# Table 79: AMS Subset and Superset Relations
+- package: amssymb
+  mathmode:
+    - \nsubseteq
+    - \subseteqq
+    - \supsetneqq
+    - \nsupseteq
+    - \subsetneq
+    - \varsubsetneq
+    - \nsupseteqq
+    - \subsetneqq
+    - \varsubsetneqq
+    - \sqsubset
+    - \Supset
+    - \varsupsetneq
+    - \sqsupset
+    - \supseteqq
+    - \varsupsetneqq
+    - \Subset
+    - \supsetneq
+# Table 85: Inequalities 
+    - \geq
+    - \gg
+    - \leq
+    - \ll
+    - \neq
+# Table 86: AMS Inequalities
+- package: amssymb
+  mathmode:
+    - \eqslantgtr
+    - \gtrdot
+    - \lesseqgtr
+    - \ngeq
+    - \eqslantless
+    - \gtreqless
+    - \lesseqqgtr
+    - \ngeqq
+    - \geqq
+    - \gtreqqless
+    - \lessgtr
+    - \ngeqslant
+    - \geqslant
+    - \gtrless
+    - \lesssim
+    - \ngtr
+    - \ggg
+    - \gtrsim
+    - \lll
+    - \nleq
+    - \gnapprox
+    - \gvertneqq
+    - \lnapprox
+    - \nleqq
+    - \gneq
+    - \leqq
+    - \lneq
+    - \nleqslant
+    - \gneqq
+    - \leqslant
+    - \lneqq
+    - \nless
+    - \gnsim
+    - \lessapprox
+    - \lnsim
+    - \gtrapprox
+    - \lessdot
+    - \lvertneqq
+# Table 91: AMS Triangle Relations
+- package: amssymb
+  mathmode:
+    - \blacktriangleleft
+    - \ntrianglelefteq
+    - \trianglelefteq
+    - \vartriangleleft
+    - \blacktriangleright
+    - \ntriangleright
+    - \triangleq
+    - \vartriangleright
+    - \ntriangleleft
+    - \ntrianglerighteq
+    - \trianglerighteq
+# Table 95: Arrows 
+- mathmode:
+    - \Downarrow
+    - \longleftarrow
+    - \nwarrow
+    - \downarrow
+    - \Longleftarrow
+    - \Rightarrow
+    - \hookleftarrow
+    - \longleftrightarrow
+    - \rightarrow
+    - \hookrightarrow
+    - \Longleftrightarrow
+    - \searrow
+#    - \leadsto
+    - \longmapsto
+    - \swarrow
+    - \leftarrow
+    - \Longrightarrow
+    - \uparrow
+    - \Leftarrow
+    - \longrightarrow
+    - \Uparrow
+    - \Leftrightarrow
+    - \mapsto
+    - \updownarrow
+    - \leftrightarrow
+    - \nearrow
+    - \Updownarrow
+# Table 96: Harpoons 
+    - \leftharpoondown
+    - \rightharpoondown
+    - \rightleftharpoons
+    - \leftharpoonup
+    - \rightharpoonup
+# Table 97: textcomp Text-mode Arrows
+- package: textcomp
+  textmode:
+    - \textdownarrow
+    - \textrightarrow
+    - \textleftarrow
+    - \textuparrow
+# Table 98: AMS Arrows 
+- package: amssymb
+  mathmode:
+    - \circlearrowleft
+    - \leftleftarrows
+    - \rightleftarrows
+    - \circlearrowright
+    - \leftrightarrows
+    - \rightrightarrows
+    - \curvearrowleft
+    - \leftrightsquigarrow
+    - \rightsquigarrow
+    - \curvearrowright
+    - \Lleftarrow
+    - \Rsh
+    - \dashleftarrow
+    - \looparrowleft
+    - \twoheadleftarrow
+    - \dashrightarrow
+    - \looparrowright
+    - \twoheadrightarrow
+    - \downdownarrows
+    - \Lsh
+    - \upuparrows
+    - \leftarrowtail
+    - \rightarrowtail
+# Table 99: AMS Negated Arrows 
+    - \nLeftarrow
+    - \nLeftrightarrow
+    - \nRightarrow
+    - \nleftarrow
+    - \nleftrightarrow
+    - \nrightarrow
+# Table 100: AMS Harpoons 
+    - \downharpoonleft
+    - \leftrightharpoons
+    - \upharpoonleft
+    - \downharpoonright
+    - \rightleftharpoons
+    - \upharpoonright
+# Table 122: Greek Letters
+- mathmode:
+    - \alpha
+    - \theta
+    - \tau
+    - \beta
+    - \vartheta
+    - \pi
+    - \upsilon
+    - \gamma
+    - \iota
+    - \varpi
+    - \phi
+    - \delta
+    - \kappa
+    - \rho
+    - \varphi
+    - \epsilon
+    - \lambda
+    - \varrho
+    - \chi
+    - \varepsilon
+    - \mu
+    - \sigma
+    - \psi
+    - \zeta
+    - \nu
+    - \varsigma
+    - \omega
+    - \eta
+    - \xi
+    - \Gamma
+    - \Lambda
+    - \Sigma
+    - \Psi
+    - \Delta
+    - \Xi
+    - \Upsilon
+    - \Omega
+    - \Theta
+    - \Pi
+    - \Phi
+# Table 123: AMS Greek Letters 
+- package: amssymb
+  mathmode:
+    - \digamma
+    - \varkappa
+# Table 129: Letter-like Symbols
+- mathmode:
+    - \bot
+    - \forall
+    - \imath
+    - \ni
+    - \top
+    - \ell
+    - \hbar
+    - \in
+    - \partial
+    - \wp
+    - \exists
+    - \Im
+    - \jmath
+    - \Re
+# Table 130: AMS Letter-like Symbols
+- package: amssymb
+  mathmode:
+    - \Bbbk
+    - \complement
+    - \hbar
+#    - \circledR # already in another table
+    - \Finv
+    - \hslash
+    - \circledS
+    - \Game
+    - \nexists
+# Table 150: textcomp Text-mode Delimiters
+- package: textcomp
+  textmode:
+    - \textlangle
+    - \textrangle
+    - \textlbrackdbl
+    - \textrbrackdbl
+    - \textlquill
+    - \textrquill
+# Table 174: Dots 
+- mathmode:
+    - \cdotp
+    - \colon
+    - \ldotp
+    - \vdots
+    - \cdots
+    - \ddots
+    - \ldots
+# Table 175: AMS Dots
+- package: amsmath
+  mathmode:
+#    - \because # Table 63
+    - \dotsi
+#    - \therefore # Table 63
+    - \dotsb
+    - \dotsm
+    - \dotsc
+    - \dotso
+# Table 184: Miscellaneous LATEX 2ε Math Symbols 
+- mathmode:
+    - \aleph
+#    - \Diamond
+    - \infty
+    - \prime
+    - \angle
+    - \diamondsuit
+#    - \mho
+    - \sharp
+    - \backslash
+    - \emptyset
+    - \nabla
+    - \spadesuit
+#    - \Box
+    - \flat
+    - \natural
+    - \surd
+    - \clubsuit
+    - \heartsuit
+    - \neg
+    - \triangle
+# Table 185: Miscellaneous AMS Math Symbols 
+- package: amssymb
+  mathmode:
+    - \angle
+    - \blacktriangledown
+    - \mho
+    - \backprime
+    - \diagdown
+    - \sphericalangle
+    - \bigstar
+    - \diagup
+    - \square
+    - \blacklozenge
+    - \eth
+    - \triangledown
+    - \blacksquare
+    - \lozenge
+    - \varnothing
+    - \blacktriangle
+    - \measuredangle
+    - \vartriangle
+# Table 191: Miscellaneous textcomp Text-mode Math Symbols
+- package: textcomp
+  textmode:
+    - \textdegree
+    - \textonehalf
+    - \textthreequarters
+    - \textdiv
+    - \textonequarter
+    - \textthreesuperior
+    - \textfractionsolidus
+    - \textonesuperior
+    - \texttimes
+    - \textlnot
+    - \textpm
+    - \texttwosuperior
+    - \textminus
+    - \textsurd
+# Table 196: Math Alphabets
+- package: amssymb
+  mathmode:
+    - \mathbb{N}
+    - \mathbb{Z}
+    - \mathbb{Q}
+    - \mathbb{R}
+    - \mathbb{C}
+# Table197: gensymb Symbols Deﬁned to Work in Both Math and Text Mode 
+- package: gensymb
+  bothmodes:
+    - \celsius
+    - \micro
+    - \perthousand
+    - \degree
+    - \ohm

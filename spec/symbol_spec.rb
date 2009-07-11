@@ -31,7 +31,7 @@ describe Latex::Symbol do
   end
 end
 
-describe Latex::Symbol::List do
+describe 'Latex::Symbol::List' do
 
   TEMPLATE = ERB.new <<-TEMPLATE.gsub(/^  /,'')
   \\documentclass[10pt]{article}
