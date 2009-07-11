@@ -31,6 +31,7 @@ $(function(){
           populateSymbolList(json.all);
           latex.init();
           setuptraining();
+          return false;
         });
         $('#hitarea').show();
       }

@@ -16,10 +16,12 @@
   <body class='symbols'>
     <div id="everything">
       <h1>Detexify<sup>2</sup> - Symbol table</h1>
+      
       <ul class="nav">
         <li><a href="/classify.html">classify</a></li>
         <li><a href="/symbols.html">symbols</a></li>
-      </ul>    
+      </ul>
+          
       <div id="infoarea">
         <h2>What is this?</h2>
         <p>
@@ -39,7 +41,7 @@
       <ul id="symbols" class="symbols">
       </ul>
       <div id="trainingarea">
-        Draw below and click 'train'!
+        <img alt="Draw below and then click 'train'!" id="drawhere" src="images/draw_here_then_train.png">
         <div id="canvascontainer">
         <canvas id="tafel" width="400" height="400">
           Your browser must support the &lt;canvas&gt; element in order
@@ -50,7 +52,8 @@
         </div>
         </div>
         <div id="canvascontrols">
-          <a id="clear" href='#'>clear</a> | <a id="train" href="#">train</a>
+          <a id="clear" href='#'>clear</a>
+          <a id="train" href="#">train</a>
         </div>
         <div id="canvaserror">This canvas is fubar :(</div>
       </div>

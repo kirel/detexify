@@ -1,5 +1,9 @@
 /* @override http://localhost:4567/css/style.css */
 
+a:link, a:visited {
+  color: royalblue;
+}
+
 body, td {
 	font-family: sans-serif;
 }
@@ -8,8 +12,22 @@ body, td {
 	font-size: 1.2em;
 }
 
-#canvascontainer {
+#canvasarea, #trainingarea, #canvascontainer {
   position: relative;
+}
+
+body.classify #drawhere {
+  position: absolute;
+  top: -80px;
+  left: 320px;
+  z-index: -1;
+}
+
+body.symbols #drawhere {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
 }
 
 body.classify #canvasspinner, body.symbols #canvasspinner {
@@ -19,27 +37,105 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
 }
 
 #canvascontrols #clear {
+  color: red;
+  text-decoration: none;
   font-weight: bold;
   font-size: 16px;
-  padding-left: 18px;
-  background: url(/images/delete.png) no-repeat;
+  padding: 0 5px 1px 20px;
+  margin-left: 0px;
+  background: url(/images/delete.png) no-repeat 2px 1px;
+  border: 1px solid gray;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 #canvascontrols #train {
+  color: green;
+  text-decoration: none;
   font-weight: bold;
   font-size: 16px;
-  padding-left: 18px;
-  background: url(/images/add.png) no-repeat;
+  padding: 0 5px 1px 20px;
+  margin-left: 0px;
+  background: url(/images/add.png) no-repeat 2px 1px;
+  border: 1px solid gray;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 ul.nav {
   list-style: none;
-  padding: 0 2em 0 0;
+  padding: 0;
 }
 
+ul.nav li {
+  display: inline-block;
+}
+
+ul.nav li a:link, ul.nav li a:visited {
+	font-size: 20px;
+	text-decoration: none;
+}
+
+ul.nav li:first-child {
+  border: 1px solid gray;
+  padding: 3px 6px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+ul.nav li:last-child {
+  border: 1px solid gray;
+  padding: 3px 6px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+body.classify ul.nav li:last-child,
+body.symbols ul.nav li:first-child
+{
+  background-color: white;
+}
+
+body.classify ul.nav li:first-child,
+body.symbols ul.nav li:last-child
+{
+  background-color: cornsilk;
+}
+
+body.classify ul.nav li:last-child a:link,
+body.symbols ul.nav li:first-child a:link,
+body.classify ul.nav li:last-child a:visited,
+body.symbols ul.nav li:first-child a:visited
+{
+  /* color: blue; */
+}
+
+body.classify ul.nav li:first-child a:link,
+body.symbols ul.nav li:last-child a:link,
+body.classify ul.nav li:first-child a:visited,
+body.symbols ul.nav li:last-child a:visited
+{
+  color: black;
+}
 
 ul.nav li:before {
-  content: "› ";
+  /* content: "› "; */
 }
 
 code {
@@ -68,7 +164,7 @@ body.classify #infoarea
 #hitarea {
 	position: absolute;
 	left: 460px;
-	top: 80px;
+	top: 120px;
 }
 
 body.symbols #infoarea {
@@ -141,8 +237,13 @@ ul.symbols li .symbol img {
 	max-height: 100px;
 }
 
-ul.symbols li:hover, ul.symbols li.active {
-  background-color: #eee;
+ul.symbols li:hover {
+  background-color: whitesmoke;
+}
+
+ul.symbols li.active:hover,
+ul.symbols li.active {
+  background-color: cornsilk;
 }
 
 .samples {

@@ -2,6 +2,11 @@
 
 $(function(){
   $('#spinner').show();  
+
+  // Canvas
+  var c = $("#tafel").get(0);
+  canvassify(c);
+
   $.getJSON("/symbols", function(json) {
     json.sort(function(a,b){ return (''+a.command).localeCompare(''+b.command); })
     populateSymbolList(json);
@@ -13,6 +18,8 @@ $(function(){
       .click(function(){
         $(this).tooltip(0).hide();
         if ($('#trainingli').is(":hidden")) {
+          c.clear();
+          $("#drawhere").show();
           $('#trainingli').prev().removeClass('active');
           $('#trainingli').insertAfter($(this).closest("li")).slideDown('slow');
           $('#trainingli').prev().addClass('active');
@@ -20,6 +27,8 @@ $(function(){
           var that = this;
           $('#trainingli').prev().removeClass('active');
           $('#trainingli').slideUp('slow', function(){
+            c.clear();
+            $("#drawhere").show();
             $(this).insertAfter($(that).closest("li")).slideDown('slow');
             $('#trainingli').prev().addClass('active');
           });
@@ -34,9 +43,6 @@ $(function(){
 
     // wire the canvas
       
-  // Canvas
-  var c = $("#tafel").get(0);
-  canvassify(c);
   // Train if train button pressed
   var trainClicked = function() {
     // get the image from the previous li
@@ -54,6 +60,7 @@ $(function(){
     c.clear();
     return false;
   });
+  $('#trainingarea').mouseenter(function(){$("#drawhere").fadeOut("slow");});
 
   $("#canvaserror").hide();  
 
