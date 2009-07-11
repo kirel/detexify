@@ -50,7 +50,7 @@ module Detexify
       io.rewind
       sample = Sample.new(:symbol_id => id, :feature_vector => f, :strokes => strokes)
       sample.save
-      sample.put_attachment('source', io.read, :content_type => io.content_type)
+      sample.put_attachment('source', io.read, :content_type => io.content_type) # TODO abstract!
       samples << sample
     end
   
