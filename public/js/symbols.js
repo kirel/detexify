@@ -11,6 +11,15 @@ $(function(){
     json.sort(function(a,b){ return (''+a.command).localeCompare(''+b.command); })
     populateSymbolList(json);
     latex.init();
+    // color code training numbers
+    var num = $('#symbols li .info .samples .number').each(function(){
+      var n = parseInt($(this).text());
+      if (n < 26) {
+        $(this).css('color','rgb('+(255-n*10)+','+(n*10)+',0)');
+      } else {
+        $(this).css('color','green');
+      }
+      });
     // setup training
     $('#symbols li .symbol img')
       .wrap('<a href="#"></a>')

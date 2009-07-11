@@ -31,10 +31,7 @@ module Detexify
     end
         
     def sample_counts
-      h = {}
-      symbols.each do |symbol|
-        h[symbol.id] = 0
-      end
+      h = Hash.new { |h,v| h[v] = 0 }
       samples.each do |sample|
         h[sample.symbol_id] += 1
       end
