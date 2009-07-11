@@ -51,7 +51,7 @@ function populateSymbolList(symbols) {
       info += '<br><span class="samples">Samples: <span class="number">'+symbol.samples+'</span></span><br>';
     }
     $('#symbols').append(
-      '<li><div class="symbolsentry"><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
+      '<li id="'+symbol.id+'"><div class="symbolsentry"><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
       '<div class="info">'+info+'</div></div></li>'
       );
   });

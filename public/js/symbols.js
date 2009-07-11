@@ -58,12 +58,11 @@ $(function(){
       
   // Train if train button pressed
   var trainClicked = function() {
-    // get the image from the previous li
-    img = $(this).closest("li").prev().find('img');
+    // get the previous li's
+    id = $(this).closest("li").prev().attr('id');
     num = $(this).closest("li").prev().find('.info .samples .number');
-    $(img).tooltip(0).hide();
     $('#canvasspinner').show('scale');            
-    train(img.attr('alt').substring(7), c, function(){
+    train(id, c, function(){
       num.text(parseInt(num.text())+1);
       colorcode(num);
       $('#canvasspinner').hide('scale');
