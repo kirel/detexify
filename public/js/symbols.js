@@ -58,6 +58,7 @@ $(function(){
       
   // Train if train button pressed
   var trainClicked = function() {
+    $.gritter.add({title:'Thanks!', text:'Thank you for training!', time: 1000})
     // get the previous li's
     id = $(this).closest("li").prev().attr('id');
     num = $(this).closest("li").prev().find('.info .samples .number');
@@ -66,7 +67,7 @@ $(function(){
       num.text(parseInt(num.text())+1);
       colorcode(num);
       $('#canvasspinner').hide('scale');
-      alert('Thanks!');
+      $.gritter.add({title:'Success!', text:'Successfully trained.', time: 1000})
       });
     // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
     c.clear();

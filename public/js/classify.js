@@ -19,9 +19,14 @@ $(function(){
             .wrap('<a href="#"></a>')
             .tooltip({ tip: '#traintip' })
             .click(function(){
+              $.gritter.add({title:'Thanks!', text:'Thank you for training!', time: 1000})
               $(this).tooltip(0).hide();
               $('#canvasspinner').show('scale');            
-              train($(this).attr('alt').substring(7), canvas, function(){ $('#canvasspinner').hide('scale'); alert('Thanks!'); }); return false;
+              train($(this).attr('alt').substring(7), canvas, function(){
+                $('#canvasspinner').hide('scale');
+                $.gritter.add({title:'Success!', text:'Sucessfully trained.', time: 1000});
+                });
+              return false;
               });
         }
         setuptraining();
