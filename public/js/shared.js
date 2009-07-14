@@ -1,7 +1,8 @@
 // Create a namespace, to hold variables and functions.
 latex = new Object();
 
-latex.assetHost = 'images/symbols/';
+//latex.assetHost = 'images/symbols/';
+latex.assetHost = 'https://detexify.kirelabs.org.s3.amazonaws.com/images/symbols/';
 
 // Function to transform the whole document.  Add SRC to each IMG with
 // ALT text starting with "tex:".  However, skip if element already
