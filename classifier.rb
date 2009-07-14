@@ -22,11 +22,11 @@ module Detexify
     def initialize stroke_extractor, data_extractor
       @stroke_extractor, @data_extractor = stroke_extractor, data_extractor
       @progress = 0
+      load_samples
     end
 
-    # This is expensive
     def samples
-      @samples || load_samples
+      @samples# || load_samples
     end
 
     def symbols
