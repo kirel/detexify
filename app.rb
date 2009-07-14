@@ -11,6 +11,10 @@ get '/' do
   redirect '/classify.html'
 end
 
+get '/status' do
+  JSON :loaded => CLASSIFIER.loaded?, :progress => CLASSIFIER.progress
+end
+
 get '/symbols' do
   symbols = CLASSIFIER.symbols.map { |s| s.to_hash }
   # update with counts

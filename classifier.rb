@@ -11,9 +11,17 @@ module Detexify
   class Classifier
 
     K = 5
+    
+    # returns load status in percent
+    attr_reader :progress
+    
+    def loaded?
+      progress == 100
+    end
 
     def initialize stroke_extractor, data_extractor
       @stroke_extractor, @data_extractor = stroke_extractor, data_extractor
+      @progress = 0
     end
 
     # This is expensive
@@ -109,9 +117,9 @@ module Detexify
       # load by symbol in a new thread
       Thread.new do
         symbols.each_with_index do |symbol,i|
-          # TODO allow more concurrent requests
+          # TODO allow more concurrent requests or load in batches
           @samples << Sample.by_symbol_id(:key => symbol.id)
-          puts "*** Done reading #{symbol.id} - #{i+1} of #{symbols.size}"
+          @progress = 100*(i+1)/symbols.size
         end
       end
       @samples

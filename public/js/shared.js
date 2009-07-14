@@ -64,4 +64,21 @@ function train(id, canvas, callback) {
 }
 
 
-$(function(){latex.init()});
+$(function(){
+  // this is some ugly code - jQuery timers instead?
+  var iid = 0;
+  var checkStatus = function () {
+    $.getJSON("/status", function(status) {
+      if (!status.loaded) {
+        $('#status').text('Warning! The app has recently been restarted and is not fully loaded yet. ('+status.progress+'% done)')
+      } else {
+        if (iid) {
+          clearInterval(iid);
+        }
+      }
+    });
+  }
+  checkStatus();
+  iid = setInterval(checkStatus, 5000);
+  latex.init();
+  });
