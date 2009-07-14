@@ -75,6 +75,7 @@ $(function(){
         if (iid) {
           clearInterval(iid);
         }
+        $('#status').text('');
       }
     });
   }
