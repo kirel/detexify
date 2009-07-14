@@ -7,29 +7,28 @@ require 'symbol'
 require 'sample'
 
 module Detexify
-    
+
   class Classifier
-                
+
     K = 5
-    
+
     def initialize stroke_extractor, data_extractor
       @stroke_extractor, @data_extractor = stroke_extractor, data_extractor
     end
-      
+
     # This is expensive
-    # TODO load only { Vector => command } Hash (via CoucDB map)
     def samples
-      @all ||= Sample.all.select { |sample| symbols.map { |symbol| symbol.id }.member? sample.symbol_id }
+      @samples || load_samples
     end
-    
+
     def symbols
       @symbols ||= Latex::Symbol::List # FIXME do I need @symbols?  
     end
-    
+
     def symbol id
       Latex::Symbol[id]
     end
-        
+
     def sample_counts
       h = Hash.new { |h,v| h[v] = 0 }
       samples.each do |sample|
@@ -37,11 +36,11 @@ module Detexify
       end
       h
     end
-        
+
     def count_samples symbol
       samples.select { |sample| sample.symbol_id == symbol.id }.size
     end
-  
+
     # train the classifier
     def train id, strokes, io
       # TODO reject illegal input e.g. empty strokes
@@ -53,7 +52,7 @@ module Detexify
       sample.put_attachment('source', io.read, :content_type => io.content_type) # TODO abstract!
       samples << sample
     end
-  
+
     def classify strokes, io # TODO modules KNN, Mean, etc. for different classifier types? 
       f = extract_features io.read, strokes
       # use nearest neighbour classification
@@ -76,16 +75,17 @@ module Detexify
       missing = symbols.map { |symbol| symbol.id } - nearest.keys
       # FIXME this feels slow
       return [neighbours.map { |id, num| { :symbol => Latex::Symbol[id].to_hash, :score => num } }.sort_by { |h| -h[:score] },
-              nearest.map { |id, dist| { :symbol => Latex::Symbol[id].to_hash, :score => dist } }.sort_by{ |h| h[:score] } + missing.map { |id| { :symbol => Latex::Symbol[id].to_hash, :score => 999999} } ]
+      nearest.map { |id, dist| { :symbol => Latex::Symbol[id].to_hash, :score => dist } }.sort_by{ |h| h[:score] } + missing.map { |id| { :symbol => Latex::Symbol[id].to_hash, :score => 999999} } ]
     end
-    
+
     def distance x, y
       # TODO find a better distance function
       MyMath.euclidean_distance(x, y)
     end
-    
+
     def regenerate_features
       puts "regenerating features"
+      # TODO do this by symbol
       Sample.all.each do |s|
         f = extract_features(s.source, s.strokes)
         puts f.inspect
@@ -101,7 +101,22 @@ module Detexify
       features << @data_extractor.call(data) if @data_extractor
       features.flatten
     end
-        
+
+    private
+
+    def load_samples
+      @samples = Samples.new
+      # load by symbol in a new thread
+      Thread.new do
+        symbols.each_with_index do |symbol,i|
+          # TODO allow more concurrent requests
+          @samples << Sample.by_symbol_id(:key => symbol.id)
+          puts "*** Done reading #{symbol.id} - #{i+1} of #{symbols.size}"
+        end
+      end
+      @samples
+    end
+
   end
-    
+
 end

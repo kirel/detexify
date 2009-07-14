@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Latex
 
   class Symbol
@@ -16,7 +18,7 @@ module Latex
       args.each do |k,v|
         instance_variable_set "@#{k}", v if A.include? k
       end
-      @id = "#{package || 'latex2e'}-#{fontenc || 'OT1'}-#{command.gsub('\\','_')}"
+      @id = "#{package || 'latex2e'}-#{fontenc || 'OT1'}-#{command.gsub('\\','_')}".to_sym
     end
     
     def [](k)
@@ -34,7 +36,7 @@ module Latex
     def to_hash
       h = {}
       A.each { |a| !self[a].nil? && (h[a] = self[a]) }
-      h[:id] = self[:id]
+      h[:id] = self[:id]#.to_s FIXME - needed?
       h
     end
     
@@ -60,6 +62,7 @@ module Latex
     end.flatten    
     
     def self.[](id)
+      id = id.to_sym
       List.find { |symbol| symbol.id == id }
     end
             
