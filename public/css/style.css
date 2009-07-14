@@ -36,6 +36,14 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
   left: 370px;
 }
 
+#status {
+  color: red;
+  display: none;
+  font-size: 16px;
+  padding: 0 0 0 20px;
+  background: url(/images/exclamation.png) no-repeat;
+}
+
 #canvascontrols #clear {
   color: red;
   text-decoration: none;

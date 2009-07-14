@@ -70,12 +70,12 @@ $(function(){
   var checkStatus = function () {
     $.getJSON("/status", function(status) {
       if (!status.loaded) {
-        $('#status').text('Warning! The app has recently been restarted and is not fully loaded yet. ('+status.progress+'% done)')
+        $('#status').text('Warning! The app has recently been restarted and is not fully loaded yet. ('+status.progress+'% done)').show();
       } else {
         if (iid) {
           clearInterval(iid);
         }
-        $('#status').text('');
+        $('#status').text('').hide();
       }
     });
   }
