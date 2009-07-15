@@ -132,6 +132,7 @@ module Detexify
       @samples = Samples.new
       @sample_counts = Hash.new { |h,k| h[k] = 0 }
       # load by symbol in a new thread
+      Thread.abort_on_exception = true
       @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
@@ -141,6 +142,7 @@ module Detexify
           @progress = 100*(i+1)/symbols.size
         end
       end
+      
       @samples
     end
 
