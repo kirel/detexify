@@ -9,7 +9,7 @@
 	padding-bottom:0;
 }
 * html .gritter-close {
-	background:url(../images/gritter-close-ie6.gif);
+	background:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-close-ie6.gif);
 	width:22px;
 	height:22px;
 	top:7px;
@@ -28,23 +28,23 @@
 	position:relative;
 }
 .gritter-top {
-	background:url(../images/gritter-top.png) no-repeat top left;
+	background:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-top.png) no-repeat top left;
 	height:10px;
 }
 .hover .gritter-top {
-	background-image:url(../images/gritter-top-hover.png);
+	background-image:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-top-hover.png);
 }
 .gritter-bottom {
-	background:url(../images/gritter-bottom.png) no-repeat bottom left;
+	background:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-bottom.png) no-repeat bottom left;
 	height:8px;
 	margin: 0 0 12px 0;
 }
 .hover .gritter-bottom {
-	background-image:url(../images/gritter-bottom-hover.png);
+	background-image:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-bottom-hover.png);
 }
 .gritter-item {
 	display:block;
-	background:url(../images/gritter-bg-tile.png);
+	background:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-bg-tile.png);
 	color:#eee;
 	padding:2px 11px 8px 11px;
 	font-size: 11px;
@@ -55,13 +55,13 @@
 	margin:0;
 }
 .hover .gritter-item {
-	background-image:url(../images/gritter-bg-tile-hover.png);
+	background-image:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-bg-tile-hover.png);
 }
 .gritter-close {
 	position:absolute;
 	top:5px;
 	left:3px;
-	background:url(../images/gritter-close.png);
+	background:url(http://detexify.kirelabs.org.s3.amazonaws.com/images/gritter-close.png);
 	cursor:pointer;
 	width:30px;
 	height:30px;

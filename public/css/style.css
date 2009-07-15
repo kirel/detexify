@@ -41,7 +41,7 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
   display: none;
   font-size: 16px;
   padding: 0 0 0 20px;
-  background: url(/images/exclamation.png) no-repeat;
+  background: url(http://detexify.kirelabs.org.s3.amazonaws.com/images/exclamation.png) no-repeat;
 }
 
 #canvascontrols #clear {
@@ -51,7 +51,7 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
   font-size: 16px;
   padding: 0 5px 1px 20px;
   margin-left: 0px;
-  background: url(/images/delete.png) no-repeat 2px 1px;
+  background: url(http://detexify.kirelabs.org.s3.amazonaws.com/images/delete.png) no-repeat 2px 1px;
   border: 1px solid gray;
   -webkit-border-bottom-right-radius: 10px;
   -moz-border-radius-bottomright: 10px;
@@ -68,7 +68,7 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
   font-size: 16px;
   padding: 0 5px 1px 20px;
   margin-left: 0px;
-  background: url(/images/add.png) no-repeat 2px 1px;
+  background: url(http://detexify.kirelabs.org.s3.amazonaws.com/images/add.png) no-repeat 2px 1px;
   border: 1px solid gray;
   -webkit-border-bottom-right-radius: 10px;
   -moz-border-radius-bottomright: 10px;
@@ -300,7 +300,7 @@ ul.symbols li .info .fontenc, ul.symbols li .info .package, ul.symbols li .info 
 }
 
 div.tooltip { 
-    background:transparent url(../images/white_arrow.png) no-repeat scroll 0 0; 
+    background:transparent url(http://detexify.kirelabs.org.s3.amazonaws.com/images/white_arrow.png) no-repeat scroll 0 0; 
     text-align: center;
     height:63px; 
     padding: 40px 30px 30px 30px; 
