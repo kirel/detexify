@@ -145,18 +145,18 @@ body.symbols ul.nav li.symbols
   background-color: cornsilk;
 }
 
-body.classify ul.nav li:last-child a:link,
-body.symbols ul.nav li:first-child a:link,
-body.classify ul.nav li:last-child a:visited,
-body.symbols ul.nav li:first-child a:visited
+body.classify ul.nav li.symbols a:link,
+body.symbols ul.nav li.classify a:link,
+body.classify ul.nav li.symbols a:visited,
+body.symbols ul.nav li.classify a:visited
 {
   /* color: blue; */
 }
 
-body.classify ul.nav li:first-child a:link,
-body.symbols ul.nav li:last-child a:link,
-body.classify ul.nav li:first-child a:visited,
-body.symbols ul.nav li:last-child a:visited
+body.classify ul.nav li.classify a:link,
+body.symbols ul.nav li.symbols a:link,
+body.classify ul.nav li.classify a:visited,
+body.symbols ul.nav li.symbols a:visited
 {
   color: black;
 }
