@@ -49,9 +49,14 @@ module Detexify
       samples.select { |sample| sample.symbol_id == symbol.id }.size
     end
 
+    # errors for use with train an classify
+    IllegalSymbolId = Class.new(ArgumentError)
+    DataMessedUp = Class.new(ArgumentError)
+
     # train the classifier
     def train id, strokes, io
-      # TODO reject illegal input e.g. empty strokes
+      raise IllegalSymbolId unless Latex::Symbol[id]
+      raise DataMessedUp unless data_ok?(strokes, io)
       # TODO offload feature extraction to a job queue
       f = extract_features io.read, strokes
       io.rewind
@@ -62,6 +67,7 @@ module Detexify
     end
 
     def classify strokes, io # TODO modules KNN, Mean, etc. for different classifier types? 
+      raise DataMessedUp unless data_ok?(strokes, io)
       f = extract_features io.read, strokes
       # use nearest neighbour classification
       # sort by distance and find minimal distance for each command
@@ -69,14 +75,13 @@ module Detexify
       all = samples.sort_by do |sample|
         # FIXME catch exception Dimension mismatch here
         d = distance(Vector.elements(f), Vector.elements(sample.feature_vector))
-        nearest[sample.symbol_id] = d if !nearest[sample.symbol_id] || nearest[sample.symbol_id] > d
+        nearest[sample.symbol_id] = d if (!nearest[sample.symbol_id]) || (nearest[sample.symbol_id] > d)
         d
       end
-      neighbours = {} # holds nearest neighbours to pattern
+      neighbours = Hash.new { |h,v| h[v] = 0 } # holds nearest neighbours to pattern
       # K is number of best matches we want in the list
-      while !all.empty? && neighbours.size < K
-        sample = all.shift
-        neighbours[sample.symbol_id] ||= 0
+      while (!all.empty?) && (neighbours.size < K)
+        sample = all.shift # next nearest sample to f
         neighbours[sample.symbol_id] += 1
       end
       # we are adding everything that is not in the nearest list with LARGE distance
@@ -109,13 +114,22 @@ module Detexify
       features << @data_extractor.call(data) if @data_extractor
       features.flatten
     end
+    
+    def wait_until_loaded
+      @load_thread.join
+    end
 
     private
+    
+    def data_ok? strokes, io
+      # TODO more and better checks
+      strokes.is_a?(Array) && io.respond_to?(:read) && io.respond_to?(:content_type)
+    end
 
     def load_samples
       @samples = Samples.new
       # load by symbol in a new thread
-      Thread.new do
+      @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
           @samples << Sample.by_symbol_id(:key => symbol.id)

@@ -1,4 +1,5 @@
-require File.join(File.expand_path(File.dirname(__FILE__)), '../extractors')
+require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
+require 'extractors'
 
 describe Detexify::Extractors::Strokes::BoundingBox do
   

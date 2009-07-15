@@ -2,7 +2,7 @@ require 'spec'
 require 'spec/interop/test'
 require 'rack/test'
 
-require File.join(File.dirname(__FILE__), '/spec_helper')
+require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 require 'app'
 
@@ -16,10 +16,10 @@ describe 'The Sinatra classifier' do
   include Rack::Test::Methods
 
   before do
-    # Detexify::Sample::database.recreate!
     @symbol = Latex::Symbol::List.first
     @strokes = [[{'x'=>0, 'y'=>0}, {'x'=>1, 'y'=>1}]]
     @uri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC'
+    CLASSIFIER.stub!(:train)
   end
 
   it "classifies a wellformed request" do
