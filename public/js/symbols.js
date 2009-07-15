@@ -63,11 +63,16 @@ $(function(){
     id = $(this).closest("li").prev().attr('id');
     num = $(this).closest("li").prev().find('.info .samples .number');
     $('#canvasspinner').show('scale');            
-    train(id, c, function(){
+    train(id, c, function(json){
       num.text(parseInt(num.text())+1);
       colorcode(num);
       $('#canvasspinner').hide('scale');
-      $.gritter.add({title:'Success!', text:'Successfully trained.', time: 1000})
+      // TODO DRY
+      if (json.message) {
+        $.gritter.add({title:'Success!', text: json.message, time: 1000});
+      } else {
+        $.gritter.add({title:'Error!', text: json.error, time: 1000});
+      }
       });
     // TODO Buttons ausgrauen solange Request $('...').ubind('click', fn);
     c.clear();

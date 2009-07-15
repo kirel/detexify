@@ -11,6 +11,7 @@ module Detexify
   class Classifier
 
     K = 5
+    SAMPLE_LIMIT = 500
     
     # returns load status in percent
     attr_reader :progress
@@ -37,26 +38,26 @@ module Detexify
       Latex::Symbol[id]
     end
 
-    def sample_counts
-      h = Hash.new { |h,v| h[v] = 0 }
-      samples.each do |sample|
-        h[sample.symbol_id] += 1
-      end
-      h
-    end
+    attr_reader :sample_counts
 
     def count_samples symbol
-      samples.select { |sample| sample.symbol_id == symbol.id }.size
+      if symbol.respond_to? :to_sym
+        @sample_counts[symbol.to_sym]
+      else # should be a symbol
+        @sample_counts[symbol.id]
+      end
     end
 
     # errors for use with train an classify
     IllegalSymbolId = Class.new(ArgumentError)
     DataMessedUp = Class.new(ArgumentError)
+    TooManySamples = Class.new(RuntimeError)
 
     # train the classifier
     def train id, strokes, io
       raise IllegalSymbolId unless Latex::Symbol[id]
       raise DataMessedUp unless data_ok?(strokes, io)
+      raise TooManySamples if count_samples(id) >= SAMPLE_LIMIT
       # TODO offload feature extraction to a job queue
       f = extract_features io.read, strokes
       io.rewind
@@ -64,6 +65,7 @@ module Detexify
       sample.save
       sample.put_attachment('source', io.read, :content_type => io.content_type) # TODO abstract!
       samples << sample
+      @sample_counts[id.to_sym] += 1
     end
 
     def classify strokes, io # TODO modules KNN, Mean, etc. for different classifier types? 
@@ -128,11 +130,14 @@ module Detexify
 
     def load_samples
       @samples = Samples.new
+      @sample_counts = Hash.new { |h,k| h[k] = 0 }
       # load by symbol in a new thread
       @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
-          @samples << Sample.by_symbol_id(:key => symbol.id)
+          samples = Sample.by_symbol_id(:key => symbol.id)
+          @samples << samples
+          @sample_counts[symbol.id] += samples.size
           @progress = 100*(i+1)/symbols.size
         end
       end

@@ -36,7 +36,7 @@ module Latex
     def to_hash
       h = {}
       A.each { |a| !self[a].nil? && (h[a] = self[a]) }
-      h[:id] = self[:id]#.to_s FIXME - needed?
+      h[:id] = self[:id]
       h
     end
     

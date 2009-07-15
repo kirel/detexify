@@ -51,6 +51,28 @@ describe Detexify::Classifier do
     lambda { @classifier.train(@symbol.id, @strokes, 'fubar') }.should raise_error(Detexify::Classifier::DataMessedUp)
   end
   
+  # FIXME this is a temporary spec - a need cleanup instead of limits
+  describe "with a symbol trained to the limit" do
+    
+    before do
+      # Symbol is in database once. Add another SAMPLE_LIMIT - 1 times.
+      (Detexify::Classifier::SAMPLE_LIMIT-1).times { @classifier.train(@symbol.id, @strokes, @io) }
+    end
+    
+    it "should not train that symbol again" do
+      lambda { @classifier.train(@symbol.id, @strokes, @io) }.should raise_error(Detexify::Classifier::TooManySamples)
+    end
+    
+  end
+  
+  it "have correct sample counts" do
+    @classifier.sample_counts[@symbol.id].should == 1
+    @classifier.count_samples(@symbol.id).should == 1
+    @classifier.count_samples(@symbol).should == 1
+    @classifier.sample_counts['foo'].should == 0 #IllegalSymbolId ?
+    @classifier.count_samples('bar').should == 0
+  end
+  
   it "should regenerate features"
 
 end

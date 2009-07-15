@@ -40,12 +40,18 @@ post '/train' do
     halt 403, "Strokes scrambled"
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
-    CLASSIFIER.train params[:id], strokes, io
+    begin
+      CLASSIFIER.train params[:id], strokes, io
+    rescue Detexify::Classifier::TooManySamples
+      # FIXME can I handle http status codes in the request? Wanna go restful
+      #halt 403, "Thanks - i've got enough of these..."
+      halt 200, JSON(:error => "Thanks but I've got enough of these...")
+    end
   else
     halt 403, "These strokes look suspicious"
   end
   # TODO sanity check in command list
-  halt 200
+  halt 200, JSON(:message => "Symbol was successfully trained.")
   # TODO return new list of symbols and counts
 end
 

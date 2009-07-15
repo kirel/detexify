@@ -61,7 +61,7 @@ function populateSymbolList(symbols) {
 
 // Train the symbol in canvas to id and call callback on return
 function train(id, canvas, callback) {
-  $.post("/train", { "id": id, "newtex": true, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, callback);
+  $.post("/train", { "id": id, "newtex": true, "url": canvas.toDataURL(), "strokes": JSON.stringify(canvas.strokes) }, callback, 'json');
 }
 
 

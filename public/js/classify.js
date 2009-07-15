@@ -2,15 +2,21 @@
 
 $(function(){
   // requests to classinatra  
-  var abort;
+  var abort, active;
     
   function classify(canvas) {
     abort = false;
     var url = canvas.toDataURL();
-    $('#canvasspinner').show('scale');
+    if (active === 0) {
+      $('#canvasspinner').show('scale');      
+    }
+    active = active + 1;
     $.post("/classify", { "url": url, "strokes": JSON.stringify(canvas.strokes) }, function(json) {
       if (!abort) {
-        $('#canvasspinner').hide('scale');    
+        active = active - 1;
+        if (active === 0) {
+          $('#canvasspinner').hide('scale');
+        }
         populateSymbolList(json.best);
         $('#morearea').show();
         latex.init();
@@ -22,9 +28,14 @@ $(function(){
               $.gritter.add({title:'Thanks!', text:'Thank you for training!', time: 1000})
               $(this).tooltip(0).hide();
               $('#canvasspinner').show('scale');            
-              train($(this).attr('alt').substring(7), canvas, function(){
+              train($(this).attr('alt').substring(7), canvas, function(json){
+                // TODO DRY
                 $('#canvasspinner').hide('scale');
-                $.gritter.add({title:'Success!', text:'Sucessfully trained.', time: 1000});
+                if (json.message) {
+                  $.gritter.add({title:'Success!', text: json.message, time: 1000})
+                } else {
+                  $.gritter.add({title:'Error!', text: json.error, time: 1000})
+                }
                 });
               return false;
               });
@@ -46,8 +57,10 @@ $(function(){
   // Canvas
   var c = $("#tafel").get(0);
   canvassify(c, classify);
+  active = 0;
   $('#clear').click(function(){
     abort = true;
+    active = 0;
     c.clear();
     $('#hitarea').hide();
     $('#symbols').empty();
