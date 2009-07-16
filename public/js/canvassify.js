@@ -1,4 +1,4 @@
-// make a canvas drawable and give the dataurl to some function after each stroke
+// make a canvas drawable and give the stroke to some function after each stroke
 // better canvas.drawable({start: startcallback, stop: stopcallback, stroke: strokecallback})
 function canvassify(canvas, callback) {
   var ctx = canvas.getContext('2d');

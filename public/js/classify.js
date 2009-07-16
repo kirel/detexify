@@ -6,12 +6,11 @@ $(function(){
     
   function classify(canvas) {
     abort = false;
-    var url = canvas.toDataURL();
     if (active === 0) {
       $('#canvasspinner').show('scale');      
     }
     active = active + 1;
-    $.post("/classify", { "url": url, "strokes": JSON.stringify(canvas.strokes) }, function(json) {
+    $.post("/classify", {"strokes": JSON.stringify(canvas.strokes) }, function(json) {
       if (!abort) {
         active = active - 1;
         if (active === 0) {
