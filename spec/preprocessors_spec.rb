@@ -35,3 +35,9 @@ describe Detexify::Preprocessors::Strokes::EquidistantPoints do
   end
       
 end
+
+describe Detexify::Preprocessors::Strokes::ToImage do
+  
+  it "should create an image from the strokes"
+  
+end

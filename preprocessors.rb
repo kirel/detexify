@@ -13,7 +13,6 @@ module Detexify
 
       # TODO class LineDensity 
 
-      # TODO Tests needed!
       class EquidistantPoints
 
         DEFAULT_OPTIONS = { :distance => 0.01 }
@@ -52,6 +51,11 @@ module Detexify
         end
 
       end # class EquidistantPoints
+      
+      # take strokes and make an (rmagick?) image out of it
+      class ToImage
+        
+      end # class StrokesToImage
 
     end # module Strokes
 
