@@ -5,7 +5,7 @@ require 'json'
 require 'sinatra'
 require 'classifier.rb' 
 
-CLASSIFIER = Detexify::Classifier.new(Detexify::Extractors::Strokes::Features.new, nil)
+CLASSIFIER = Detexify::Classifier.new(Detexify::Extractors::Strokes::Features.new)
 
 get '/' do
   redirect '/classify.html'
@@ -24,16 +24,7 @@ end
 
 post '/train' do
   halt 403, "Illegal id" unless params[:id] && CLASSIFIER.symbol(params[:id])
-  halt 403, 'I want some payload' unless params[:strokes] && params[:url]
-  begin
-    uri = URI.parse params[:url]
-    unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
-         raise "Only HTTP, FTP or Data!"
-    end
-    io = uri.open
-  rescue
-    halt 403, "Url scrambled"
-  end
+  halt 403, 'I want some payload' unless params[:strokes]
   begin
     strokes = JSON params[:strokes]
   rescue
@@ -41,7 +32,7 @@ post '/train' do
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
     begin
-      CLASSIFIER.train params[:id], strokes, io
+      CLASSIFIER.train params[:id], strokes
     rescue Detexify::Classifier::TooManySamples
       # FIXME can I handle http status codes in the request? Wanna go restful
       #halt 403, "Thanks - i've got enough of these..."
@@ -56,13 +47,8 @@ post '/train' do
 end
 
 post '/classify' do
-  halt 401, 'I want some payload' unless params[:strokes] && params[:url]
+  halt 401, 'I want some payload' unless params[:strokes]
   strokes = JSON params[:strokes]
-  uri = URI.parse params[:url]
-  unless [URI::HTTP, URI::FTP, URI::Data].any? { |c| uri.is_a? c }
-    halt 401, "Only HTTP, FTP or Data!"
-  end
-  io = uri.open
-  best, all = CLASSIFIER.classify strokes, io
+  best, all = CLASSIFIER.classify strokes
   JSON :best => best, :all => all
 end

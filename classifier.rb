@@ -20,8 +20,8 @@ module Detexify
       progress == 100
     end
 
-    def initialize stroke_extractor, data_extractor
-      @stroke_extractor, @data_extractor = stroke_extractor, data_extractor
+    def initialize extractor
+      @extractor = extractor
       @progress = 0
       load_samples
     end
@@ -54,23 +54,21 @@ module Detexify
     TooManySamples = Class.new(RuntimeError)
 
     # train the classifier
-    def train id, strokes, io
+    def train id, strokes
       raise IllegalSymbolId unless Latex::Symbol[id]
-      raise DataMessedUp unless data_ok?(strokes, io)
+      raise DataMessedUp unless data_ok?(strokes)
       raise TooManySamples if count_samples(id) >= SAMPLE_LIMIT
       # TODO offload feature extraction to a job queue
-      f = extract_features io.read, strokes
-      io.rewind
+      f = extract_features strokes
       sample = Sample.new(:symbol_id => id, :feature_vector => f, :strokes => strokes)
       sample.save
-      sample.put_attachment('source', io.read, :content_type => io.content_type) # TODO abstract!
       samples << sample
       @sample_counts[id.to_sym] += 1
     end
 
-    def classify strokes, io # TODO modules KNN, Mean, etc. for different classifier types? 
-      raise DataMessedUp unless data_ok?(strokes, io)
-      f = extract_features io.read, strokes
+    def classify strokes # TODO modules KNN, Mean, etc. for different classifier types? 
+      raise DataMessedUp unless data_ok?(strokes)
+      f = extract_features strokes
       # use nearest neighbour classification
       # sort by distance and find minimal distance for each command
       nearest = {}
@@ -110,11 +108,8 @@ module Detexify
       puts "done."
     end
 
-    def extract_features data, strokes # data is String
-      features = []
-      features << @stroke_extractor.call(strokes) if @stroke_extractor
-      features << @data_extractor.call(data) if @data_extractor
-      features.flatten
+    def extract_features strokes
+      @extractor.call(strokes)
     end
     
     def wait_until_loaded
@@ -123,9 +118,9 @@ module Detexify
 
     private
     
-    def data_ok? strokes, io
+    def data_ok? strokes
       # TODO more and better checks
-      strokes.is_a?(Array) && io.respond_to?(:read) && io.respond_to?(:content_type)
+      strokes.is_a?(Array)
     end
 
     def load_samples
