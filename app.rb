@@ -1,6 +1,3 @@
-require 'uri'
-require 'open-uri'
-require 'data-uri'
 require 'json'
 require 'sinatra'
 require 'classifier.rb' 
