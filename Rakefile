@@ -33,12 +33,14 @@ namespace :images do
   task :delete do
     require 'couchrest'
     require 'sample'
-    Detexify::Sample.all.each do |s|
+    all = Detexify::Sample.all
+    puts 'finished loading documents'
+    all.each do |s|
       begin
-        s.delete_attachment("source")
-        s.save
+        Detexify::Sample.database.delete_attachment(s, "source") if s.has_attachment? "source"
+        print '.'
       rescue => e
-        puts "Error: #{e.inspect}"
+        puts "\nError: #{e.inspect}\n"
       end
     end
     puts 'done.'
