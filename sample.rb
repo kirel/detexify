@@ -10,10 +10,6 @@ module Detexify
     view_by :symbol_id
     
     #timestamps!
-                          
-    def source
-      fetch_attachment 'source'
-    end
     
     def symbol
       Latex::Symbol[symbol_id]
