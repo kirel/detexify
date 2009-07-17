@@ -33,14 +33,17 @@ namespace :images do
   task :delete do
     require 'couchrest'
     require 'sample'
-    all = Detexify::Sample.all
-    puts 'finished loading documents'
-    all.each do |s|
-      begin
-        Detexify::Sample.database.delete_attachment(s, "source") if s.has_attachment? "source"
-        print '.'
-      rescue => e
-        puts "\nError: #{e.inspect}\n"
+    require 'symbol'
+    Latex::Symbol::List.each do |symbol|
+      sams = Detexify::Sample.by_symbol_id :key => symbol.id
+      puts "working on #{symbol}"
+      sams.each do |s|
+        begin
+          Detexify::Sample.database.delete_attachment(s, "source") if s.has_attachment? "source"
+          print '.'
+        rescue => e
+          puts "\nError: #{e.inspect}\n"
+        end
       end
     end
     puts 'done.'

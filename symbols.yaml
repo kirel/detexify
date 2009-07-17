@@ -800,6 +800,7 @@
     - \rightsquigarrow
     - \curvearrowright
     - \Lleftarrow
+    - \Rrightarrow # actually not on the table...
     - \Rsh
     - \dashleftarrow
     - \looparrowleft
@@ -826,6 +827,28 @@
     - \downharpoonright
     - \rightleftharpoons
     - \upharpoonright
+# Table 101: stmaryrd Arrows
+- package: stmaryrd
+  mathmode:
+    - \leftarrowtriangle
+    - \Mapsfrom
+    - \shortleftarrow
+    - \leftrightarroweq
+    - \mapsfrom
+    - \shortrightarrow
+    - \leftrightarrowtriangle
+    - \Mapsto
+    - \shortuparrow
+    - \lightning
+    - \nnearrow
+    - \ssearrow
+    - \Longmapsfrom
+    - \nnwarrow
+    - \sswarrow
+    - \longmapsfrom
+    - \rightarrowtriangle
+    - \Longmapsto
+    - \shortdownarrow
 # Table 122: Greek Letters
 - mathmode:
     - \alpha
@@ -883,6 +906,7 @@
     - \ell
     - \hbar
     - \in
+    - \not\in #added by me
     - \partial
     - \wp
     - \exists
@@ -901,6 +925,11 @@
     - \circledS
     - \Game
     - \nexists
+# Table 144: stmaryrd Variable-sized Delimiters 
+- package: stmaryrd
+  mathmode:
+    - \llbracket
+    - \rrbracket
 # Table 150: textcomp Text-mode Delimiters
 - package: textcomp
   textmode:
@@ -997,3 +1026,71 @@
     - \mathbb{Q}
     - \mathbb{R}
     - \mathbb{C}
+    - \mathcal{H}
+    - \mathcal{L}
+    - \mathfrak{S}
+# Table 210: marvosym Communication Symbols 
+- package: marvosym
+  textmode:
+    - \Email
+    - \fax
+    - \Faxmachine
+    - \Lightning
+    - \Pickup
+    - \Emailct
+    - \FAX
+    - \Letter
+    - \Mobilefone
+    - \Telefon
+# Table 212: wasysym Biological Symbols
+- package: wasysym
+  bothmodes:
+    - \female 
+    - \male 
+# Table 254: wasysym General Symbols
+- package: wasysym
+  textmode:
+    - \LEFTarrow
+    - \lightning
+    - \DOWNarrow
+    - \phone
+    - \UParrow
+    - \pointer
+    - \recorder
+  bothmodes:
+    - \checked #
+    - \kreuz #
+    - \RIGHTarrow
+    - \ataribox #
+    - \clock #
+    - \smiley #
+    - \bell #
+    - \diameter #
+    - \sun #
+    - \blacksmiley #
+    - \Bowtie #
+    - \frownie #
+    - \wasylozenge #
+    - \brokenvert #
+    - \invdiameter #
+# Table 263: Other marvosym Symbols 
+- package: marvosym
+  textmode:
+    - \Ankh
+    - \Cross
+    - \Heart
+    - \Smiley
+    - \Bat
+    #- \FHBOlogo
+    #- \MartinVogel
+    #- \Womanface
+    #- \Bouquet
+    #- \FHBOLOGO
+    - \Mundus
+    - \Yinyang
+    - \Celtcross
+    - \Frowny
+    - \MVAt
+    - \CircledA
+    #- \FullFHBO
+    - \MVRightarrow
