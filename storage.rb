@@ -68,7 +68,7 @@ module Latex
       # write symbol to tempfile
       tempfile.puts TEMPLATE.result(binding)
       tempfile.close
-      L.debug 'Generating latex...'
+      L.debug "Generating latex for #{symbol}..."
       system("latex -interaction=batchmode -output-directory=#{TMP} #{tempfile.path} >/dev/null")
       raise 'Panic! No dvi!' unless File.exist?(dvi)
 
@@ -86,7 +86,7 @@ module Latex
     
     def create_all
       Latex::Symbol::List.each do |symbol|
-        create symbol
+        create symbol unless File.exist? File.join(OUT, filename(symbol))
       end
     end
 
