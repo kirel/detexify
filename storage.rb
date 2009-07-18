@@ -102,7 +102,7 @@ module Latex
     private
     
     def self.filename symbol
-      Digest::MD5.hexdigest symbol.id
+      Digest::MD5.hexdigest symbol.id.to_s
     end
 
     def self.prepare
