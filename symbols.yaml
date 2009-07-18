@@ -576,6 +576,24 @@
     - \iiint
     - \iiiint
     - \idotsint
+# Table58: esint Variable-sized MathOperators
+- package: esint
+  mathmode:
+    - \dotsint
+    - \ointclockwise
+    - \fint
+    - \ointctrclockwise
+    - \iiiint
+    - \sqiint
+    - \iiint
+    - \sqint
+    - \iint
+    - \varoiint
+    - \landdownint
+    - \varointclockwise
+    - \landupint
+    - \varointctrclockwise
+    - \oiint
 # Table 62: Binary Relations 
 - mathmode:
     - \approx
@@ -925,6 +943,19 @@
     - \circledS
     - \Game
     - \nexists
+# Table 138: stmaryrd Delimiters
+- package: stmaryrd
+  mathmode:
+    - \Lbag
+    - \Rbag
+    - \lbag
+    - \rbag
+    - \llceil
+    - \rrceil
+    - \llfloor
+    - \rrfloor
+    - \llparenthesis
+    - \rrparenthesis
 # Table 144: stmaryrd Variable-sized Delimiters 
 - package: stmaryrd
   mathmode:
@@ -1029,6 +1060,17 @@
     - \mathcal{H}
     - \mathcal{L}
     - \mathfrak{S}
+- package: bbold
+  mathmode:
+    - \mathbb{1}
+# Table197: gensymbSymbolsDeﬁnedtoWorkinBothMathandTextMode
+- package: gensymb
+  bothmodes:
+    - \celsius
+    #- \micro # doesn't work
+    #- \perthousand # doesn't work
+    - \degree
+    - \ohm
 # Table 210: marvosym Communication Symbols 
 - package: marvosym
   textmode:
