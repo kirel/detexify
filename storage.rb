@@ -86,7 +86,7 @@ module Latex
     
     def create_all
       Latex::Symbol::List.each do |symbol|
-        create symbol unless File.exist? File.join(OUT, filename(symbol))
+        create symbol unless File.exist? "#{File.join(OUT, filename(symbol))}.png"
       end
     end
 
