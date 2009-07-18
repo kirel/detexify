@@ -9,6 +9,10 @@ describe Detexify::Sample do
     @strokes = [[{'x'=>1,'y'=>1}]]
   end
   
+  after do
+    Detexify::Sample::database.recreate!
+  end
+  
   it "can be created" do
     sample = Detexify::Sample.new :strokes => @strokes, :feature_vector => [], :symbol_id => @symbol.id
     lambda { sample.create! }.should_not raise_error     

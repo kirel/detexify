@@ -18,6 +18,10 @@ describe Detexify::Classifier do
     @classifier.wait_until_loaded
   end
   
+  after do
+    Detexify::Sample::database.recreate!
+  end
+  
   it "should load the database and have the correct sample count" do
     @classifier.samples.count.should be(1)
   end
