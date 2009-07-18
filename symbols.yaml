@@ -597,7 +597,9 @@
 # Table 62: Binary Relations 
 - mathmode:
     - \approx
+    - \not\approx #added by me
     - \equiv
+    - \not\equiv #added by me
     - \perp
     - \smile
     - \asymp
@@ -615,9 +617,11 @@
     - \dashv
     - \models
     - \sim
+    - \not\sim #added by me
     - \doteq
     - \parallel
     - \simeq
+    - \not\simeq #added by me
 # Table 63: AMS Binary Relations
 - package: amssymb
   mathmode:
