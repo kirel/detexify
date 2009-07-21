@@ -5,6 +5,12 @@ require 'classifier.rb'
 COUCH = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
 CLASSIFIER = Detexify::Classifier.new(COUCH, Detexify::Extractors::Strokes::Features.new)
 
+%w(/en/classify /de/classify).each do |path|
+  get path do
+    redirect '/classify.html'    
+  end
+end
+
 get '/' do
   redirect '/classify.html'
 end
