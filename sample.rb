@@ -27,23 +27,4 @@ module Detexify
     
   end
   
-  class Samples
-    
-    include Enumerable
-    
-    def initialize
-      @minisamples = []
-    end
-    
-    def each &block
-      @minisamples.each &block
-    end
-    
-    def << sample
-      @minisamples << MiniSample.new(sample)
-      self
-    end
-    
-  end
-
 end
