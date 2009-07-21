@@ -12,18 +12,22 @@ module Detexify
 
     K = 5
     SAMPLE_LIMIT = 500
+
+    def initialize dburl, extractor, options = {}
+      @couch = CouchRest.database!(dburl) # TODO allow other databases than CoucDB? via Adapters
+      # http:// -> couchdb via Couchrest, mysql:// -> ..., sqlite:// -> ... via Sequel?
+      Sample.use_database @couch # this line looks wrong but it is there in the couchrest specs
+      @sampleproxy = Sample.on(@couch)
+      @extractor = extractor
+      @progress = 0
+      load_samples
+    end
     
     # returns load status in percent
     attr_reader :progress
     
     def loaded?
-      progress == 100
-    end
-
-    def initialize extractor
-      @extractor = extractor
-      @progress = 0
-      load_samples
+      @progress == 100
     end
 
     def samples
@@ -60,7 +64,7 @@ module Detexify
       raise TooManySamples if count_samples(id) >= SAMPLE_LIMIT
       # TODO offload feature extraction to a job queue
       f = extract_features strokes
-      sample = Sample.new(:symbol_id => id, :feature_vector => f, :strokes => strokes)
+      sample = @sampleproxy.new(:symbol_id => id, :feature_vector => f, :strokes => strokes)
       sample.save
       samples << sample
       @sample_counts[id.to_sym] += 1
@@ -99,7 +103,7 @@ module Detexify
     def regenerate_features
       puts "regenerating features"
       # TODO do this by symbol
-      Sample.all.each do |s|
+      @sampleproxy.all.each do |s|
         f = extract_features(s.source, s.strokes)
         puts f.inspect
         s.feature_vector = f
@@ -113,7 +117,7 @@ module Detexify
     end
     
     def wait_until_loaded
-      @load_thread.join
+      #@load_thread.join
     end
 
     private
@@ -128,15 +132,15 @@ module Detexify
       @sample_counts = Hash.new { |h,k| h[k] = 0 }
       # load by symbol in a new thread
       Thread.abort_on_exception = true
-      @load_thread = Thread.new do
+      #@load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
-          samples = Sample.by_symbol_id(:key => symbol.id)
-          @samples << samples
+          samples = @sampleproxy.by_symbol_id(:key => symbol.id)
+          samples.each { |sample| @samples << MiniSample.new(sample) }
           @sample_counts[symbol.id] += samples.size
           @progress = 100*(i+1)/symbols.size
         end
-      end
+      #end
       
       @samples
     end

@@ -4,17 +4,17 @@ require 'sample'
 
 describe Detexify::Sample do
   before do
-    Detexify::Sample::database.recreate!
+    @db = CouchRest.database! TESTCOUCH
     @symbol = Latex::Symbol::List.first
     @strokes = [[{'x'=>1,'y'=>1}]]
   end
   
   after do
-    Detexify::Sample::database.recreate!
+    @db.delete!
   end
   
   it "can be created" do
-    sample = Detexify::Sample.new :strokes => @strokes, :feature_vector => [], :symbol_id => @symbol.id
+    sample = Detexify::Sample.on(@db).new :strokes => @strokes, :feature_vector => [], :symbol_id => @symbol.id
     lambda { sample.create! }.should_not raise_error     
   end
 end

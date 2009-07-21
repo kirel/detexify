@@ -1,8 +1,6 @@
 module Detexify
     
   class Sample < CouchRest::ExtendedDocument
-    DB = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
-    use_database CouchRest.database!(DB)
     property :feature_vector
     property :strokes
     property :symbol_id
@@ -42,10 +40,7 @@ module Detexify
     end
     
     def << sample
-      sample = [sample] unless sample.is_a? Array
-      sample.each do |s|
-        @minisamples << MiniSample.new(s)
-      end
+      @minisamples << MiniSample.new(sample)
       self
     end
     

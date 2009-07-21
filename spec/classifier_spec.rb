@@ -5,21 +5,21 @@ require 'classifier'
 describe Detexify::Classifier do
 
   before do
-    Detexify::Sample::database.recreate!
+    @db = CouchRest.database! TESTCOUCH
     @symbol = Latex::Symbol::List.first
     @strokes = [[{'x'=>0, 'y'=>0}, {'x'=>1, 'y'=>1}]]
-    @sample = Detexify::Sample.new({
+    @samples = Detexify::Sample.on(@db)
+    @sample = @samples.new({
       :strokes => @strokes, :feature_vector => [0], :symbol_id => @symbol.id
     })
     @sample.create!
-    Detexify::Sample.count.should be(1)
-    # instantiate now so that database is properly loaded
-    @classifier = Detexify::Classifier.new lambda { |strokes| [rand 10] }
+    #@samples.count.should be(1) # bug in couchrest TODO check if mattetti pulled my fix
+    @classifier = Detexify::Classifier.new TESTCOUCH, lambda { |strokes| [rand 10] }
     @classifier.wait_until_loaded
   end
   
   after do
-    Detexify::Sample::database.recreate!
+    @db.delete!
   end
   
   it "should load the database and have the correct sample count" do

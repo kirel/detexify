@@ -2,7 +2,8 @@ require 'json'
 require 'sinatra'
 require 'classifier.rb' 
 
-CLASSIFIER = Detexify::Classifier.new(Detexify::Extractors::Strokes::Features.new)
+COUCH = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
+CLASSIFIER = Detexify::Classifier.new(COUCH, Detexify::Extractors::Strokes::Features.new)
 
 get '/' do
   redirect '/classify.html'
