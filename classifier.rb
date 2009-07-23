@@ -20,7 +20,7 @@ module Detexify
       @samples = Sample.on(@couch)
       @extractor = extractor
       @progress = 0
-      @minisamples = []
+      @minisamples = MiniSampleContainer.new SAMPLE_LIMIT
       @sample_counts = Hash.new { |h,k| h[k] = 0 }
       load_samples
     end
@@ -68,7 +68,7 @@ module Detexify
       f = extract_features strokes
       sample = @samples.new(:symbol_id => id, :feature_vector => f, :strokes => strokes)
       sample.save
-      samples << sample if count_samples(id) < SAMPLE_LIMIT
+      samples << sample
       @sample_counts[id.to_sym] += 1
     end
 
@@ -136,7 +136,6 @@ module Detexify
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
           samples = @samples.by_symbol_id(:key => symbol.id)
-          #samples.each { |sample| @minisamples << MiniSample.new(sample) }
           # only load 100 randomly selected samples into the memory
           samples.sort_by { rand }[0,SAMPLE_LIMIT].each { |sample| @minisamples << MiniSample.new(sample) }
           @sample_counts[symbol.id] += samples.size
