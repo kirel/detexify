@@ -45,6 +45,7 @@
   - \S 
   - \dag 
   - \pounds
+  - \& # added by me
 # Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
 - package: amssymb
   bothmodes:
@@ -960,6 +961,29 @@
     - \rrfloor
     - \llparenthesis
     - \rrparenthesis
+# Table 141: Variable-sized Delimiters
+- mathmode:
+    # symbols commented out are already defined elsewhere
+    # - \downarrow
+    # - \Downarrow
+    - \langle
+    - \rangle
+    - \lceil
+    - \rceil
+    # - \uparrow
+    # - \Uparrow
+    - \lfloor
+    - \rfloor
+    # - \updownarrow
+    # - \Updownarrow
+    #- \{
+    #- \}
+    - '['
+    - ']'
+    - '|'
+    - \|
+    - /
+    # - \backslash
 # Table 144: stmaryrd Variable-sized Delimiters 
 - package: stmaryrd
   mathmode:
@@ -1063,10 +1087,19 @@
     - \mathbb{C}
     - \mathcal{H}
     - \mathcal{L}
+    - \mathcal{O}
+    - \mathcal{P}
     - \mathfrak{S}
 - package: bbold
   mathmode:
     - \mathbb{1}
+- package: dsfont
+  mathmode:
+    - \mathds{N}
+    - \mathds{Z}
+    - \mathds{Q}
+    - \mathds{R}
+    - \mathds{C}
 # Table197: gensymbSymbolsDeﬁnedtoWorkinBothMathandTextMode
 - package: gensymb
   bothmodes:
