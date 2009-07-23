@@ -11,7 +11,7 @@ module Detexify
   class Classifier
 
     K = 5
-    SAMPLE_LIMIT = 500
+    SAMPLE_LIMIT = 100
 
     def initialize dburl, extractor, options = {}
       @couch = CouchRest.database!(dburl) # TODO allow other databases than CoucDB? via Adapters
@@ -20,6 +20,8 @@ module Detexify
       @samples = Sample.on(@couch)
       @extractor = extractor
       @progress = 0
+      @minisamples = []
+      @sample_counts = Hash.new { |h,k| h[k] = 0 }
       load_samples
     end
     
@@ -61,12 +63,12 @@ module Detexify
     def train id, strokes
       raise IllegalSymbolId unless Latex::Symbol[id]
       raise DataMessedUp unless data_ok?(strokes)
-      raise TooManySamples if count_samples(id) >= SAMPLE_LIMIT
+      #raise TooManySamples if count_samples(id) >= SAMPLE_LIMIT
       # TODO offload feature extraction to a job queue
       f = extract_features strokes
       sample = @samples.new(:symbol_id => id, :feature_vector => f, :strokes => strokes)
       sample.save
-      samples << sample
+      samples << sample if count_samples(id) < SAMPLE_LIMIT
       @sample_counts[id.to_sym] += 1
     end
 
@@ -128,15 +130,15 @@ module Detexify
     end
 
     def load_samples
-      @minisamples = []
-      @sample_counts = Hash.new { |h,k| h[k] = 0 }
       # load by symbol in a new thread
       Thread.abort_on_exception = true
       @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
           samples = @samples.by_symbol_id(:key => symbol.id)
-          samples.each { |sample| @minisamples << MiniSample.new(sample) }
+          #samples.each { |sample| @minisamples << MiniSample.new(sample) }
+          # only load 100 randomly selected samples into the memory
+          samples.sort_by { rand }[0,SAMPLE_LIMIT].each { |sample| @minisamples << MiniSample.new(sample) }
           @sample_counts[symbol.id] += samples.size
           @progress = 100*(i+1)/symbols.size
         end

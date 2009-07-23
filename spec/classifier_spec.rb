@@ -60,9 +60,7 @@ describe Detexify::Classifier do
       (Detexify::Classifier::SAMPLE_LIMIT-1).times { @classifier.train(@symbol.id, @strokes) }
     end
     
-    it "should not train that symbol again" do
-      lambda { @classifier.train(@symbol.id, @strokes) }.should raise_error(Detexify::Classifier::TooManySamples)
-    end
+    it "should train that symbol again but don't load it into memory"
     
   end
   
