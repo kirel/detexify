@@ -41,12 +41,7 @@ module Detexify
     end
     
     def << sample
-      sample =  case sample
-                when Sample
-                  MiniSample.new(sample)
-                when MiniSample
-                  sample
-                end
+      sample =  MiniSample.new(sample) unless sample.is_a? MiniSample
       a = @hash[sample.symbol_id]
       a << sample
       a.shift if a.size > @limit
