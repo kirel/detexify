@@ -27,21 +27,19 @@ describe Detexify::Classifier do
   end
 
   it "should classify a new sample" do
-    best, all = @classifier.classify(@strokes)
-    best.should have(1).element
-    all.should have(Latex::Symbol::List.size).elements
+    res = @classifier.classify(@strokes)
+    res.should have(Latex::Symbol::List.size).elements
 
     # verify structure of response
-    [best, all].each do |a|
-      a.should be_an(Array)
-      a.should_not be_empty
-      a.each do |element|
-        element.should be_a(Hash)
-        element.should have_key(:symbol)
-        element.should have_key(:score)
-      end      
-    end
+    res.should be_an(Array)
+    res.each do |hit|
+      hit.should be_a(Hash)
+      hit.should have_key(:symbol)
+      hit.should have_key(:score)
+    end      
   end
+  
+  it "should limit the results if requested"
   
   it "should train a legal symbol" do
     lambda { @classifier.train(@symbol.id, @strokes) }.should_not raise_error

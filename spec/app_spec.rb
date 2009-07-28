@@ -26,10 +26,10 @@ describe 'The Sinatra classifier' do
     post '/classify', :strokes => JSON(@strokes)
     last_response.should be_ok
     r = JSON last_response.body
-    r.should be_a(Hash)
-    %w(best all).each do |key|
-      r.should have_key(key)
-    end
+    r.should be_a(Array)
+    # %w(best all).each do |key|
+    #   r.should have_key(key)
+    # end
   end
   
   it "trains a wellformed request" do

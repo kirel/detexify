@@ -50,6 +50,8 @@ post '/train' do
   # TODO return new list of symbols and counts
 end
 
+# classifies a set of strokes
+# post param 'strokes' must be [['x':int x, 'y':int y, 't':int time], [...]]
 post '/classify' do
   halt 401, 'I want some payload' unless params[:strokes]
   strokes = JSON params[:strokes]

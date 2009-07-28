@@ -8,7 +8,7 @@ function canvassify(canvas, callback) {
   var current_stroke;
   canvas.strokes = [];
   var point = function(x,y) {
-    return {"x":x, "y":y, "time": (new Date()).getTime()};
+    return {"x":x, "y":y, "t": (new Date()).getTime()};
   }
   var start = function(evt) {
     draw = true;
