@@ -16,7 +16,7 @@ $(function(){
         if (active === 0) {
           $('#canvasspinner').hide('scale');
         }
-        populateSymbolList(json.best);
+        populateSymbolList(json.slice(0,5));
         $('#morearea').show();
         latex.init();
         var setuptraining = function() {
@@ -43,7 +43,7 @@ $(function(){
         // setup all list
         $('#more').unbind('click').click(function(){
           $('#morearea').hide();
-          populateSymbolList(json.all);
+          populateSymbolList(json);
           latex.init();
           setuptraining();
           return false;
