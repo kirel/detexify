@@ -55,6 +55,6 @@ end
 post '/classify' do
   halt 401, 'I want some payload' unless params[:strokes]
   strokes = JSON params[:strokes]
-  best, all = CLASSIFIER.classify strokes
-  JSON :best => best, :all => all
+  hits = CLASSIFIER.classify strokes
+  JSON hits
 end
