@@ -1,1 +1,1 @@
-couchrest
+couchrest --version '>= 0.32'
