@@ -16,7 +16,7 @@ module Detexify
     def initialize dburl, extractor, options = {}
       @couch = CouchRest.database!(dburl) # TODO allow other databases than CoucDB? via Adapters
       # http:// -> couchdb via Couchrest, mysql:// -> ..., sqlite:// -> ... via Sequel?
-      Sample.use_database @couch # this line looks wrong but it is there in the couchrest specs
+      # Sample.use_database @couch # this line looks wrong but it is there in the couchrest specs
       @samples = Sample.on(@couch)
       @extractor = extractor
       @progress = 0
@@ -123,7 +123,7 @@ module Detexify
     end
     
     def wait_until_loaded
-      @load_thread.join
+      @load_thread.join if @load_thread
     end
 
     private
@@ -136,6 +136,7 @@ module Detexify
     def load_samples
       # load by symbol in a new thread
       Thread.abort_on_exception = true
+      puts 'Starting load thread...'
       @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
@@ -144,6 +145,7 @@ module Detexify
           samples.sort_by { rand }[0,SAMPLE_LIMIT].each { |sample| @minisamples << MiniSample.new(sample) }
           @sample_counts[symbol.id] += samples.size
           @progress = 100*(i+1)/symbols.size
+          # puts "#{symbol} loaded. #{@progress} % done..."
         end
       end
       @minisamples
