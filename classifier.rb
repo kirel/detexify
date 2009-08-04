@@ -139,7 +139,6 @@ module Detexify
     def load_samples
       # load by symbol in a new thread
       Thread.abort_on_exception = true
-      puts 'Starting load thread...'
       @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
