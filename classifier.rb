@@ -72,7 +72,7 @@ module Detexify
       @sample_counts[id.to_sym] += 1
     end
 
-    def classify strokes # TODO modules KNN, Mean, etc. for different classifier types? 
+    def classify strokes, options = {} # TODO modules KNN, Mean, etc. for different classifier types? 
       raise DataMessedUp unless data_ok?(strokes)
       f = extract_features strokes
       # use nearest neighbour classification
@@ -98,7 +98,10 @@ module Detexify
       # we are adding everything that is not in the nearest list with LARGE distance
       missing = symbols.map { |symbol| symbol.id } - minimal_distance_hash.keys
       # FIXME this feels slow
-      return minimal_distance_hash.map { |id, dist| { :symbol => Latex::Symbol[id].to_hash, :score => dist } }.sort_by{ |h| h[:score] } + missing.map { |id| { :symbol => Latex::Symbol[id].to_hash, :score => 999999} }
+      ret = minimal_distance_hash.map { |id, dist| { :symbol => Latex::Symbol[id].to_hash, :score => dist } }.sort_by{ |h| h[:score] } + missing.map { |id| { :symbol => Latex::Symbol[id].to_hash, :score => 999999} }
+      # limit and skip
+      ret = ret[options[:skip] || 0, options[:limit] || ret.size] if [:limit, :skip].any? { |k| options[k] }
+      return ret
     end
 
     def distance x, y

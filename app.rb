@@ -44,7 +44,7 @@ end
 # post param 'strokes' must be [['x':int x, 'y':int y, 't':int time], [...]]
 post '/classify' do
   halt 401, 'I want some payload' unless params[:strokes]
-  strokes = JSON params[:strokes]
-  hits = CLASSIFIER.classify strokes
+  strokes = JSON params.delete(:strokes)
+  hits = CLASSIFIER.classify strokes, params
   JSON hits
 end
