@@ -11,7 +11,7 @@ module Detexify
   class Classifier
 
     K = 5
-    SAMPLE_LIMIT = 100
+    SAMPLE_LIMIT = 50
 
     def initialize dburl, extractor, options = {}
       @couch = CouchRest.database!(dburl) # TODO allow other databases than CoucDB? via Adapters
