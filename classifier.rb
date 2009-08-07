@@ -136,29 +136,16 @@ module Detexify
       strokes.is_a?(Array)
     end
 
-    LOAD_BATCH = 50
-    
     def load_samples
       # load by symbol in a new thread
       Thread.abort_on_exception = true
-      
-      batch = []
       @load_thread = Thread.new do
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
-          batch << symbol.id
-          if batch.size >= LOAD_BATCH
-            samples = @samples.by_symbol_id(:keys => batch)
-            batch.each do |id|
-              samples_for_id = samples.select { |sample| sample.symbol_id.to_sym == id }
-              # puts "for #{id}"
-              # puts samples_for_id.inspect
-              # only load 100 randomly selected samples into the memory
-              samples_for_id.sort_by { rand }[0,SAMPLE_LIMIT].each { |sample| @minisamples << MiniSample.new(sample) }
-              @sample_counts[id] += samples.size              
-            end
-            batch.clear
-          end
+          samples = @samples.by_symbol_id(:key => symbol.id)
+          # only load 100 randomly selected samples into the memory
+          samples.sort_by { rand }[0,SAMPLE_LIMIT].each { |sample| @minisamples << MiniSample.new(sample) }
+          @sample_counts[symbol.id] += samples.size
           @progress = 100*(i+1)/symbols.size
           # puts "#{symbol} loaded. #{@progress} % done..."
         end
