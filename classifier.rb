@@ -136,7 +136,7 @@ module Detexify
       strokes.is_a?(Array)
     end
 
-    LOAD_BATCH = 100
+    LOAD_BATCH = 50
     
     def load_samples
       # load by symbol in a new thread
