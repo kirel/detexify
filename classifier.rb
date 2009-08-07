@@ -11,8 +11,7 @@ module Detexify
   class Classifier
 
     K = 5
-    FAST_LIMIT = 10
-    SAMPLE_LIMIT = 50
+    SAMPLE_LIMIT = 100
 
     def initialize dburl, extractor, options = {}
       @couch = CouchRest.database!(dburl) # TODO allow other databases than CoucDB? via Adapters
@@ -141,24 +140,13 @@ module Detexify
       # load by symbol in a new thread
       Thread.abort_on_exception = true
       @load_thread = Thread.new do
-        #fast load
         symbols.each_with_index do |symbol,i|
           # TODO allow more concurrent requests or load in batches
-          samples = @samples.by_symbol_id(:key => symbol.id, :limit => FAST_LIMIT)
+          samples = @samples.by_symbol_id(:key => symbol.id)
           # only load 100 randomly selected samples into the memory
-          samples.each { |sample| @minisamples << MiniSample.new(sample) }
+          samples.sort_by { rand }[0,SAMPLE_LIMIT].each { |sample| @minisamples << MiniSample.new(sample) }
           @sample_counts[symbol.id] += samples.size
-          @progress = 20*(i+1)/symbols.size
-          # puts "#{symbol} loaded. #{@progress} % done..."
-        end
-        #slow load
-        symbols.each_with_index do |symbol,i|
-          # TODO allow more concurrent requests or load in batches
-          samples = @samples.by_symbol_id(:key => symbol.id, :skip => FAST_LIMIT, :limit => (SAMPLE_LIMIT-FAST_LIMIT))
-          # only load 100 randomly selected samples into the memory
-          samples.each { |sample| @minisamples << MiniSample.new(sample) }
-          @sample_counts[symbol.id] += samples.size
-          @progress = 20+80*(i+1)/symbols.size
+          @progress = 100*(i+1)/symbols.size
           # puts "#{symbol} loaded. #{@progress} % done..."
         end
       end
