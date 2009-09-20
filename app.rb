@@ -4,13 +4,21 @@ require 'classifiers'
 require 'extractors'
 require 'matrix'
 require 'symbol'
+require 'couch'
+
+autoload :MultiElasticMatcher, "elastic_matcher"
 
 #COUCH = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
 
-CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r })
+#CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r })
+#CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |x| x }, MultiElasticMatcher, [lambda { |i| :all }])
+CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |strokes| Detexify::Preprocessors::Strokes::SizeNormalizer.new.process strokes }, MultiElasticMatcher, [lambda { |i| i.size }])
 
-configure do
+# load DB
+Detexify::Couch::Sample.all.each do |s|
+  CLASSIFIER.train s.symbol_id, s.strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
 end
+
 @loaded = true, @progress = 100 # TODO
 @sample_counts = Hash.new { |h,k| h[k] = 0 }
 # TODO load the data
@@ -46,6 +54,7 @@ post '/train' do
     # TODO update sample counts
     
     # *** TODO also persist 
+    Detexify::Couch::Sample.create! :symbol_id => params[:id], :strokes => strokes
   else
     halt 403, "These strokes look suspicious"
   end
@@ -61,5 +70,5 @@ post '/classify' do
   strokes = JSON params[:strokes]
   s = strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
   hits = CLASSIFIER.classify s#, { :skip => params[:skip] && params[:skip].to_i, :limit => params[:limit] && params[:limit].to_i }
-  JSON hits
+  JSON hits.map { |hit| { :symbol => Latex::Symbol[hit.id].to_hash, :score => hit.score} }
 end

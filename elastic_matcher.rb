@@ -56,7 +56,11 @@ class ElasticMatcher
 end
 
 MultiElasticMatcher = lambda do |first, second|
-  
+  @matcher = ElasticMatcher.new
+  max = [first.size, second.size].min
+  (0...max).sum do |i|
+    @matcher.call(first[i], second[i])
+  end
 end
 
 if __FILE__ == $0

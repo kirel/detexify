@@ -1,3 +1,5 @@
+module Detexify
+
 module Couch
   
   require 'couchrest'
@@ -6,7 +8,6 @@ module Couch
   class Sample < CouchRest::ExtendedDocument
     use_database CouchRest.database!("http://127.0.0.1:5984/detexify-samples")
     
-    property :feature_vector
     property :strokes
     property :symbol_id
     
@@ -20,4 +21,6 @@ module Couch
     
   end
   
+end
+
 end

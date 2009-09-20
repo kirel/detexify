@@ -1,8 +1,11 @@
 require 'sample'
+require 'decision_tree' # TODO autoload
 
 module Classifiers
 
-  # classifier
+  Hit = Struct.new :id, :score
+
+  # classifiers
 
   class KnnClassifier
         
@@ -42,7 +45,7 @@ module Classifiers
       neighbours.each { |id, num| computed_neighbour_distance[id] = max_nearest_neighbours_distance.to_f/num }
       minimal_distance_hash.update(computed_neighbour_distance)
       # FIXME this feels slow
-      ret = minimal_distance_hash.map { |id, dist| { :id => id, :score => dist } }.sort_by{ |h| h[:score] }
+      ret = minimal_distance_hash.map { |id, dist| Hit.new id, dist }.sort_by{ |h| h.score }
       # limit and skip
       ret = ret[options[:skip] || 0, options[:limit] || ret.size] if [:limit, :skip].any? { |k| options[k] }
       return ret
@@ -53,7 +56,6 @@ module Classifiers
   class DCPruningKnnClassifier < KnnClassifier
         
     def initialize extractor, measure, deciders, options = {}
-      @pruner = pruner
       @extractor = extractor
       @measure = measure
       @tree = DecisionTree.new deciders

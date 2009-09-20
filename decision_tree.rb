@@ -2,12 +2,14 @@ require 'sample'
 
 class DecisionTree
   
+  # TODO http://en.wikipedia.org/wiki/ID3_algorithm
+   
   def initialize deciders
     @deciders = deciders
     @tree = {}
   end
   
-  def << sample
+  def << sample # TODO should be able to add to multiple subtrees
     t = @tree
     @deciders[0..-2].each do |d|
       branch = d.call sample.data

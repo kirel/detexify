@@ -33,7 +33,7 @@ describe Classifiers::KnnClassifier do
     it "should return results ordered by their score" do
       res = @classifier.classify(@data)
       # # mapping to hit[:score] as sort_by is not stable
-      res.map { |hit| hit[:score] }.should === res.sort_by { |hit| hit[:score] }.map { |hit| hit[:score] }
+      res.map { |hit| hit.score }.should === res.sort_by { |hit| hit.score }.map { |hit| hit.score }
     end
 
     it "should limit the results if requested" do

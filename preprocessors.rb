@@ -56,6 +56,35 @@ module Detexify
       class ToImage
         
       end # class StrokesToImage
+      
+      class SizeNormalizer
+        
+        # TODO options
+        
+        def process strokes
+          left, right, top, bottom = Detexify::Extractors::Strokes::BoundingBox.new.call(strokes)
+
+          # TODO push this into a preprocessor
+          # computations for next step
+          height = top - bottom
+          width = right - left
+          ratio = width/height
+          long, short = ratio > 1 ? [width, height] : [height, width]
+          offset =  if ratio > 1
+            Vector[0.0, (1.0 - short/long)/2.0]
+          else
+            Vector[(1.0 - short/long)/2.0, 0.0]
+          end
+          
+          # move left and bottom to zero, scale to fit and then center
+          strokes.map do |stroke|
+            stroke.map do |point|
+              ((point - Vector[left, bottom]) * (1.0/long)) + offset
+            end
+          end
+        end
+        
+      end
 
     end # module Strokes
 
