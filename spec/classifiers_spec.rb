@@ -1,15 +1,16 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
+require 'sample'
 require 'classifiers'
 
-describe Detexify::KnnClassifier do
+describe Classifiers::KnnClassifier do
 
   before do
     @data = 1
-    @sample = Detexify::Sample.new(:"1", 1)
+    @sample = Sample.new(:"1", 1)
     @extractor = lambda { |i| i } # identity
     @measure = lambda { |i,j| (i - j).abs }
-    @classifier = Detexify::KnnClassifier.new @extractor, @measure
+    @classifier = Classifiers::KnnClassifier.new @extractor, @measure
   end
     
   it "should train a sample" do
@@ -20,7 +21,7 @@ describe Detexify::KnnClassifier do
     
     before do
       (1..10).each do |i|
-        sample = Detexify::Sample.new(:"#{i}", i)
+        sample = Sample.new(:"#{i}", i)
         @classifier.train(sample.id, sample.data)
       end
     end

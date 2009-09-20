@@ -14,13 +14,13 @@ module Detexify
           # TODO push this into preprocessors.rb
           # maximally fit into [0,1]x[0,1]
           first_point = strokes.first.first
-          left, right, top, bottom = %w(x x y y).map { |c| first_point[c] }  # TODO!
+          left, right, top, bottom = [0,0,1,1].map { |c| first_point[c] }  # TODO!
           strokes.each do |stroke|
             stroke.each do |point|
-              left   = point['x'] if point['x'] < left
-              right  = point['x'] if point['x'] > right
-              bottom = point['y'] if point['y'] < bottom
-              top    = point['y'] if point['y'] > top
+              left   = point[0] if point[0] < left # x
+              right  = point[0] if point[0] > right # x
+              bottom = point[1] if point[1] < bottom # y
+              top    = point[1] if point[1] > top # y
             end
           end
           return [left, right, top, bottom].map { |i| i.to_f }
@@ -39,7 +39,7 @@ module Detexify
           strokes.each do |stroke|
             stroke.each do |point|
               @boxes.each_with_index do |box, i|
-                count[i] += 1 if box['x'].include?(point['x']) && box['y'].include?(point['y'])
+                count[i] += 1 if box['x'].include?(point[0]) && box['y'].include?(point[1])
               end
             end
           end
@@ -69,8 +69,8 @@ module Detexify
             stroke.each do |point|
               if previous
                 # TODO DRY this up
-                p = Vector.elements(previous.values_at('x', 'y'))
-                n = Vector.elements(point.values_at('x', 'y'))
+                p = previous #Vector.elements(previous.values_at('x', 'y'))
+                n = point #Vector.elements(point.values_at('x', 'y'))
                 v = n - p
                 # now classify v
                 d = chaincodes[MyMath::orientation(v)]
@@ -111,16 +111,15 @@ module Detexify
           ratio = width/height
           long, short = ratio > 1 ? [width, height] : [height, width]
           offset =  if ratio > 1
-            { 'x' => 0.0 , 'y' => (1.0 - short/long)/2.0 }
+            Vector[0.0, (1.0 - short/long)/2.0]
           else
-            { 'x' => (1.0 - short/long)/2.0 , 'y' => 0.0 }
+            Vector[(1.0 - short/long)/2.0, 0.0]
           end
 
           # move left and bottom to zero, scale to fit and then center
-          strokes.each do |stroke|
-            stroke.each do |point|
-              point['x'] = ((point['x'] - left) / long) + offset['x']
-              point['y'] = ((point['y'] - bottom) / long) + offset['y']
+          strokes = strokes.map do |stroke|
+            stroke.map do |point|
+              ((point - Vector[left, bottom]) * (1.0/long)) + offset
             end
           end          
 
@@ -153,7 +152,7 @@ module Detexify
           # - number of strokes
           extractors << Proc.new { |s| (s.size*10).to_f }
           # TODO add more features
-          return extractors.map { |e| e.call(strokes) }.flatten
+          return Vector.elements extractors.map { |e| e.call(strokes) }.flatten
         end
 
       end # class OnlineFeatures

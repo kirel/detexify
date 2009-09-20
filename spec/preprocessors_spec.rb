@@ -4,13 +4,13 @@ require 'preprocessors'
 describe Detexify::Preprocessors::Strokes::EquidistantPoints do
   
   def distance p1, p2
-    MyMath::euclidean_distance(Vector.elements(p1.values_at('x','y')), Vector.elements(p2.values_at('x','y')))
+    (p1-p2).r
   end
   
   before do
     @distance = 0.01
     @pre = Detexify::Preprocessors::Strokes::EquidistantPoints.new :distance => @distance
-    @stroke = [{'x'=>1,'y'=>1}, {'x'=>-1,'y'=>-3}, {'x'=>-1,'y'=>-1}]
+    @stroke = [Vector[1,1], Vector[-1,-3], Vector[-1,-1]]
   end
   
   it "should make points in strokes equidistantly distributed" do
@@ -19,7 +19,7 @@ describe Detexify::Preprocessors::Strokes::EquidistantPoints do
     stroke.each do |point|
       if previous
         # not using be_close because distance in cusps can be smaller
-        distance(previous, point).should <= @distance + @distance/100
+        distance(previous, point).should <= @distance + @distance/100 # TODO there should be a matcher
         previous = point
       else
         previous = point

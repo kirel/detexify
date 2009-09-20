@@ -28,14 +28,14 @@ module Detexify
           previous = nil
           stroke.each do |point|
             if previous
-              p = Vector.elements(previous.values_at('x', 'y'))
-              n = Vector.elements(point.values_at('x', 'y'))
+              p = previous
+              n = point
               v = n - p
               norm = v.r
               # add new points
               while norm > distance_left
                 p = p + v * (distance_left/norm)
-                previous = {'x' => p[0], 'y' => p[1]}
+                previous = p
                 equidistant_stroke << previous
                 distance_left = @options[:distance]
                 v = n - p

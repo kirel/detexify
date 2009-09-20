@@ -1,23 +1,32 @@
 require 'json'
 require 'sinatra'
-require 'classifier.rb' 
+require 'classifiers'
+require 'extractors'
+require 'matrix'
+require 'symbol'
 
-COUCH = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
-CLASSIFIER = Detexify::Classifier.new(COUCH, Detexify::Extractors::Strokes::Features.new)
+#COUCH = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
+
+CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r })
+
+configure do
+end
+@loaded = true, @progress = 100 # TODO
+@sample_counts = Hash.new { |h,k| h[k] = 0 }
+# TODO load the data
 
 get '/status' do
-  JSON :loaded => CLASSIFIER.loaded?, :progress => CLASSIFIER.progress
+  JSON :loaded => true, :progress => 100
 end
 
 get '/symbols' do
-  symbols = CLASSIFIER.symbols.map { |s| s.to_hash }
+  symbols = Latex::Symbol::List.map { |s| s.to_hash }
   # update with counts
-  sample_counts = CLASSIFIER.sample_counts
-  JSON symbols.map { |symbol| symbol.update(:samples => sample_counts[symbol[:id]]) }
+  JSON symbols.map { |symbol| symbol.update(:samples => 0) }#@sample_counts[symbol[:id]]) }
 end
 
 post '/train' do
-  halt 403, "Illegal id" unless params[:id] && CLASSIFIER.symbol(params[:id])
+  halt 403, "Illegal id" unless params[:id] && Latex::Symbol[params[:id].to_sym]
   halt 403, 'I want some payload' unless params[:strokes]
   begin
     strokes = JSON params[:strokes]
@@ -25,13 +34,18 @@ post '/train' do
     halt 403, "Strokes scrambled"
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
-    begin
-      CLASSIFIER.train params[:id], strokes
-    rescue Detexify::Classifier::TooManySamples
-      # FIXME can I handle http status codes in the request? Wanna go restful
-      #halt 403, "Thanks - i've got enough of these..."
-      halt 200, JSON(:error => "Thanks but I've got enough of these...")
-    end
+    # begin
+      s = strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
+      CLASSIFIER.train params[:id], s
+    # rescue Detexify::Classifier::TooManySamples
+    #   # FIXME can I handle http status codes in the request? Wanna go restful
+    #   #halt 403, "Thanks - i've got enough of these..."
+    #   halt 200, JSON(:error => "Thanks but I've got enough of these...")
+    # end
+    
+    # TODO update sample counts
+    
+    # *** TODO also persist 
   else
     halt 403, "These strokes look suspicious"
   end
@@ -45,6 +59,7 @@ end
 post '/classify' do
   halt 401, 'I want some payload' unless params[:strokes]
   strokes = JSON params[:strokes]
-  hits = CLASSIFIER.classify strokes, { :skip => params[:skip] && params[:skip].to_i, :limit => params[:limit] && params[:limit].to_i }
+  s = strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
+  hits = CLASSIFIER.classify s#, { :skip => params[:skip] && params[:skip].to_i, :limit => params[:limit] && params[:limit].to_i }
   JSON hits
 end

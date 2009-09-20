@@ -1,6 +1,6 @@
 require 'sample'
 
-module Detexify
+module Classifiers
 
   # classifier
 
