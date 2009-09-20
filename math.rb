@@ -1,8 +1,12 @@
 require 'matrix'
 
 module Enumerable
-  def sum
-    inject { |s,e| s+e }
+  def sum(*args, &block)
+    if block_given?
+      map &block
+    else
+      self
+    end.inject(*args) { |sum, x| sum + x }
   end
 end
 
