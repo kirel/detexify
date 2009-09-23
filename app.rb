@@ -1,17 +1,14 @@
 require 'json'
 require 'sinatra'
-require 'classifiers'
-require 'extractors'
 require 'matrix'
 require 'symbol'
 require 'couch'
 require 'memcache'
 
-autoload :MultiElasticMatcher, "elastic_matcher"
+require 'my_classifiers'
+
 CACHE = MemCache.new('localhost:11211')
-CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r }, :cache => CACHE)
-#CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |x| x }, MultiElasticMatcher, [lambda { |i| :all }])
-#CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |strokes| Detexify::Preprocessors::Strokes::SizeNormalizer.new.process strokes }, MultiElasticMatcher, [lambda { |i| i.size }])
+CLASSIFIER = Classifiers[:default, CACHE]
 
 # load DB
 

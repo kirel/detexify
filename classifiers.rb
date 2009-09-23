@@ -4,7 +4,7 @@ require 'decision_tree' # TODO autoload
 module Classifiers
 
   Hit = Struct.new :id, :score
-
+    
   # classifiers
 
   class KnnClassifier
@@ -77,5 +77,18 @@ module Classifiers
     end
     
   end
+  
+  @@classifier_blueprints = {}
+  
+  module_function
+  
+  def classifier key, &block
+    @@classifier_blueprints[key] = proc &block
+  end
+  
+  def [] key, cache
+    @@classifier_blueprints[key].call cache
+  end
+  
 
 end
