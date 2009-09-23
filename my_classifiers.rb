@@ -15,5 +15,5 @@ classifier :elastic do
       Detexify::Preprocessors::Strokes::EquidistantPoints.new(:distance => 0.1)
     ),
     MultiElasticMatcher,
-    [lambda { |i| i.size }])
+    [lambda { |i| i.size }, Detexify::Extractors::Strokes::AspectRatio.new(4)])
 end

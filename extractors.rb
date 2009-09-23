@@ -27,6 +27,33 @@ module Detexify
         end
 
       end
+      
+      class AspectRatio # more a decider than an extractor
+        
+        def initialize ratio
+          @ratio = ratio > 1 ? ratio : 1.0/ratio
+        end
+        
+        def call strokes
+          left, right, top, bottom = Detexify::Extractors::Strokes::BoundingBox.new.call(strokes)
+
+          # TODO push this into a preprocessor
+          # computations for next step
+          height = top - bottom
+          width = right - left
+          ratio = width/height
+          case
+          when ratio > @ratio
+            :wide
+          when ratio < 1.0/@ratio
+            :tall
+          else
+            :normal
+          end
+            
+        end
+        
+      end
 
       class PointDensity
 
