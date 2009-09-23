@@ -24,4 +24,4 @@ class CappedContainer
 
 end # CappedContainer
 
-Sample = Struct.new(:id, :data)
+Sample = Struct.new(:id, :data, :sample_id)

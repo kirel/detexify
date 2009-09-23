@@ -17,16 +17,19 @@ module Classifiers
       @measure = measure
       @samples = CappedContainer.new SAMPLE_LIMIT # TODO add to options
       @cache = options[:cache]
+      @semaphore = Mutex.new # synchronize access to @samples
     end
     
     # train the classifier
-    def train id, data
-      extracted = if @cache
-                    @cache.fetch(data._id.to_s) { @extractor.call(data) }
+    def train id, data, sample_id = nil # _id is for caching purposes
+      extracted = if @cache && sample_id
+                    @cache.fetch(sample_id.to_s) { @extractor.call(data) }
                   else
                     @extractor.call(data)
                   end
-      @samples << Sample.new(id, extracted)
+      synchronize do
+        @samples << Sample.new(id, extracted)
+      end
     end
 
     def classify data, options = {}
@@ -34,10 +37,21 @@ module Classifiers
       # use nearest neighbour classification
       # sort by distance and find minimal distance for each class
       minimal_distance_hash = {}
-      sorted = @samples.sort_by do |sample|
-        d = @measure.call(unknown, sample.data)
-        minimal_distance_hash[sample.id] = d if (!minimal_distance_hash[sample.id]) || (minimal_distance_hash[sample.id] > d)
-        d
+      sorted = synchronize do
+        # puts @samples.size
+        # i = 0
+        @samples.sort_by do |sample|
+          # puts "**** Vergleiche"
+          d = @measure.call(unknown, sample.data)
+          minimal_distance_hash[sample.id] = d if (!minimal_distance_hash[sample.id]) || (minimal_distance_hash[sample.id] > d)
+          # puts "Abstand #{d}"
+          # if d.nan?
+          #   puts "-Unbekannt- #{unknown.inspect}"
+          #   puts "-Muster- #{sample.inspect}"
+          # end
+          # puts (i += 1)
+          d
+        end
       end
       neighbours = Hash.new { |h,v| h[v] = 0 } # counting classes of neighbours
       # K is number of best matches we want in the list
@@ -56,6 +70,12 @@ module Classifiers
       ret = ret[options[:skip] || 0, options[:limit] || ret.size] if [:limit, :skip].any? { |k| options[k] }
       return ret
     end
+    
+    protected
+    
+    def synchronize &block
+      @semaphore.synchronize &block
+    end
 
   end # KnnClassifier
   
@@ -65,14 +85,19 @@ module Classifiers
       @extractor = extractor
       @measure = measure
       @tree = DecisionTree.new deciders
+      @semaphore = Mutex.new
     end
     
-    def train id, data
-      @tree << Sample.new(id, @extractor.call(data))
+    def train id, data, sample_id = nil
+      synchronize do
+        @tree << Sample.new(id, @extractor.call(data), sample_id.to_s)
+      end
     end
     
     def classify data, options = {}
-      @samples = @tree.call data
+      synchronize do
+        @samples = @tree.call data
+      end
       super data, options
     end
     
@@ -86,7 +111,7 @@ module Classifiers
     @@classifier_blueprints[key] = proc &block
   end
   
-  def [] key, cache
+  def [] key, cache = nil
     @@classifier_blueprints[key].call cache
   end
   

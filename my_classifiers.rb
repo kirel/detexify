@@ -8,6 +8,12 @@ classifier :default do |cache|
   KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r }, :cache => cache)
 end
 
-#CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r }, :cache => CACHE)
-#CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |x| x }, MultiElasticMatcher, [lambda { |i| :all }])
-#CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |strokes| Detexify::Preprocessors::Strokes::SizeNormalizer.new.process strokes }, MultiElasticMatcher, [lambda { |i| i.size }])
+classifier :elastic do
+  Classifiers::DCPruningKnnClassifier.new(
+    Detexify::Preprocessors::Pipe.new(
+      Detexify::Preprocessors::Strokes::SizeNormalizer.new,
+      Detexify::Preprocessors::Strokes::EquidistantPoints.new(:distance => 0.1)
+    ),
+    MultiElasticMatcher,
+    [lambda { |i| i.size }])
+end

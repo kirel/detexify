@@ -94,12 +94,12 @@ module Detexify
 
           # TODO chop off heads and tails
           # strokes = strokes.map do |stroke|
-          #   Preprocessors::Chop.new(:points => 5, :degree => 180).process(stroke)            
+          #   Preprocessors::Chop.new(:points => 5, :degree => 180).call(stroke)            
           # end
 
           # TODO smooth out points (avarage over three points)
           # strokes = strokes.map do |stroke|
-          #   Preprocessors::Smooth.new.process(stroke)            
+          #   Preprocessors::Smooth.new.call(stroke)            
           # end
 
           left, right, top, bottom = Detexify::Extractors::Strokes::BoundingBox.new.call(strokes)
@@ -124,9 +124,7 @@ module Detexify
           end          
 
           # convert to equidistant point distributon
-          strokes = strokes.map do |stroke|
-            Detexify::Preprocessors::Strokes::EquidistantPoints.new(:distance => 0.01).process(stroke)            
-          end
+          strokes = Detexify::Preprocessors::Strokes::EquidistantPoints.new(:distance => 0.01).call(strokes)
 
           # FIXME I've lost the timestamps here. Dunno if I want to keep them
 
@@ -136,7 +134,7 @@ module Detexify
           extractors << Detexify::Extractors::Strokes::DirectionalHistogramFeatures.new
           # - start direction
           # - end direction
-          # startdirection, enddirection = Extractors::StartEndDirection.new.process(strokes)
+          # startdirection, enddirection = Extractors::StartEndDirection.new.call(strokes)
           # - start/end position
           # - point density
           boxes = [

@@ -8,7 +8,8 @@ require 'memcache'
 require 'my_classifiers'
 
 CACHE = MemCache.new('localhost:11211')
-CLASSIFIER = Classifiers[:default, CACHE]
+#CLASSIFIER = Classifiers[:default, CACHE]
+CLASSIFIER = Classifiers[:elastic]
 
 # load DB
 
@@ -16,32 +17,39 @@ require 'mongo'
 include Mongo
 
 samples = Connection.new.db('detexify').collection('samples')#('samples')
+count = samples.count
+loaded, progress = false, 0
 
-i=0
-require 'benchmark'
-Benchmark.bm do |bm|
-  bm.report do
-samples.find.each do |s|
-  data = s['strokes'].map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
-  data.extend(Module.new do |mod|
-    mod.send :define_method, :_id do
-      s['_id']
+Thread.new do
+  j=0
+  i=0
+  require 'benchmark'
+  Benchmark.bm do |bm|
+    bm.report do
+      samples.find.each do |s|
+        data = s['strokes'].map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
+        CLASSIFIER.train s['symbol_id'], data, s['_id']
+        i += 1
+        progress = (i*100)/count
+        if progress >= j
+          puts "#{progress}% geladen"
+          while j <= progress
+            j += 10
+          end
+        end
+      end
     end
-  end)
-  CLASSIFIER.train s['symbol_id'], data
-  i += 1
-end
   end
+
+  loaded = true
+
 end
 
-puts i
-
-@loaded = true, @progress = 100 # TODO
 @sample_counts = Hash.new { |h,k| h[k] = 0 }
 # TODO load the data
 
 get '/status' do
-  JSON :loaded => true, :progress => 100
+  JSON :loaded => loaded, :progress => progress
 end
 
 get '/symbols' do
@@ -60,8 +68,9 @@ post '/train' do
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
     # begin
-      s = strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
-      CLASSIFIER.train params[:id], s
+    sample_id = samples << { 'symbol_id' => params[:id], 'strokes' => strokes }
+    s = strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
+    CLASSIFIER.train params[:id], s, sample_id
     # rescue Detexify::Classifier::TooManySamples
     #   # FIXME can I handle http status codes in the request? Wanna go restful
     #   #halt 403, "Thanks - i've got enough of these..."
@@ -71,7 +80,7 @@ post '/train' do
     # TODO update sample counts
     
     # *** TODO also persist 
-    # samples << strokes
+    
   else
     halt 403, "These strokes look suspicious"
   end

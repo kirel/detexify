@@ -6,7 +6,7 @@ describe DecisionTree do
   
   before do
     @struct = Struct.new :color, :taste
-    @sample = Detexify::Sample.new :klass, @struct.new(:red, :tasty)
+    @sample = Sample.new :klass, @struct.new(:red, :tasty)
     @t = DecisionTree.new [lambda { |e| e.color }, lambda { |e| e.taste }]
   end
   
@@ -19,7 +19,7 @@ describe DecisionTree do
       [[:red, :tasty]],
       [[:blue, :nasty]]*2,
       [[:green, :sweet]]*3
-    ].map { |a| a.map { |b| Detexify::Sample.new :klass, @struct.new(*b) } }
+    ].map { |a| a.map { |b| Sample.new :klass, @struct.new(*b) } }
     
     samples.each do |a|
       a.each do |s|
