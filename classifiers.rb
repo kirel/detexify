@@ -16,11 +16,17 @@ module Classifiers
       @extractor = extractor
       @measure = measure
       @samples = CappedContainer.new SAMPLE_LIMIT # TODO add to options
+      @cache = options[:cache]
     end
     
     # train the classifier
     def train id, data
-      @samples << Sample.new(id, @extractor.call(data))
+      extracted = if @cache
+                    @cache.fetch(data._id.to_s) { @extractor.call(data) }
+                  else
+                    @extractor.call(data)
+                  end
+      @samples << Sample.new(id, extracted)
     end
 
     def classify data, options = {}

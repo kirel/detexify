@@ -5,19 +5,39 @@ require 'extractors'
 require 'matrix'
 require 'symbol'
 require 'couch'
+require 'memcache'
 
 autoload :MultiElasticMatcher, "elastic_matcher"
-
-#COUCH = ENV['COUCH'] || "http://127.0.0.1:5984/detexify"
-
-#CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r })
+CACHE = MemCache.new('localhost:11211')
+CLASSIFIER = Classifiers::KnnClassifier.new(Detexify::Extractors::Strokes::Features.new, lambda { |v,w| (v-w).r }, :cache => CACHE)
 #CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |x| x }, MultiElasticMatcher, [lambda { |i| :all }])
-CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |strokes| Detexify::Preprocessors::Strokes::SizeNormalizer.new.process strokes }, MultiElasticMatcher, [lambda { |i| i.size }])
+#CLASSIFIER = Classifiers::DCPruningKnnClassifier.new(lambda{ |strokes| Detexify::Preprocessors::Strokes::SizeNormalizer.new.process strokes }, MultiElasticMatcher, [lambda { |i| i.size }])
 
 # load DB
-Detexify::Couch::Sample.all.each do |s|
-  CLASSIFIER.train s.symbol_id, s.strokes.map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
+
+require 'mongo'
+include Mongo
+
+samples = Connection.new.db('detexify').collection('samples')#('samples')
+
+i=0
+require 'benchmark'
+Benchmark.bm do |bm|
+  bm.report do
+samples.find.each do |s|
+  data = s['strokes'].map { |stroke| stroke.map { |point| Vector[point['x'], point['y']] }}
+  data.extend(Module.new do |mod|
+    mod.send :define_method, :_id do
+      s['_id']
+    end
+  end)
+  CLASSIFIER.train s['symbol_id'], data
+  i += 1
 end
+  end
+end
+
+puts i
 
 @loaded = true, @progress = 100 # TODO
 @sample_counts = Hash.new { |h,k| h[k] = 0 }
@@ -54,7 +74,7 @@ post '/train' do
     # TODO update sample counts
     
     # *** TODO also persist 
-    Detexify::Couch::Sample.create! :symbol_id => params[:id], :strokes => strokes
+    # samples << strokes
   else
     halt 403, "These strokes look suspicious"
   end

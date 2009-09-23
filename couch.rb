@@ -1,26 +1,26 @@
 module Detexify
 
-module Couch
+  module Couch
   
-  require 'couchrest'
-  require 'symbol'
+    require 'couchrest'
+    require 'symbol'
   
-  class Sample < CouchRest::ExtendedDocument
-    use_database CouchRest.database!("http://127.0.0.1:5984/detexify-samples")
+    class Sample < CouchRest::ExtendedDocument
+      use_database CouchRest.database!("http://127.0.0.1:5984/detexify-samples")
     
-    property :strokes
-    property :symbol_id
+      property :strokes
+      property :symbol_id
     
-    view_by :symbol_id
+      view_by :symbol_id
     
-    #timestamps!
+      #timestamps!
     
-    def symbol
-      Latex::Symbol[symbol_id]
+      def symbol
+        Latex::Symbol[symbol_id]
+      end
+    
     end
-    
-  end
   
-end
+  end
 
 end

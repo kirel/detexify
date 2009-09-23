@@ -56,23 +56,26 @@ module MyMath
     cos = Math::acos(x)*8.0/Math::PI
     sin = Math::asin(y)*8.0/Math::PI
     case
-    when cos > 3 && sin > 3 && sin < 5
+    when cos >= 3 && sin >= 3 && sin < 5
       :north
-    when cos > 1 && cos < 3 && sin > 1 && sin < 3
+    when cos >= 1 && cos < 3 && sin >= 1 && sin < 3
       :northeast
-    when cos < 1 && sin < 1 && sin > -1
+    when cos < 1 && sin < 1 && sin >= -1
       :east
-    when cos > 1 && cos < 3 && sin < -1 && sin > -3
+    when cos >= 1 && cos < 3 && sin < -1 && sin >= -3
       :southeast
-    when cos > 3 && cos < 5 && sin < -3
+    when cos >= 3 && cos < 5 && sin < -3
       :south
-    when cos > 5 && cos < 7 && sin > -3 && sin < -1
+    when cos >= 5 && cos < 7 && sin >= -3 && sin < -1
       :southwest
-    when cos > 7 && sin > -1 && sin < 1
+    when cos >= 7 && sin >= -1 && sin < 1
       :west
-    when cos > 5 && cos < 7 && sin > 1 && sin < 3
+    when cos >= 5 && cos < 7 && sin >= 1 && sin < 3
       :northwest
+    else
+      :none # v.r == 0 => x,y == NaN
     end
+    
   end
 
 end

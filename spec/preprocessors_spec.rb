@@ -19,7 +19,7 @@ describe Detexify::Preprocessors::Strokes::EquidistantPoints do
     stroke.each do |point|
       if previous
         # not using be_close because distance in cusps can be smaller
-        distance(previous, point).should <= @distance + @distance/100 # TODO there should be a matcher
+        distance(previous, point).should <= @distance + @distance/100.0 # TODO there should be a matcher
         previous = point
       else
         previous = point
@@ -32,6 +32,16 @@ describe Detexify::Preprocessors::Strokes::EquidistantPoints do
     [:first, :last].each do |m|
       distance(stroke.send(m), @stroke.send(m)).should be_close(0, @distance)      
     end
+  end
+  
+  it "should not die on duplicate points" do
+    stroke = nil
+    lambda { stroke = @pre.process [Vector[0,0]]*10 }.should_not raise_error
+    stroke.should == [Vector[0,0]]
+  end
+  
+  it "should not fail on duplicate points" do
+    @pre.process([Vector[0,0]]*10 + [Vector[1,1]]).should have_at_least(2).elements
   end
       
 end

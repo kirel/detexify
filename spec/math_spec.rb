@@ -45,14 +45,23 @@ describe MyMath do
   
   it "should calculate orientation of a vector" do
     {
+      :north => [-0.5,1],
       :north => [0,1],
+      :northeast => [0.5, 1],
       :northeast => [1,1],
+      :east => [1,0.5],
       :east => [1,0],
+      :southeast => [1,-0.5],
       :southeast => [1,-1],
+      :south => [0.5,-1],
       :south => [0,-1],
+      :southwest => [-0.5,-1],
       :southwest => [-1,-1],
+      :west => [-1,-0.5],
       :west => [-1,0],
-      :northwest => [-1,1]
+      :northwest => [-1,0.5],
+      :northwest => [-1,1],
+      :none => [0.0,0.0]
     }.each do |d, v|
       orientation(Vector.elements(v)).should == d      
     end

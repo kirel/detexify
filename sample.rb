@@ -7,10 +7,10 @@ class CappedContainer
     @hash = Hash.new { |h,v| h[v] = [] }
   end
 
-  def << sample # wich is { :id => data }
+  def << sample # wich is a Sample
     a = @hash[sample.id]
     a << sample
-    a.shift if a.size > @limit    
+    a.shift if a.size > @limit
     self
   end  
 

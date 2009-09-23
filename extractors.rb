@@ -74,7 +74,7 @@ module Detexify
                 v = n - p
                 # now classify v
                 d = chaincodes[MyMath::orientation(v)]
-                res[d] += 1
+                res[d] += 1 if d # might be nil if orientation is :none
                 previous = point                
               else
                 previous = point

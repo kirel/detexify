@@ -31,7 +31,7 @@ module Detexify
               p = previous
               n = point
               v = n - p
-              norm = v.r
+              norm = v.r # FIXME might be zero
               # add new points
               while norm > distance_left
                 p = p + v * (distance_left/norm)
