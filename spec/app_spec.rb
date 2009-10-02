@@ -21,7 +21,7 @@ describe 'The Sinatra classifier' do
   end
 
   it "classifies a wellformed request" do
-    CLASSIFIER.should_receive(:classify).and_return ['foo', 'bar']
+    CLASSIFIER.should_receive(:classify).and_return [Hit.new(@symbol.id, 1)]
     post '/classify', :strokes => JSON(@strokes)
     last_response.should be_ok
     r = JSON last_response.body
@@ -69,5 +69,27 @@ describe 'The Sinatra classifier' do
       end
     end
   end
+  
+  it "should limit the results if requested" # do
+   #    res = @classifier.classify(@data, :limit => 1)
+   #    res.should have(1).elements    
+   #  end
+
+  it "should skip results if requested" # do
+   #    res = @classifier.classify(@data)
+   #    skip = @classifier.classify(@data, :skip => 1)
+   #    skip.should === res[1..-1]
+   #  end
+
+  it "should limit the results if also skipped" # do
+   #    res = @classifier.classify(@data, :limit => 1, :skip => 1)
+   #    res.should have(1).elements
+   #  end
+
+  it "should skip results if also limited" # do
+   #    res = @classifier.classify(@data, :limit => 2)
+   #    skip = @classifier.classify(@data, :skip => 1, :limit => 1)
+   #    skip.should === res[1, 1]    
+   #  end
   
 end

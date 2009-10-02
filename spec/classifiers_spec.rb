@@ -35,28 +35,6 @@ describe Classifiers::KnnClassifier do
       # # mapping to hit[:score] as sort_by is not stable
       res.map { |hit| hit.score }.should === res.sort_by { |hit| hit.score }.map { |hit| hit.score }
     end
-
-    it "should limit the results if requested" do
-      res = @classifier.classify(@data, :limit => 1)
-      res.should have(1).elements    
-    end
-
-    it "should skip results if requested" do
-      res = @classifier.classify(@data)
-      skip = @classifier.classify(@data, :skip => 1)
-      skip.should === res[1..-1]
-    end
-
-    it "should limit the results if also skipped" do
-      res = @classifier.classify(@data, :limit => 1, :skip => 1)
-      res.should have(1).elements
-    end
-
-    it "should skip results if also limited" do
-      res = @classifier.classify(@data, :limit => 2)
-      skip = @classifier.classify(@data, :skip => 1, :limit => 1)
-      skip.should === res[1, 1]    
-    end
     
   end
   

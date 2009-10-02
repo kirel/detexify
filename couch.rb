@@ -1,3 +1,4 @@
+# Legacy...
 module Detexify
 
   module Couch
