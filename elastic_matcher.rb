@@ -39,13 +39,13 @@ class ElasticMatcher
 
   def D r,s
     n, m = r.size-1, s.size-1
-    if m == 0
-      # need to map remaining points of s to remaining point in r
+    if n == 0 # r is only one point left
+      # need to map remaining points of s to remaining point in s
       return(s.sum { |e| d(e, r.first) })
     end
-    if n == 0
-      # need to map remaining points of s to remaining point in s
-      return(s.sum { |e| d(e, s.first) })
+    if m == 0 # s is only 1 point left
+      # need to map remaining points of s to remaining point in r
+      return(r.sum { |e| d(e, s.first) })
     end
     @dynamic_memory[n][m] ||= d(r[n],s[m]) + [ 
       D(r, s[0..-2]),
@@ -57,10 +57,10 @@ end
 
 MultiElasticMatcher = lambda do |first, second|
   @matcher = ElasticMatcher.new
-  max = [first.size, second.size].min
-  (0...max).sum do |i|
-    @matcher.call(first[i], second[i])
-  end
+  small, long = first.size < second.size ? [first, second] : [second, first]
+  res = (0...small.size).sum { |i| @matcher.call(small[i], long[i]) }
+  # if long is longer match all remaining against last stroke of small
+  res += (small.size...long.size).sum { |i| @matcher.call(small.last, long[i]) } || 0
 end
 
 if __FILE__ == $0
