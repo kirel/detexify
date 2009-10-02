@@ -4,11 +4,10 @@ task :default => [:spec]
 
 Spec::Rake::SpecTask.new do |t|
   t.warning = true
-  t.rcov = true
+  #t.rcov = false
 end
 
 namespace :images do
-
 
   desc "create images from symbols.yaml"
   task :create do
