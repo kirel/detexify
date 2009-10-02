@@ -1,4 +1,5 @@
 class Worm
+  
   include Enumerable
   
   def initialize l
@@ -15,6 +16,11 @@ class Worm
     @a << elem
     return self
   end
+  
+  def push elem
+    @a << elem
+    @a.shift if @a.size > @max_lenght
+  end    
 end
 
 class CappedContainer
@@ -29,9 +35,13 @@ class CappedContainer
   def << sample # wich is a Sample
     a = @hash[sample.id]
     a << sample
-    # a.shift if a.size > @limit
     self
   end  
+  
+  def push sample
+    a = @hash[sample.id]
+    a.push sample    
+  end
 
   def each &block
     @hash.each do |id, ary|

@@ -86,11 +86,12 @@ module Classifiers
     def initialize extractor, measure, deciders, options = {}
       options = {
         :k => 5,
+        :limit => 100
       }.update(options)
       @k = options[:k] 
       @extractor = extractor
       @measure = measure
-      @tree = DecisionTree.new deciders
+      @tree = DecisionTree.new deciders, options[:limit]
       @semaphore = Mutex.new
     end
     
