@@ -9,19 +9,21 @@ module Classifiers
 
   class KnnClassifier
         
-    K = 5
-    SAMPLE_LIMIT = 50
-
     def initialize extractor, measure, options = {}
+      options = {
+        :k => 5,
+        :limit => 100
+      }.update(options)
+      @k = options[:k] 
       @extractor = extractor
       @measure = measure
-      @samples = CappedContainer.new SAMPLE_LIMIT # TODO add to options
+      @samples = CappedContainer.new options[:limit] # TODO add to options
       @cache = options[:cache]
       @semaphore = Mutex.new # synchronize access to @samples
     end
     
     # train the classifier
-    def train id, data, sample_id = nil # _id is for caching purposes
+    def train id, data, sample_id = nil # sample_id is for caching purposes
       extracted = if @cache && sample_id
                     @cache.fetch(sample_id.to_s) { @extractor.call(data) }
                   else
@@ -54,8 +56,8 @@ module Classifiers
         end
       end
       neighbours = Hash.new { |h,v| h[v] = 0 } # counting classes of neighbours
-      # K is number of best matches we want in the list
-      while (!sorted.empty?) && (neighbours.size < K)
+      # @k is number of best matches we want in the list
+      while (!sorted.empty?) && (neighbours.size < @k)
         sample = sorted.shift # next nearest sample to f
         neighbours[sample.id] += 1 # counting neighbours of that class
       end
@@ -66,8 +68,8 @@ module Classifiers
       minimal_distance_hash.update(computed_neighbour_distance)
       # FIXME this feels slow
       ret = minimal_distance_hash.map { |id, dist| Hit.new id, dist }.sort_by{ |h| h.score }
-      # limit and skip
-      ret = ret[options[:skip] || 0, options[:limit] || ret.size] if [:limit, :skip].any? { |k| options[k] }
+      # limit and skip shuld be done in the app
+      # ret = ret[options[:skip] || 0, options[:limit] || ret.size] if [:limit, :skip].any? { |k| options[k] }
       return ret
     end
     
@@ -82,6 +84,10 @@ module Classifiers
   class DCPruningKnnClassifier < KnnClassifier
         
     def initialize extractor, measure, deciders, options = {}
+      options = {
+        :k => 5,
+      }.update(options)
+      @k = options[:k] 
       @extractor = extractor
       @measure = measure
       @tree = DecisionTree.new deciders
