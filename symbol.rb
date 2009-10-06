@@ -1,4 +1,5 @@
 require 'yaml'
+require 'digest'
 
 module Latex
 
@@ -31,6 +32,11 @@ module Latex
     
     def to_s
       "#{command} (#{package || 'latex2e'}, #{fontenc || 'OT1'})"
+    end
+    
+    def filename
+      # id.to_s
+      Digest::MD5.hexdigest id.to_s
     end
     
     def to_hash
