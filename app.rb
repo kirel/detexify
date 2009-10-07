@@ -8,11 +8,10 @@ require 'memcache'
 require 'my_classifiers'
 
 CACHE = MemCache.new('localhost:11211')
-#CLASSIFIER = Classifiers[:default, CACHE]
-CLASSIFIER = Classifiers[:tenelastic, CACHE]
+CLASSIFIER = Classifiers[:default, CACHE]
+#CLASSIFIER = Classifiers[:dcelastic, CACHE]
 
 # load DB
-
 require 'mongo'
 include Mongo
 
@@ -40,7 +39,7 @@ Thread.new do
             j += 10
           end
         end
-      end
+      end        
     end
   end
   loaded = true

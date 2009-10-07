@@ -20,7 +20,7 @@ class SymbolTask < Rake::TaskLib
   LATEX
   
   TMP = 'tmp'
-  OUT = 'public/images/symbols'
+  OUT = 'public/images/latex'
 
   attr_accessor :name, :tmp, :out
 
