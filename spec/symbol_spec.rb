@@ -33,21 +33,8 @@ end
 
 describe 'Latex::Symbol::List' do
 
-  TEMPLATE = ERB.new <<-TEMPLATE.gsub(/^  /,'')
-  \\documentclass[10pt]{article}
-  \\usepackage[utf8]{inputenc} % Direkte Eingabe von Umlauten und anderen Diakritika
-
-  <%= @packages %>
-
-  \\pagestyle{empty}
-
-  \\begin{document}
-
-  <%= @command %>
-
-  \\end{document}
-  TEMPLATE
-
+  TEMPLATE = ERB.new open(File.join(File.dirname(__FILE__), '..', 'template.tex.erb')).read
+  
   it "should have all different ids" do
     ids = Latex::Symbol::List.map { |symbol| symbol.id }
     ids.size.should == ids.uniq.size

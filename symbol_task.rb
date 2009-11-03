@@ -1,23 +1,11 @@
 require 'rake/tasklib'
 require 'erb'
 require 'symbol'
+require 'aws/s3'
 
 class SymbolTask < Rake::TaskLib
   
-  TEMPLATE = ERB.new <<-LATEX.gsub(/^  /,'')
-  \\documentclass[10pt]{article}
-  \\usepackage[utf8]{inputenc} % Direkte Eingabe von Umlauten und anderen Diakritika
-
-  <%= @packages %>
-
-  \\pagestyle{empty}
-
-  \\begin{document}
-
-  <%= @command %>
-
-  \\end{document}
-  LATEX
+  TEMPLATE = ERB.new open('template.tex.erb').read
   
   TMP = 'tmp'
   OUT = 'images/latex'
@@ -48,6 +36,25 @@ class SymbolTask < Rake::TaskLib
     
     desc "create png images from all symbols"
     task @name => all_image_tasks
+    
+    desc "upload all pngs found in images/* to S3"
+    task :upload => @name do
+      abort 'You suck!' unless ENV['AWS_KEY'] && ENV['AWS_SECRET']
+      AWS::S3::Base.establish_connection!(
+        :access_key_id     => ENV['AWS_KEY'],
+        :secret_access_key => ENV['AWS_SECRET'],
+      )
+      
+      bucket = 'detexify.kirelabs.org' # TODO make configurable
+      Dir.glob('images/**/*.png').each do |path|
+        puts "Uploading #{path}..."
+        AWS::S3::S3Object.store(path, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000') unless AWS::S3::S3Object.exists? path, bucket
+        # legacy
+        oldpath = path.sub('latex', 'symbols')
+        AWS::S3::S3Object.store(oldpath, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000') unless AWS::S3::S3Object.exists? oldpath, bucket
+        puts 'done.'
+      end
+    end
   end
   
   
@@ -95,21 +102,3 @@ class SymbolTask < Rake::TaskLib
   end
   
 end
-
-
-# -----
-
-  # INDEX = ERB.new <<-HTML.gsub(/^  /,'')
-  # <html>
-  # <body>
-  #   <h1>Symbole</h1>
-  #   <table>
-  #     <% for s in @symbols %>
-  #     <tr>
-  #       <td><%= s.command %></td><td><img src='<%= s.id %>.png'></td>
-  #     </tr>
-  #     <% end %>
-  #   </table>
-  # </body>
-  # </html>
-  # HTML
