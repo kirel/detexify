@@ -47,12 +47,22 @@ class SymbolTask < Rake::TaskLib
       
       bucket = 'detexify.kirelabs.org' # TODO make configurable
       Dir.glob('images/**/*.png').each do |path|
-        puts "Uploading #{path}..."
-        AWS::S3::S3Object.store(path, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000') unless AWS::S3::S3Object.exists? path, bucket
+        unless AWS::S3::S3Object.exists? path, bucket
+          puts "Uploading #{path}..."
+          AWS::S3::S3Object.store(path, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000')
+          puts 'done.'
+        else
+          puts "#{path} already uploaded."
+        end
         # legacy
         oldpath = path.sub('latex', 'symbols')
-        AWS::S3::S3Object.store(oldpath, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000') unless AWS::S3::S3Object.exists? oldpath, bucket
-        puts 'done.'
+        unless AWS::S3::S3Object.exists? oldpath, bucket
+          puts "Uploading #{oldpath}... DEPRECATED"
+          AWS::S3::S3Object.store(oldpath, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000') 
+          puts 'done.'
+        else
+          puts "#{oldpath} already uploaded."
+        end
       end
     end
   end
