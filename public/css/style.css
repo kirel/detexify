@@ -1,0 +1,350 @@
+/* @override http://localhost:4567/css/style.css */
+
+a:link, a:visited {
+  color: royalblue;
+}
+
+html {
+  overflow-y:scroll;
+}
+
+body, td {
+  font-family: sans-serif;
+}
+
+#infoarea h2 {
+  font-size: 1.2em;
+}
+
+#canvasarea, #trainingarea, #canvascontainer {
+  position: relative;
+}
+
+body.classify #drawhere {
+  position: absolute;
+  top: -80px;
+  left: 320px;
+  z-index: -1;
+}
+
+body.symbols #drawhere {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+}
+
+body.classify #canvasspinner, body.symbols #canvasspinner {
+  position: absolute;
+  top: 370px;
+  left: 370px;
+}
+
+#status {
+  color: red;
+  display: none;
+  font-size: 16px;
+  padding: 0 0 0 20px;
+  background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/exclamation.png) no-repeat;
+}
+
+#canvascontrols #clear {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0 5px 1px 20px;
+  margin-left: 0px;
+  background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/delete.png) no-repeat 2px 1px;
+  border: 1px solid gray;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#canvascontrols #train {
+  color: green;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0 5px 1px 20px;
+  margin-left: 0px;
+  background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/add.png) no-repeat 2px 1px;
+  border: 1px solid gray;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+ul.nav {
+  list-style: none;
+  padding: 0;
+}
+
+ul.nav li {
+  display: inline-block;
+  font-size: 20px;
+}
+
+ul.nav li a:link, ul.nav li a:visited {
+  font-size: 20px;
+  text-decoration: none;
+}
+
+#donate {
+  text-align: right;
+  font-size: 22px;
+  color: gray;
+}
+
+#donate em {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  vertical-align: top;
+}
+
+#donate span {
+  vertical-align: top;
+	text-align: center;
+  display: inline-block;
+  font-size: 11px;
+  width: 160px;
+  color: gray;
+  margin: 0 15px;
+}
+
+ul.nav li.classify {
+  border: 1px solid gray;
+  padding: 3px 6px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+ul.nav li.symbols {
+  border: 1px solid gray;
+  padding: 3px 6px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+ul.nav li.blog {
+  margin: 0 0 0 10px;
+  border: 1px solid gray;
+  padding: 3px 6px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+body.classify ul.nav li.classify,
+body.symbols ul.nav li.symbols {
+  background-color: white;
+}
+
+body.classify ul.nav li.classify,
+body.symbols ul.nav li.symbols {
+  background-color: cornsilk;
+}
+
+body.classify ul.nav li.symbols a:link,
+body.symbols ul.nav li.classify a:link,
+body.classify ul.nav li.symbols a:visited,
+body.symbols ul.nav li.classify a:visited {
+  
+
+}
+
+body.classify ul.nav li.classify a:link,
+body.symbols ul.nav li.symbols a:link,
+body.classify ul.nav li.classify a:visited,
+body.symbols ul.nav li.symbols a:visited {
+  color: black;
+}
+
+code {
+  font-size: 2em;
+}
+
+#everything {
+  position: relative;
+  width: 964px;
+  margin: 0 auto;
+}
+
+h1 img {
+  height: 1.5em;
+  margin-bottom: -.5em;
+}
+
+body.classify #infoarea {
+  width: 402px;
+}
+
+.spinner {
+  display: none;
+}
+
+#hitarea {
+  position: absolute;
+  left: 460px;
+  top: 120px;
+}
+
+body.symbols #infoarea {
+  position: absolute;
+  top: 80px;
+  left: 560px;
+}
+
+#hitarea {
+  display: none;
+}
+
+#hittip {
+  display: none;
+  padding: 10px;
+  border: 1px solid black;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: white;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+div#spinner {
+  display: none;
+}
+
+canvas#tafel {
+  display: block;
+}
+
+body.symbols .infoarea {
+  
+}
+
+ul.symbols {
+  width: 500px;
+  margin: 0;
+  padding: 0;
+}
+
+ul.symbols li {
+  border-top: 1px dotted gray;
+  display: block;
+  clear: both;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul.symbols li .symbolsentry {
+  display: table;
+}
+
+ul.symbols li .info {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  width: 400px;
+  padding: 1em 0 1em 1em;
+}
+
+ul.symbols li .symbol {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100px;
+}
+
+ul.symbols li .symbol img {
+  border: none;
+  padding: 10px 0;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+ul.symbols li:hover {
+  background-color: whitesmoke;
+}
+
+ul.symbols li.active:hover,
+ul.symbols li.active {
+  background-color: cornsilk;
+}
+
+.samples {
+  font-size: .8em;
+}
+
+#controls {
+  margin-bottom: 10px;
+}
+
+#up {
+  font-size: 1.2em;
+  background: white;
+}
+
+#trainingarea {
+  width: 400px;
+  margin: 10px auto;
+}
+
+#trainingarea, #trainingli {
+  display: none;
+}
+
+#trainingli:hover {
+  background-color: transparent;
+}
+
+#adsense {
+  width: 468px;
+  margin: auto;
+}
+
+ul.symbols li .info .fontenc, ul.symbols li .info .package, ul.symbols li .info .texmode {
+  font-size: 1em;
+}
+
+div.tooltip {
+  background: transparent url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/white_arrow.png) no-repeat scroll 0 0;
+  text-align: center;
+  height: 63px;
+  padding: 40px 30px 30px 30px;
+  width: 152px;
+  font-size: 14px;
+  display: none;
+  color: #000;
+}
