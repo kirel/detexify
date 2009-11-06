@@ -2,6 +2,7 @@ require 'json'
 require 'sinatra'
 require 'restclient'
 require 'symbol'
+require 'base64'
 
 # load DB
 # require 'mongo'
@@ -58,7 +59,7 @@ post '/train' do
     # sample_id = samples << { 'symbol_id' => params[:id], 'strokes' => strokes }
     # sample_counts[params[:id].to_sym] += 1
     
-    rsp = RestClient.post CLASSIFIER_URL + "/train/#{params[:id]}", params[:strokes]
+    rsp = RestClient.post CLASSIFIER_URL + "/train/#{Base64.encode64(params[:id])}", params[:strokes]
     halt 200, rsp
     
   else
@@ -74,8 +75,8 @@ post '/classify' do
   rsp = RestClient.post CLASSIFIER_URL + "/classify", params[:strokes]
   hits = JSON rsp
   #, { :skip => params[:skip] && params[:skip].to_i, :limit => params[:limit] && params[:limit].to_i }
-  nohits = Latex::Symbol::List - hits.map { |hit| Latex::Symbol[hit['id']] }
-  hits = hits.map { |hit| { :symbol => Latex::Symbol[hit['id']].to_hash, :score => hit['score']} } + nohits.map { |symbol| { :symbol => symbol.to_hash, :score => 99999 } }
+  nohits = Latex::Symbol::List - hits.map { |hit| Latex::Symbol[Base64.decode64(hit['id'])] }
+  hits = hits.map { |hit| { :symbol => Latex::Symbol[Base64.decode64(hit['id'])].to_hash, :score => hit['score']} } + nohits.map { |symbol| { :symbol => symbol.to_hash, :score => 99999 } }
   JSON hits
 end
 
