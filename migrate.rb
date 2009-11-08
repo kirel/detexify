@@ -5,7 +5,7 @@ require 'restclient'
 require 'mongo'
 include Mongo
 mongo = Connection.new.db('detexify').collection('samples')
-couch = 'http://localhost:5984/detexify/'
+couch = ENV['COUCH'] || 'http://localhost:5984/detexify/'
 RestClient.get couch rescue RestClient.put couch, nil
 c = mongo.count.to_f
 i = 0.0

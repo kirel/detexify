@@ -6,8 +6,13 @@ require 'base64'
 require 'couch'
 
 classifier = (ENV['CLASSIFIER'] || 'http://localhost:3000').sub(/\/?$/,'')
-couch = Couch.new((ENV['COUCH'] || 'http://localhost:5984/detexify').sub(/\/?$/,'/'))
-couch.create!
+if ENV['COUCH'] == 'none'
+  couch = Class.new { def << fake; end }.new
+  STDERR.puts 'WARNING! Running without a couch.'
+else
+  couch = Couch.new((ENV['COUCH'] || 'http://localhost:5984/detexify').sub(/\/?$/,'/'))
+  couch.create!
+end
 
 sample_counts = Hash.new { |h,k| h[k] = 0 } # TODO sample counts
 
