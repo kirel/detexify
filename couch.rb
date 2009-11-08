@@ -1,27 +1,48 @@
-# Legacy...
-module Detexify
+require 'restclient'
+require 'json'
 
-  module Couch
+class Couch
+  include Enumerable
   
-    require 'couchrest'
-    require 'symbol'
-  
-    class Sample < CouchRest::ExtendedDocument
-      use_database CouchRest.database!("http://127.0.0.1:5984/detexify-samples")
-    
-      property :strokes
-      property :symbol_id
-    
-      view_by :symbol_id
-    
-      #timestamps!
-    
-      def symbol
-        Latex::Symbol[symbol_id]
-      end
-    
-    end
-  
+  def initialize dburl
+    @dburl = dburl
   end
-
+    
+  %w(get post put delete).each do |method|
+    define_method method do |*args|
+      args.first = @dburl + args.first
+      RestClient.send method, *args
+    end    
+  end
+  
+  def create!
+    RestClient.get @dburl rescue RestClient.put @dburl, nil
+  end
+  
+  def << doc
+    RestClient.post @dburl, JSON(doc)
+    self
+  end
+  
+  def size
+    JSON(RestClient.get(@dburl + '_all_docs?limit=0'))['total_rows']
+  end
+  
+  def each
+    # iterate in batches of @batch_size
+    @batch_size = 100
+    # initial query
+    res = JSON(RestClient.get(@dburl + "_all_docs?limit=#{@batch_size+1}&include_docs=true"))
+    rows = res['rows']
+    last = rows.size > @batch_size ? rows.pop : nil
+    rows.each { |row| yield row['doc'] }
+    # subsequent queries
+    while last
+      startkey = last['key']
+      res = JSON(RestClient.get(@dburl + "_all_docs?startkey=%22#{startkey}%22&limit=#{@batch_size+1}&include_docs=true"))
+      rows = res['rows']
+      last = rows.size > @batch_size ? rows.pop : nil
+      rows.each { |row| yield row['doc'] }
+    end
+  end
 end
