@@ -27,7 +27,7 @@ post '/train' do
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
     rsp = RestClient.post classifier + "/train/#{Base64.encode64(params[:id])}", params[:strokes]
-    couch << {'id' => params[:id], 'data' => params[:data]}
+    couch << {'id' => params[:id], 'data' => strokes }
     halt 200, rsp
   else
     halt 403, "These strokes look suspicious"
