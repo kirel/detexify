@@ -2,6 +2,7 @@ require 'restclient'
 require 'json'
 require 'base64'
 require 'couch'
+require 'actionpool'
 
 class PopulateTask < Rake::TaskLib
   
@@ -26,12 +27,14 @@ class PopulateTask < Rake::TaskLib
       percent = 0.0
 
       start = Time.now.to_i
+      pool = ActionPool::Pool.new :min_threads => 3, :max_threads => 10
       couch.each do |doc|
         data = JSON(doc['data'])
         id = doc['id']
-        RestClient.post "#{cla}/train/#{Base64.encode64(id)}", data
-        progress += 1
-        puts "#{percent = (progress*100.0/count).floor}% geladen" if (progress*100.0/count).floor > percent
+        pool.process do
+          RestClient.post "#{cla}/train/#{Base64.encode64(id)}", data
+          puts "#{percent = (progress*100.0/count).floor}% geladen" if ((progress+=1)*100.0/count).floor > percent
+        end
       end
       puts "done. #{(Time.now.to_i-start)} secs."
     end
