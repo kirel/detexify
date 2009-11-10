@@ -15,6 +15,9 @@ else
 end
 
 sample_counts = Hash.new { |h,k| h[k] = 0 } # TODO sample counts
+JSON(RestClient.get(classifier))['counts'].each do |id,c|
+  sample_counts[Base64.decode64(id).to_sym] += c
+end
 
 get '/symbols' do
   symbols = Latex::Symbol::List.map { |s| s.to_hash }
@@ -33,6 +36,7 @@ post '/train' do
   if strokes && !strokes.empty? && !strokes.first.empty?
     rsp = RestClient.post classifier + "/train/#{Base64.encode64(params[:id])}", params[:strokes]
     couch << {'id' => params[:id], 'data' => strokes }
+    sample_counts[params[:id].to_sym] += 1
     halt 200, rsp
   else
     halt 403, "These strokes look suspicious"
