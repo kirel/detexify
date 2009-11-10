@@ -42,7 +42,7 @@ class SymbolTask < Rake::TaskLib
       abort 'You suck!' unless ENV['AWS_KEY'] && ENV['AWS_SECRET']
       AWS::S3::Base.establish_connection!(
         :access_key_id     => ENV['AWS_KEY'],
-        :secret_access_key => ENV['AWS_SECRET'],
+        :secret_access_key => ENV['AWS_SECRET']
       )
       
       bucket = 'detexify.kirelabs.org' # TODO make configurable
