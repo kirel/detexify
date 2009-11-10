@@ -40,7 +40,7 @@ module Latex
     end
     
     def uri
-      "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/latex/#{filename}.png"
+      "http://detexify.kirelabs.org.s3.amazonaws.com/images/latex/#{filename}.png"
     end
     
     def to_hash
