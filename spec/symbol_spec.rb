@@ -1,5 +1,9 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
+require 'erb'
+require 'uri'
+require 'symbol'
+
 describe Latex::Symbol do
   
   before do
@@ -10,6 +14,11 @@ describe Latex::Symbol do
     [:command, :package, :fontenc, :textmode, :mathmode].each do |m|
       @symbol.should respond_to(m)
     end
+  end
+  
+  it "should have the propertie uri" do
+    @symbol.should respond_to(:uri)
+    lambda { URI.parse(@symbol.uri) }.should_not raise_error(URI::InvalidURIError)
   end
   
   it "should require command and rest is optional" do

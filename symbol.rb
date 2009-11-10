@@ -39,6 +39,10 @@ module Latex
       Digest::MD5.hexdigest id.to_s
     end
     
+    def uri
+      "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/latex/#{filename}.png"
+    end
+    
     def to_hash
       h = {}
       A.each { |a| !self[a].nil? && (h[a] = self[a]) }
