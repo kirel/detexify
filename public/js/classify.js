@@ -29,7 +29,7 @@ $(function(){
               $.gritter.add({title:'Thanks!', text:'Thank you for training!', time: 1000})
               $(this).tooltip(0).hide();
               $('#canvasspinner').show('scale');            
-              train($(this).attr('alt').substring(7), canvas, function(json){
+              train($(this).closest('li').attr('id'), canvas, function(json){
                 // TODO DRY
                 $('#canvasspinner').hide('scale');
                 if (json.message) {
