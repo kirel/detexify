@@ -1,1 +1,3 @@
-couchrest --version '>= 0.32'
+json
+restclient
+sinatra
