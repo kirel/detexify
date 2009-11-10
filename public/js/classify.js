@@ -21,7 +21,6 @@ $(function(){
         if (sentstrokeswhencalled < sentstrokes) return false;
         populateSymbolList(json.slice(0,5));
         $('#morearea').show();
-        latex.init();
         var setuptraining = function() {
           $('#symbols li .symbol img')
             .wrap('<a href="#"></a>')
@@ -47,7 +46,6 @@ $(function(){
         $('#more').unbind('click').click(function(){
           $('#morearea').hide();
           populateSymbolList(json);
-          latex.init();
           setuptraining();
           return false;
         });
@@ -71,5 +69,4 @@ $(function(){
     return false;
   });
   $("#canvaserror").hide();
-  latex.init();
 });

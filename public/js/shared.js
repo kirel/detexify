@@ -1,24 +1,3 @@
-// Create a namespace, to hold variables and functions.
-latex = new Object();
-
-//latex.assetHost = 'images/symbols/';
-latex.assetHost = 'http://detexify-web.kirelabs.org.s3.amazonaws.com/images/latex/';
-
-// Function to transform the whole document.  Add SRC to each IMG with
-// ALT text starting with "tex:".  However, skip if element already
-// has a SRC.
-latex.init = function () {
-  $('img').each(function() {
-    if (this.alt.substring(0,7) == 'symbol:' && !this.src) {
-      var id = this.alt.substring(7);
-      // See http://xkr.us/articles/javascript/encode-compare/
-      this.src = latex.assetHost + $.md5(id) + '.png';
-      // Append TEX to the class of the IMG.
-      //$(this).addClass('symbol');
-    }
-  });
-}
-
 function populateSymbolList(symbols) {
   $('#symbols').empty();
   jQuery.each(symbols, function() {
@@ -52,35 +31,13 @@ function populateSymbolList(symbols) {
       info += '<br><span class="samples">Samples: <span class="number">'+symbol.samples+'</span></span><br>';
     }
     $('#symbols').append(
-      '<li id="'+symbol.id+'"><div class="symbolsentry"><div class="symbol"><img alt="symbol:'+symbol.id+'"></div>'+
+      '<li id="'+symbol.id+'"><div class="symbolsentry"><div class="symbol"><img class="'+symbol.id+'" src="'+symbol.uri+'"></div>'+
       '<div class="info">'+info+'</div></div></li>'
       );
   });
-  latex.init();
 }
 
 // Train the symbol in canvas to id and call callback on return
 function train(id, canvas, callback) {
   $.post("/train", { "id": id, "newtex": true, "strokes": JSON.stringify(canvas.strokes) }, callback, 'json');
 }
-
-
-$(function(){
-  // this is some ugly code - jQuery timers instead?
-  // var iid = 0;
-  //   var checkStatus = function () {
-  //     $.getJSON("/status", function(status) {
-  //       if (!status.loaded) {
-  //         $('#status').text('Warning! The app has recently been restarted and is not fully loaded yet. ('+status.progress+'% done)').show();
-  //       } else {
-  //         if (iid) {
-  //           clearInterval(iid);
-  //         }
-  //         $('#status').text('').hide();
-  //       }
-  //     });
-  //   }
-  //   checkStatus();
-  //   iid = setInterval(checkStatus, 5000);
-  latex.init();
-  });

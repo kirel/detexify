@@ -42,7 +42,6 @@ $(function(){
     // secure the trainingarea
     $('#trainingarea').appendTo($('#safespot'));
     populateSymbolList(filtered(symbols));
-    latex.init();
     // color code training numbers
     var num = $('#symbols li .info .samples .number').each(function(){
       colorcode(this);
