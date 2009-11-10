@@ -6,7 +6,7 @@ module Latex
   class Symbol
         
     #:nodoc:
-    A = [:command, :package, :fontenc, :mathmode, :textmode]
+    A = [:command, :package, :fontenc, :mathmode, :textmode, :uri]
     
     attr_reader *A
     attr_reader :id
