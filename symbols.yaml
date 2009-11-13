@@ -1175,7 +1175,10 @@
 - package: wasysym
   bothmodes:
     - \female 
-    - \male 
+    - \male
+- package: skull
+  mathmode:
+    - \skull
 # Table 254: wasysym General Symbols
 - package: wasysym
   textmode:
