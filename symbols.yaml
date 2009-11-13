@@ -45,7 +45,13 @@
   - \S 
   - \dag 
   - \pounds
-  - \& # added by me
+  # added by me
+  - \&
+  - '\#'
+  - \%
+- \--
+- \---
+- \----
 # Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
 - package: amssymb
   bothmodes:
@@ -874,51 +880,94 @@
     - \shortdownarrow
 # Table 122: Greek Letters
 - mathmode:
-    - \alpha
-    - \theta
-    - \tau
-    - \beta
-    - \vartheta
-    - \pi
-    - \upsilon
-    - \gamma
-    - \iota
-    - \varpi
-    - \phi
-    - \delta
-    - \kappa
-    - \rho
-    - \varphi
-    - \epsilon
-    - \lambda
-    - \varrho
-    - \chi
-    - \varepsilon
-    - \mu
-    - \sigma
-    - \psi
-    - \zeta
-    - \nu
-    - \varsigma
-    - \omega
-    - \eta
-    - \xi
-    - \Gamma
-    - \Lambda
-    - \Sigma
-    - \Psi
-    - \Delta
-    - \Xi
-    - \Upsilon
-    - \Omega
-    - \Theta
-    - \Pi
-    - \Phi
+  - \alpha
+  - \theta
+  - \tau
+  - \beta
+  - \vartheta
+  - \pi
+  - \upsilon
+  - \gamma
+  - \iota
+  - \varpi
+  - \phi
+  - \delta
+  - \kappa
+  - \rho
+  - \varphi
+  - \epsilon
+  - \lambda
+  - \varrho
+  - \chi
+  - \varepsilon
+  - \mu
+  - \sigma
+  - \psi
+  - \zeta
+  - \nu
+  - \varsigma
+  - \omega
+  - \eta
+  - \xi
+  - \Gamma
+  - \Lambda
+  - \Sigma
+  - \Psi
+  - \Delta
+  - \Xi
+  - \Upsilon
+  - \Omega
+  - \Theta
+  - \Pi
+  - \Phi
 # Table 123: AMS Greek Letters 
 - package: amssymb
   mathmode:
     - \digamma
     - \varkappa
+# Table 125: upgreek Upright Greek Letters
+- package: upgreek
+  mathmode:
+    - \upphi
+    - \upvarphi
+    - \upchi
+    - \uppsi
+    - \upomega
+    - \Uppsi
+    - \Upomega
+    - \upalpha
+    - \upbeta
+    - \upgamma
+    - \updelta
+    - \upepsilon
+    - \upvarepsilon
+    - \upzeta
+    - \upeta
+    - \Upgamma
+    - \Updelta
+    - \Uptheta
+    - \uptheta
+    - \upvartheta
+    - \upiota
+    - \upkappa
+    - \uplambda
+    - \upmu
+    - \upnu
+    - \upxi
+    - \Uplambda
+    - \Upxi
+    - \Uppi
+    - \uppi
+    - \upvarpi
+    - \uprho
+    - \upvarrho
+    - \upsigma
+    - \upvarsigma
+    - \uptau
+    - \upupsilon
+    - \Upsigma
+    - \Upupsilon
+    - \Upphi
 # Table 129: Letter-like Symbols
 - mathmode:
     - \bot
@@ -1085,6 +1134,7 @@
     - \mathbb{Q}
     - \mathbb{R}
     - \mathbb{C}
+    - \mathcal{F}
     - \mathcal{H}
     - \mathcal{L}
     - \mathcal{O}
