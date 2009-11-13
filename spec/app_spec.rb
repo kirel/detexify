@@ -40,10 +40,10 @@ describe 'Detexify' do
     r.each do |element|
       element.should be_a(Hash)
       %w(symbol score).each do |key|
-        element.should have_key key   
+        element.should have_key(key)
         element['symbol'].should be_a(Hash)
         %w(id command mathmode textmode uri).each do |key|
-          element['symbol'].should have_key key        
+          element['symbol'].should have_key(key)
         end             
       end
     end
@@ -79,7 +79,7 @@ describe 'Detexify' do
     r.each do |element|
       element.should be_a(Hash)
       %w(id command mathmode textmode samples uri).each do |key|
-        element.should have_key key        
+        element.should have_key(key)        
       end
     end
   end
