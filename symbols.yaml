@@ -787,7 +787,6 @@
     - \hookrightarrow
     - \Longleftrightarrow
     - \searrow
-#    - \leadsto
     - \longmapsto
     - \swarrow
     - \leftarrow
@@ -808,6 +807,10 @@
     - \rightleftharpoons
     - \leftharpoonup
     - \rightharpoonup
+# Arrows not in latex2e
+- package: latexsym
+  mathmode:
+    - \leadsto
 # Table 97: textcomp Text-mode Arrows
 - package: textcomp
   textmode:
@@ -1088,6 +1091,7 @@
     - \heartsuit
     - \neg
     - \triangle
+    - \sqrt{} # not on the table... more an accent than a symbol
 # Table 185: Miscellaneous AMS Math Symbols 
 - package: amssymb
   mathmode:
@@ -1158,6 +1162,66 @@
     #- \perthousand # doesn't work
     - \degree
     - \ohm
+# Table 202: wasysym Astronomical Symbols
+- package: wasysym
+  bothmodes:
+    - \mercury
+    - \earth
+    - \jupiter
+    - \uranus
+    - \pluto
+    - \venus
+    - \mars
+    - \saturn
+    - \neptune
+    - \astrosun
+    - \fullmoon
+    - \leftmoon
+    - \newmoon
+    - \rightmoon
+    - \aries
+    - \cancer
+    - \libra
+    - \aquarius
+    - \taurus
+    - \leo
+    - \scorpio
+    - \capricornus
+    - \gemini
+    - \virgo
+    - \sagittarius
+    - \pisces
+    - \ascnode
+    - \descnode
+    - \conjunction
+    - \opposition
+    - \vernal
+# Table 202: marvosym Astronomical Symbols
+- package: marvosym
+  textmode:
+    - \Mercury
+    - \Earth
+    - \Jupiter
+    - \Uranus
+    - \Pluto
+    - \Venus
+    - \Mars
+    - \Saturn
+    - \Neptune
+    - \Moon
+    - \Sun
+    - \Aries
+    - \Cancer
+    - \Libra
+    - \Aquarius
+    - \Taurus
+    - \Leo
+    - \Scorpio
+    - \Capricorn
+    - \Gemini
+    - \Virgo
+    - \Sagittarius
+    - \Pisces
 # Table 210: marvosym Communication Symbols 
 - package: marvosym
   textmode:
