@@ -52,7 +52,16 @@ post '/classify' do
   hits = JSON rsp
   #, { :skip => params[:skip] && params[:skip].to_i, :limit => params[:limit] && params[:limit].to_i }
   nohits = Latex::Symbol::List - hits.map { |hit| Latex::Symbol[Base64.decode64(hit['id'])] }
-  hits = hits.map { |hit| { :symbol => Latex::Symbol[Base64.decode64(hit['id'])].to_hash, :score => hit['score']} } + nohits.map { |symbol| { :symbol => symbol.to_hash, :score => 99999 } }
+  hits =  hits.map do |hit|
+    id = Base64.decode64(hit['id'])
+    s = Latex::Symbol[id]
+    if s
+      { :symbol => s.to_hash, :score => hit['score']}
+    else
+      STDERR.puts "WARNING! Encountered unknown symbol id '#{id}'."
+      nil
+    end
+  end.compact + nohits.map { |symbol| { :symbol => symbol.to_hash, :score => 99999 } }
   JSON hits
 end
 
