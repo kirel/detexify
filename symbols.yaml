@@ -45,7 +45,13 @@
   - \S 
   - \dag 
   - \pounds
-  - \& # added by me
+  # added by me
+  - \&
+  - '\#'
+  - \%
+- \--
+- \---
+- \----
 # Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
 - package: amssymb
   bothmodes:
@@ -781,7 +787,6 @@
     - \hookrightarrow
     - \Longleftrightarrow
     - \searrow
-#    - \leadsto
     - \longmapsto
     - \swarrow
     - \leftarrow
@@ -802,6 +807,10 @@
     - \rightleftharpoons
     - \leftharpoonup
     - \rightharpoonup
+# Arrows not in latex2e
+- package: latexsym
+  mathmode:
+    - \leadsto
 # Table 97: textcomp Text-mode Arrows
 - package: textcomp
   textmode:
@@ -874,51 +883,94 @@
     - \shortdownarrow
 # Table 122: Greek Letters
 - mathmode:
-    - \alpha
-    - \theta
-    - \tau
-    - \beta
-    - \vartheta
-    - \pi
-    - \upsilon
-    - \gamma
-    - \iota
-    - \varpi
-    - \phi
-    - \delta
-    - \kappa
-    - \rho
-    - \varphi
-    - \epsilon
-    - \lambda
-    - \varrho
-    - \chi
-    - \varepsilon
-    - \mu
-    - \sigma
-    - \psi
-    - \zeta
-    - \nu
-    - \varsigma
-    - \omega
-    - \eta
-    - \xi
-    - \Gamma
-    - \Lambda
-    - \Sigma
-    - \Psi
-    - \Delta
-    - \Xi
-    - \Upsilon
-    - \Omega
-    - \Theta
-    - \Pi
-    - \Phi
+  - \alpha
+  - \theta
+  - \tau
+  - \beta
+  - \vartheta
+  - \pi
+  - \upsilon
+  - \gamma
+  - \iota
+  - \varpi
+  - \phi
+  - \delta
+  - \kappa
+  - \rho
+  - \varphi
+  - \epsilon
+  - \lambda
+  - \varrho
+  - \chi
+  - \varepsilon
+  - \mu
+  - \sigma
+  - \psi
+  - \zeta
+  - \nu
+  - \varsigma
+  - \omega
+  - \eta
+  - \xi
+  - \Gamma
+  - \Lambda
+  - \Sigma
+  - \Psi
+  - \Delta
+  - \Xi
+  - \Upsilon
+  - \Omega
+  - \Theta
+  - \Pi
+  - \Phi
 # Table 123: AMS Greek Letters 
 - package: amssymb
   mathmode:
     - \digamma
     - \varkappa
+# Table 125: upgreek Upright Greek Letters
+- package: upgreek
+  mathmode:
+    - \upphi
+    - \upvarphi
+    - \upchi
+    - \uppsi
+    - \upomega
+    - \Uppsi
+    - \Upomega
+    - \upalpha
+    - \upbeta
+    - \upgamma
+    - \updelta
+    - \upepsilon
+    - \upvarepsilon
+    - \upzeta
+    - \upeta
+    - \Upgamma
+    - \Updelta
+    - \Uptheta
+    - \uptheta
+    - \upvartheta
+    - \upiota
+    - \upkappa
+    - \uplambda
+    - \upmu
+    - \upnu
+    - \upxi
+    - \Uplambda
+    - \Upxi
+    - \Uppi
+    - \uppi
+    - \upvarpi
+    - \uprho
+    - \upvarrho
+    - \upsigma
+    - \upvarsigma
+    - \uptau
+    - \upupsilon
+    - \Upsigma
+    - \Upupsilon
+    - \Upphi
 # Table 129: Letter-like Symbols
 - mathmode:
     - \bot
@@ -1039,6 +1091,7 @@
     - \heartsuit
     - \neg
     - \triangle
+    - \sqrt{} # not on the table... more an accent than a symbol
 # Table 185: Miscellaneous AMS Math Symbols 
 - package: amssymb
   mathmode:
@@ -1085,6 +1138,7 @@
     - \mathbb{Q}
     - \mathbb{R}
     - \mathbb{C}
+    - \mathcal{F}
     - \mathcal{H}
     - \mathcal{L}
     - \mathcal{O}
@@ -1108,6 +1162,66 @@
     #- \perthousand # doesn't work
     - \degree
     - \ohm
+# Table 202: wasysym Astronomical Symbols
+- package: wasysym
+  bothmodes:
+    - \mercury
+    - \earth
+    - \jupiter
+    - \uranus
+    - \pluto
+    - \venus
+    - \mars
+    - \saturn
+    - \neptune
+    - \astrosun
+    - \fullmoon
+    - \leftmoon
+    - \newmoon
+    - \rightmoon
+    - \aries
+    - \cancer
+    - \libra
+    - \aquarius
+    - \taurus
+    - \leo
+    - \scorpio
+    - \capricornus
+    - \gemini
+    - \virgo
+    - \sagittarius
+    - \pisces
+    - \ascnode
+    - \descnode
+    - \conjunction
+    - \opposition
+    - \vernal
+# Table 202: marvosym Astronomical Symbols
+- package: marvosym
+  textmode:
+    - \Mercury
+    - \Earth
+    - \Jupiter
+    - \Uranus
+    - \Pluto
+    - \Venus
+    - \Mars
+    - \Saturn
+    - \Neptune
+    - \Moon
+    - \Sun
+    - \Aries
+    - \Cancer
+    - \Libra
+    - \Aquarius
+    - \Taurus
+    - \Leo
+    - \Scorpio
+    - \Capricorn
+    - \Gemini
+    - \Virgo
+    - \Sagittarius
+    - \Pisces
 # Table 210: marvosym Communication Symbols 
 - package: marvosym
   textmode:
@@ -1125,7 +1239,10 @@
 - package: wasysym
   bothmodes:
     - \female 
-    - \male 
+    - \male
+- package: skull
+  mathmode:
+    - \skull
 # Table 254: wasysym General Symbols
 - package: wasysym
   textmode:
