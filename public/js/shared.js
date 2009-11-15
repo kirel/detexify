@@ -8,7 +8,7 @@ function populateSymbolList(symbols) {
       symbol = this;
     }
     var info = '';
-    if (this.score) {
+    if (this.score || this.score === 0) {
       info += '<span class="score">Score: '+this.score+'</span><br>';
     }
     if (symbol.package) {
