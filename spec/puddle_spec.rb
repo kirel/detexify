@@ -12,7 +12,7 @@ describe Puddle do
   
   it "should process stuff in parallel" do
     i = 0
-    threads = @num.times.map { @puddle.process { sleep 1; i += 1 } }
+    threads = (1..@num).map { @puddle.process { sleep 1; i += 1 } }
     i.should == 0
     sleep 1.5
     i.should == @num
@@ -20,7 +20,7 @@ describe Puddle do
   
   it "should block if too many threads" do
     i = 0
-    threads = @num.times.map { @puddle.process { sleep 1; i += 1 } }
+    threads = (1..@num).map { @puddle.process { sleep 1; i += 1 } }
     i.should == 0
     thread = @puddle.process { sleep 1; i += 1 }
     i.should == @num # other threads should be done when @num + 1 st thread starts
@@ -30,7 +30,7 @@ describe Puddle do
   
   it "should finish all threads when drained" do
     i = 0
-    threads = @num.times.map { @puddle.process { sleep 1; i += 1 } }
+    threads = (1..@num).map { @puddle.process { sleep 1; i += 1 } }
     @puddle.drain
     i.should == @num    
   end
