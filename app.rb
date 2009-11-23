@@ -62,6 +62,11 @@ post '/classify' do
       nil
     end
   end.compact + nohits.map { |symbol| { :symbol => symbol.to_hash, :score => 99999 } }
+  if params[:skip] || params[:limit]
+    skip =  params[:skip].to_i.to_s == params[:skip] && params[:skip].to_i || 0 
+    limit = params[:limit].to_i.to_s == params[:limit] && params[:limit].to_i || hits.size
+    hits = hits[skip,limit]
+  end
   JSON hits
 end
 

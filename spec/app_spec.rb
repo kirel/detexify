@@ -84,26 +84,32 @@ describe 'Detexify' do
     end
   end
   
-  it "should limit the results if requested" # do
-   #    res = @classifier.classify(@data, :limit => 1)
-   #    res.should have(1).elements    
-   #  end
+  it "should limit the results if requested" do
+    post '/classify', :strokes => JSON(@strokes), :limit => 1
+    r = JSON last_response.body
+    r.should have(1).elements    
+  end
 
-  it "should skip results if requested" # do
-   #    res = @classifier.classify(@data)
-   #    skip = @classifier.classify(@data, :skip => 1)
-   #    skip.should === res[1..-1]
-   #  end
+  it "should skip results if requested" do
+    post '/classify', :strokes => JSON(@strokes)
+    res = JSON last_response.body
+    post '/classify', :strokes => JSON(@strokes), :skip => 1
+    r = JSON last_response.body
+    r.should == res[1..-1]
+  end
 
-  it "should limit the results if also skipped" # do
-   #    res = @classifier.classify(@data, :limit => 1, :skip => 1)
-   #    res.should have(1).elements
-   #  end
+  it "should limit the results if also skipped" do
+    post '/classify', :strokes => JSON(@strokes), :skip => 1, :limit => 1
+    r = JSON last_response.body
+    r.should have(1).elements
+  end
 
-  it "should skip results if also limited" # do
-   #    res = @classifier.classify(@data, :limit => 2)
-   #    skip = @classifier.classify(@data, :skip => 1, :limit => 1)
-   #    skip.should === res[1, 1]    
-   #  end
+  it "should skip results if also limited" do
+    post '/classify', :strokes => JSON(@strokes), :limit => 2
+    res = JSON last_response.body
+    post '/classify', :strokes => JSON(@strokes), :skip => 1, :limit => 1
+    r = JSON last_response.body
+    r.should === res[1, 1]    
+  end
   
 end
