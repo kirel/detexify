@@ -47,8 +47,10 @@ $(function(){
       colorcode(this);
     });
     // setup training
-    $('#symbols li .symbol img')
-    .wrap('<a href="#"></a>')
+    $('#symbols li')
+    //$('#symbols li .symbol img')
+    //.wrap('<a href="#"></a>')
+    .css('cursor', 'pointer')
     .tooltip({ tip: '#traintip' })
     .click(function(){
       $(this).tooltip(0).hide();
