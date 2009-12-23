@@ -684,6 +684,11 @@
     - \succnsim
     - \nshortmid
     - \nvdash
+# Table 65: stmaryrd Binary Relations
+- package: stmaryrd
+  mathmode:
+    - \inplus
+    - \niplus
 # Table 78: Subset and Superset Relations 
 - mathmode:
     - \sqsupseteq
