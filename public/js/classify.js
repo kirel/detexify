@@ -3,7 +3,17 @@
 $(function(){
   // requests to classinatra  
   var abort, active, sentstrokes;
-    
+  
+  function positionUpLink() {
+    $('#up').css({
+      'position': 'fixed',
+      'top'     : $(window).height()-$('#up').outerHeight()-20,
+      'left'    : $('#hitarea').offset().left+540
+    });
+  }
+  
+  $(window).resize(positionUpLink);
+  
   function classify(canvas) {
     abort = false;
     if (active === 0) {
@@ -49,7 +59,11 @@ $(function(){
           setuptraining();
           return false;
         });
+                
         $('#hitarea').show();
+
+        positionUpLink();
+        
       }
     }, 'json');
   }

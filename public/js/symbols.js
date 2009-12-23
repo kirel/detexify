@@ -77,17 +77,22 @@ $(function(){
     $('#trainingarea').appendTo('#symbols').wrap('<li id="trainingli"></li>').show();
   }
 
-  $.getJSON("/symbols", function(json) {
-    json.sort(alphasort)
-    symbols = json;
-    populateSymbolListWrapper(symbols);
-    $('#spinner').hide();
+  function positionUpLink() {
     $('#up').css({
       'position': 'fixed',
       'top'     : $(window).height()-$('#up').outerHeight()-10,
       'left'    : $('#everything').offset().left+560
     });
+  }
+  
+  $(window).resize(positionUpLink);
 
+  $.getJSON("/symbols", function(json) {
+    json.sort(alphasort)
+    symbols = json;
+    populateSymbolListWrapper(symbols);
+    $('#spinner').hide();
+    positionUpLink();
   });
 
   $('#sort').change(function(){
