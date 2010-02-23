@@ -8,7 +8,7 @@ module Latex
     #:nodoc:
     A = [:command, :package, :fontenc, :mathmode, :textmode, :uri]
     
-    attr_reader *A
+    attr_reader(*A)
     attr_reader :id
 
     def initialize args = {}
