@@ -1,7 +1,6 @@
 require 'restclient'
 require 'json'
 require 'base64'
-require 'couch'
 require 'puddle'
 
 class PopulateTask < Rake::TaskLib

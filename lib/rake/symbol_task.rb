@@ -5,7 +5,19 @@ require 'aws/s3'
 
 class SymbolTask < Rake::TaskLib
   
-  TEMPLATE = ERB.new open('template.tex.erb').read
+  TEMPLATE = ERB.new <<-LATEX #open('template.tex.erb').read
+    \\documentclass[10pt]{article}
+    \\usepackage[utf8]{inputenc}
+
+    <%= @packages %>
+
+    \\pagestyle{empty}
+    \\begin{document}
+
+    <%= @command %>
+
+    \\end{document}
+  LATEX
   
   TMP = 'tmp'
   OUT = 'images/latex'

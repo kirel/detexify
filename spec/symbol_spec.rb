@@ -2,7 +2,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 require 'erb'
 require 'uri'
-require 'symbol'
+require 'latex/symbol'
 
 describe Latex::Symbol do
   
@@ -16,7 +16,7 @@ describe Latex::Symbol do
     end
   end
   
-  it "should have the propertie uri" do
+  it "should have the property uri" do
     @symbol.should respond_to(:uri)
     lambda { URI.parse(@symbol.uri) }.should_not raise_error(URI::InvalidURIError)
   end
@@ -43,7 +43,19 @@ end
 
 describe 'Latex::Symbol::List' do
 
-  TEMPLATE = ERB.new open(File.join(File.dirname(__FILE__), '..', 'template.tex.erb')).read
+  TEMPLATE = ERB.new <<-LATEX #open(File.join(File.dirname(__FILE__), '..', 'template.tex.erb')).read
+    \\documentclass[10pt]{article}
+    \\usepackage[utf8]{inputenc}
+
+    <%= @packages %>
+
+    \\pagestyle{empty}
+    \\begin{document}
+
+    <%= @command %>
+
+    \\end{document}
+  LATEX
   
   it "should have all different ids" do
     ids = Latex::Symbol::List.map { |symbol| symbol.id }
