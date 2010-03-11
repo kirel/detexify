@@ -17,7 +17,7 @@ end
 
 sample_counts = Hash.new { |h,k| h[k] = 0 } # TODO sample counts
 classifier.stats[:counts].each do |id, c|
-  sample_counts[id] += c
+  sample_counts[id.to_sym] += c
 end
 
 get '/symbols' do
