@@ -2,16 +2,16 @@ require 'json'
 require 'sinatra'
 require 'symbol'
 require 'base64'
-require 'couch'
+require 'armchair'
 require 'classinatra/client'
 
 classifier_url = (ENV['CLASSIFIER'] || 'http://localhost:3000').sub(/\/?$/,'')
 classifier = Classinatra::Client.at(classifier_url)
-if ENV['COUCH'] == 'none' || !ENV['COUCH']
+if ENV['COUCH'] == 'none'
   couch = Class.new { def << fake; end }.new
   STDERR.puts 'WARNING! Running without a couch.'
 else
-  couch = Couch.new((ENV['COUCH'] || 'http://localhost:5984/detexify').sub(/\/?$/,'/'))
+  couch = Armchair.new((ENV['COUCH'] || 'http://localhost:5984/detexify').sub(/\/?$/,'/'))
   couch.create!
 end
 

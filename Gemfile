@@ -5,6 +5,7 @@ gem "json"
 gem "sinatra"
 gem "rest-client", :require => 'rest_client'
 gem "httparty"
+gem "armchair"
 gem "thin"
 
 group :test do

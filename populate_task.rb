@@ -19,7 +19,7 @@ class PopulateTask < Rake::TaskLib
       end
       
       cla = ENV['CLASSIFIER'].sub(/\/?$/,'')
-      couch = Couch.new(ENV['COUCH'].sub(/\/?$/,'/'))
+      couch = Armchair.new(ENV['COUCH'])
       couch.create!
       
       count = couch.size.to_f
