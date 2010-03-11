@@ -17,11 +17,11 @@ describe Couch do
     end
   end
   
-  it "should respond to http methods" do
-    %w(get put post delete).each do |method|
-      @couch.should respond_to(method)
-    end
-  end
+  # it "should respond to http methods" do
+  #   %w(get put post delete).each do |method|
+  #     @couch.should respond_to(method)
+  #   end
+  # end
   
   it "should create the database" do
     @couch.create!
@@ -29,7 +29,7 @@ describe Couch do
   end
   
   it "should insert documents" do
-    RestClient.should_receive(:post).with(@dburl, JSON(@doc))
+    RestClient.should_receive(:post).with(@dburl, JSON(@doc), :content_type => :json, :accept => :json)
     @couch << @doc
   end
   
