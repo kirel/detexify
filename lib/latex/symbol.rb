@@ -6,7 +6,7 @@ module Latex
   class Symbol
         
     #:nodoc:
-    A = [:command, :package, :fontenc, :mathmode, :textmode, :uri]
+    A = [:command, :package, :fontenc, :mathmode, :textmode]
     
     attr_reader(*A)
     attr_reader :id
@@ -34,6 +34,10 @@ module Latex
       "#{command} (#{package || 'latex2e'}, #{fontenc || 'OT1'})"
     end
     
+    def to_sym
+      @id.to_sym
+    end
+    
     def filename
       # id.to_s
       Digest::MD5.hexdigest id.to_s
@@ -47,7 +51,12 @@ module Latex
       h = {}
       A.each { |a| !self[a].nil? && (h[a] = self[a]) }
       h[:id] = self[:id]
+      h[:uri] = uri
       h
+    end
+    
+    def to_json(*a)
+      to_hash.to_json(*a)
     end
     
     symbols = File.open( File.join(File.expand_path(File.dirname(__FILE__)),'symbols.yaml') ) { |f| YAML::load( f ) }
@@ -69,7 +78,15 @@ module Latex
           end   
         end.compact # remove nil elements    
       end
-    end.flatten    
+    end.flatten
+    
+    ExtendedList = List.inject({}) { |h,s| h.update(s.to_sym => s) }
+    
+    def ExtendedList.each
+      super do |k,v|
+        yield v
+      end
+    end
     
     def self.[](id)
       id = id.to_sym

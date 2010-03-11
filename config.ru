@@ -1,12 +1,7 @@
-begin
-  # Require the preresolved locked set of gems.
-  require ::File.expand_path('../.bundle/environment', __FILE__)
-rescue LoadError
-  # Fallback on doing the resolve at runtime.
-  require "rubygems"
-  require "bundler"
-  Bundler.setup(:default)
-end
+require 'init'
 
-require 'app'
-run Sinatra::Application
+use Rack::Static, :urls => ["/classify.html", "/symbols.html", "/css", "/images", "/flash", "/js"], :root => "public"
+
+map '/' do
+  run Detexify::LatexApp
+end

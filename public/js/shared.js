@@ -32,8 +32,8 @@ function populateSymbolList(symbols) {
     else if (symbol.textmode && symbol.mathmode) {
       info += '<br><span class="texmode">textmode & mathmode</span>';
     }
-    if (symbol.samples != undefined) {
-      info += '<br><span class="samples">Samples: <span class="number">'+symbol.samples+'</span></span><br>';
+    if (this.samples != undefined) {
+      info += '<br><span class="samples">Samples: <span class="number">'+this.samples+'</span></span><br>';
     }
     $('#symbols').append(
       '<li id="'+symbol.id+'"><div class="symbolsentry"><div class="symbol"><img src="'+symbol.uri+'"></div>'+

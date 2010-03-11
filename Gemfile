@@ -6,7 +6,7 @@ gem "sinatra"
 gem "rest-client", :require => 'rest_client'
 gem "httparty"
 gem "armchair"
-gem "thin"
+gem "thin" # for deployment on heroku
 
 group :test do
   gem "rspec"
@@ -17,5 +17,4 @@ end
 group :rake do
   gem "rake"
   gem "aws-s3"
-  # gem "mongo"
 end
