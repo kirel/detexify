@@ -66,15 +66,15 @@ module Detexify
     def validate_strokes
       begin
         e('Illegal strokes') unless
-          params[:strokes] # &&
-           #          strokes = JSON(params[:strokes]) &&
-           #          !strokes.empty? &&
-           #          !strokes.first.empty?
+          params[:strokes] &&
+          strokes = JSON(params[:strokes]) #&&
+          #          !strokes.empty? &&
+          #          !strokes.first.empty?
           # TODO more thorough checks
       rescue
         e('Illegal strokes')
       end
-      strokes = JSON(params[:strokes])
+      strokes
     end
 
     def syms
