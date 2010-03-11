@@ -1,7 +1,10 @@
 require 'rubygems'
 require 'spec/rake/spectask'
-require 'symbol_task'
-require 'populate_task'
+
+$LOAD_PATH << ::File.join(::File.dirname(__FILE__), 'lib')
+
+require 'rake/symbol_task'
+require 'rake/populate_task'
 
 task :default => [:spec]
 
