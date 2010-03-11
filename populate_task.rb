@@ -18,7 +18,7 @@ class PopulateTask < Rake::TaskLib
         abort "You must set CLASSIFIER and COUCH environment variables!"
       end
       
-      cla = ENV['CLASSIFIER'].sub(/\/?$/,'')
+      classifier = Classinatra::Client.at(ENV['CLASSIFIER'])
       couch = Armchair.new(ENV['COUCH'])
       couch.create!
       
@@ -35,7 +35,7 @@ class PopulateTask < Rake::TaskLib
           tries = 0
           begin
             tries += 1
-            RestClient.post "#{cla}/train/#{Base64.encode64(id)}", data
+            classifier.train id, data
           rescue RestClient::Exception => e
             puts "Error: {e.message}"
             if tries < 4
