@@ -1,12 +1,13 @@
 require 'json'
 require 'sinatra'
-require 'restclient'
 require 'symbol'
 require 'base64'
 require 'couch'
+require 'classinatra/client'
 
-classifier = (ENV['CLASSIFIER'] || 'http://localhost:3000').sub(/\/?$/,'')
-if ENV['COUCH'] == 'none'
+classifier_url = (ENV['CLASSIFIER'] || 'http://localhost:3000').sub(/\/?$/,'')
+classifier = Classinatra::Client.at(classifier_url)
+if ENV['COUCH'] == 'none' || !ENV['COUCH']
   couch = Class.new { def << fake; end }.new
   STDERR.puts 'WARNING! Running without a couch.'
 else
@@ -15,8 +16,8 @@ else
 end
 
 sample_counts = Hash.new { |h,k| h[k] = 0 } # TODO sample counts
-JSON(RestClient.get(classifier))['counts'].each do |id,c|
-  sample_counts[Base64.decode64(id).to_sym] += c
+classifier.stats[:counts].each do |id, c|
+  sample_counts[id] += c
 end
 
 get '/symbols' do
@@ -34,10 +35,10 @@ post '/train' do
     halt 403, "Strokes scrambled"
   end
   if strokes && !strokes.empty? && !strokes.first.empty?
-    rsp = RestClient.post classifier + "/train/#{Base64.encode64(params[:id])}", params[:strokes]
+    rsp = classifier.train params[:id], params[:strokes]
     couch << {'id' => params[:id], 'data' => strokes }
     sample_counts[params[:id].to_sym] += 1
-    halt 200, rsp
+    halt 200, JSON(rsp)
   else
     halt 403, "These strokes look suspicious"
   end
@@ -48,15 +49,14 @@ end
 post '/classify' do
   halt 401, 'I want some payload' unless params[:strokes]
   # strokes = JSON params[:strokes]
-  rsp = RestClient.post classifier + "/classify", params[:strokes]
-  hits = JSON rsp
+  hits = classifier.classify params[:strokes]
   #, { :skip => params[:skip] && params[:skip].to_i, :limit => params[:limit] && params[:limit].to_i }
-  nohits = Latex::Symbol::List - hits.map { |hit| Latex::Symbol[Base64.decode64(hit['id'])] }
-  hits =  hits.map do |hit|
-    id = Base64.decode64(hit['id'])
+  nohits = Latex::Symbol::List - hits.map { |hit| Latex::Symbol[hit[:id]] }
+  hits = hits.map do |hit|
+    id = hit[:id]
     s = Latex::Symbol[id]
     if s
-      { :symbol => s.to_hash, :score => hit['score']}
+      { :symbol => s.to_hash, :score => hit[:score]}
     else
       STDERR.puts "WARNING! Encountered unknown symbol id '#{id}'."
       nil

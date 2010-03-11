@@ -5,7 +5,7 @@ rescue LoadError
   # Fallback on doing the resolve at runtime.
   require "rubygems"
   require "bundler"
-  Bundler.setup
+  Bundler.setup(:default)
 end
 
 require 'app'
