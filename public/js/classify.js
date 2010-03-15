@@ -1,8 +1,8 @@
-// requires canvassify, mathtex
-
 $(function(){
   // requests to classinatra  
   var abort, active, sentstrokes;
+  
+  var latex_classifier = new Detexify({ baseuri: '/' });
   
   function positionUpLink() {
     $('#up').css({
@@ -14,7 +14,7 @@ $(function(){
   
   $(window).resize(positionUpLink);
   
-  function classify(canvas) {
+  function classify(strokes) {
     abort = false;
     if (active === 0) {
       $('#canvasspinner').show('scale');      
@@ -22,7 +22,7 @@ $(function(){
     active = active + 1;
     sentstrokes = sentstrokes + 1;
     var sentstrokeswhencalled = sentstrokes;
-    $.post("/classify", {"strokes": JSON.stringify(canvas.strokes) }, function(json) {
+    latex_classifier.classify(strokes, function(json) {
       if (!abort) {
         active = active - 1;
         if (active === 0) {
@@ -39,7 +39,7 @@ $(function(){
               $.gritter.add({title:'Thanks!', text:'Thank you for training!', time: 1000})
               $(this).tooltip(0).hide();
               $('#canvasspinner').show('scale');            
-              train($(this).closest('li').attr('id'), canvas, function(json){
+              latex_classifier.train($(this).closest('li').attr('id'), strokes, function(json){
                 // TODO DRY
                 $('#canvasspinner').hide('scale');
                 if (json.message) {
@@ -65,12 +65,11 @@ $(function(){
         positionUpLink();
         
       }
-    }, 'json');
+    });
   }
   
   // Canvas
-  var c = $("#tafel").get(0);
-  canvassify(c, classify);
+  var c = $.canvassify('#tafel', {callback: classify});
   active = 0;
   $('#clear').click(function(){
     abort = true;

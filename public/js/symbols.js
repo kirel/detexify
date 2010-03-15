@@ -4,11 +4,12 @@ $(function(){
   $('#spinner').show();  
 
   // Canvas
-  var c = $("#tafel").get(0);
-  canvassify(c);
+  var c = $.canvassify('#tafel');
+  
 
   var symbols;
   var filter = '';
+  var latex_classifier = new Detexify({ baseuri: '/' });
 
   var localesort = function(a,b){ return (''+a).localeCompare(''+b); }
   var alphasort = function(a,b){ return localesort(a.command, b.command); }
@@ -189,7 +190,7 @@ $(function(){
     id = $(this).closest("li").prev().attr('id');
     num = $(this).closest("li").prev().find('.info .samples .number');
     $('#canvasspinner').show('scale');            
-    train(id, c, function(json){
+    latex_classifier.train(id, c.strokes, function(json){
       num.text(parseInt(num.text())+1);
       colorcode(num);
       $('#canvasspinner').hide('scale');
