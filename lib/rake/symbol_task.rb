@@ -1,6 +1,6 @@
 require 'rake/tasklib'
 require 'erb'
-require 'symbol'
+require 'latex/symbol'
 require 'aws/s3'
 
 class SymbolTask < Rake::TaskLib
