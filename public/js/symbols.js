@@ -7,8 +7,8 @@ $(function(){
   var c = $.canvassify('#tafel');
   
 
-  var symbols;
-  var filter = '';
+  var symbols = [];
+  var filter = "";
   var latex_classifier = new Detexify({ baseuri: '/' });
 
   var localesort = function(a,b){ return (''+a).localeCompare(''+b); }
@@ -101,14 +101,6 @@ $(function(){
       break;
     }
     populateSymbolListWrapper(symbols);
-  });
-
-  $.getJSON("/symbols", function(json) {
-    symbols = json;
-    symbols.sort(alphasort);
-    populateSymbolListWrapper(symbols);
-    $('#spinner').hide();
-    positionUpLink();
   });
   
   jQuery.fn.handleKeyboardChange = function(nDelay)
@@ -213,6 +205,17 @@ $(function(){
   });
   $('#trainingarea').mouseenter(function(){$("#drawhere").fadeOut("slow");});
 
-  $("#canvaserror").hide();  
+  $("#canvaserror").hide();
+  
+  $.getJSON("/symbols", function(json) {
+    symbols = json;
+    symbols.sort(alphasort);
+    populateSymbolListWrapper(symbols);
+    //second time to make it work. This is an ugly workaround
+    symbols.sort(alphasort);
+    populateSymbolListWrapper(symbols);
+    $('#spinner').hide();
+    positionUpLink();
+  });
 
 });
