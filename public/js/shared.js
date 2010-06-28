@@ -5,11 +5,7 @@ function clippy_html(text, bgcolor) {
 
 function populateSymbolList(symbols) {
   $('#symbols').empty();
-  
-  // symbols = symbols.slice(0,50);
-  
-  console.log('symbols', symbols);
-  
+      
   // prepare symbols for mustache
   var view = {symbols:_.map(symbols, function(symbol){
     $.extend(symbol, symbol.symbol);
@@ -26,9 +22,7 @@ function populateSymbolList(symbols) {
     }
     return symbol;
   })}
-  
-  console.log('view', view);
-  
+    
   var template = '{{#symbols}}' +
     '<li id="{{id}}"><div class="symbolsentry"><div class="symbol"><img src="{{uri}}"></div>'+
     '<div class="info">' +

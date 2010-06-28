@@ -13,7 +13,7 @@ $(function(){
 
   var localesort = function(a,b){ return (''+a).localeCompare(''+b); }
   var alphasort = function(a,b){ return localesort(a.command, b.command); }
-  var packagesort = function(a,b){
+  var packagesort = function(a,b) {
     if (a.package === b.package) {
       return alphasort(a, b);
     } else {
@@ -35,7 +35,7 @@ $(function(){
     // only show dem with package or command matching filter
     if (filter === '') return symbols;
     return $.grep(symbols, function(symbol, index){
-      return (symbol.package && symbol.package.match(filter)) || symbol.command.match(filter)
+      return (symbol.package && symbol.package.match(filter)) || symbol.command.match(filter);
     });
   }
 
@@ -44,9 +44,9 @@ $(function(){
     $('#trainingarea').appendTo($('#safespot'));
     populateSymbolList(filtered(symbols));
     // color code training numbers
-    var num = $('#symbols li .info .samples .number').each(function(){
-      colorcode(this);
-    });
+    // var num = $('#symbols li .info .samples .number').each(function(){
+    //   colorcode(this);
+    // });
     // setup training
     $('#symbols li')
     //$('#symbols li .symbol img')
@@ -88,29 +88,29 @@ $(function(){
   
   $(window).resize(positionUpLink);
 
-  $.getJSON("/symbols", function(json) {
-    json.sort(alphasort)
-    symbols = json;
-    populateSymbolListWrapper(symbols);
-    $('#spinner').hide();
-    positionUpLink();
-  });
-
   $('#sort').change(function(){
     switch ($(this).val()) {
       case 'alpha':
-      symbols.sort(alphasort)
+      symbols.sort(alphasort);
       break;
       case 'samples':
-      symbols.sort(samplesort)
+      symbols.sort(samplesort);
       break;
       case 'package':
-      symbols.sort(packagesort)
+      symbols.sort(packagesort);
       break;
     }
     populateSymbolListWrapper(symbols);
   });
 
+  $.getJSON("/symbols", function(json) {
+    symbols = json;
+    symbols.sort(alphasort);
+    populateSymbolListWrapper(symbols);
+    $('#spinner').hide();
+    positionUpLink();
+  });
+  
   jQuery.fn.handleKeyboardChange = function(nDelay)
   {
     // Utility function to test if a keyboard event should be ignored
