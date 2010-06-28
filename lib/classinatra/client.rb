@@ -6,7 +6,6 @@ module Classinatra
     module InstanceMethods
       def stats
         stats = self.class.get("/").symbolize_keys!
-        stats.update :counts => stats[:counts].inject({}) { |h,kv| h.update Base64.decode64(kv.first) => kv.last }
       end
 
       def classify data
