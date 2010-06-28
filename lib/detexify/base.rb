@@ -17,7 +17,7 @@ module Detexify
       id = validate_id
       strokes = validate_strokes
       rsp = settings.classifier.train id, JSON(strokes)
-      settings.couch << {'id' => id, 'data' => strokes }
+      settings.couch << {'id' => id, 'data' => strokes } rescue puts "Saving to couch failed"
       samples[id] += 1
       # response
       content_type 'application/json'
