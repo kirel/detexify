@@ -37,7 +37,7 @@ function populateSymbolList(symbols) {
     '{{#fontenc}}<code class="fontenc">\\usepackage[{{fontenc}}]{fontenc}</code><br>{{/fontenc}}' +
     '<code class="command">{{{command}}}</code>' +
     '<br><span class="texmode">{{texmode}}</span>' +
-    '{{#showsamples}}<br><span class="samples">Samples: <span class="number">{{samples}}</span></span><br>{{/showsamples}}' +
+    //'{{#showsamples}}<br><span class="samples">Samples: <span class="number">{{samples}}</span></span><br>{{/showsamples}}' +
     '</div></div></li>' +
     '{{/symbols}}';
     
