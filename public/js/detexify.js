@@ -7,11 +7,9 @@ function Detexify(config) {
   classifier.config = $.extend({baseuri:"/"}, config);
   
   classifier.train = function(id, strokes, callback) {
-    console.log(strokes);
     $.post(classifier.config.baseuri + "train", { "id": id, "strokes": JSON.stringify(strokes) }, callback, 'json');
   }
   classifier.classify = function(strokes, callback) {
-    console.log(strokes);  
     $.post(classifier.config.baseuri + "classify", {"strokes": JSON.stringify(strokes) }, callback, 'json');
   }    
 }
