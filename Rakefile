@@ -5,6 +5,7 @@ $LOAD_PATH << ::File.join(::File.dirname(__FILE__), 'lib')
 
 require 'rake/symbol_task'
 require 'rake/populate_task'
+require 'rake/benchmark_task'
 
 task :default => [:spec]
 
@@ -16,3 +17,5 @@ end
 SymbolTask.new
 
 PopulateTask.new
+
+BenchmarkTask.new
