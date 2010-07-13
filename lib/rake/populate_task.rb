@@ -2,6 +2,8 @@ require 'restclient'
 require 'json'
 require 'base64'
 require 'puddle'
+require 'armchair'
+require 'classinatra/client'
 
 class PopulateTask < Rake::TaskLib
   
@@ -29,6 +31,7 @@ class PopulateTask < Rake::TaskLib
       pool = Puddle.new
       couch.each do |doc|
         pool.process do
+          next unless doc['data'] && doc['id']
           data = JSON(doc['data'])
           id = doc['id']
           tries = 0
