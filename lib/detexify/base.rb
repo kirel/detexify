@@ -10,7 +10,7 @@ module Detexify
   class Base < Sinatra::Base 
     
     get '/symbols' do
-      @rsp ||= JSON(settings.symbols.map {|s|{:id => s.to_sym, :symbol => s, :samples => samples[s.to_sym]}})
+      @rsp ||= JSON(settings.symbols.map {|s|{:id => s.to_sym, :symbol => s}})
     end
 
     post '/train' do
@@ -18,7 +18,6 @@ module Detexify
       strokes = validate_strokes
       rsp = settings.classifier.train id, JSON(strokes)
       settings.couch << {'id' => id, 'data' => strokes } rescue puts "Saving to couch failed"
-      samples[id] += 1
       # response
       content_type 'application/json'
       status 200
@@ -79,16 +78,6 @@ module Detexify
 
     def syms
       @symcache ||= Set.new(settings.symbols.map { |s| s.to_sym })
-    end
-
-    def samples
-      unless @counts_cache
-        @counts_cache = Hash.new { |h,k| h[k] = 0 } # TODO sample counts
-        settings.classifier.stats[:counts].each do |id, c|
-          @counts_cache[id.to_sym] += c
-        end 
-      end
-      @counts_cache
     end
 
   end # Detexify::Base

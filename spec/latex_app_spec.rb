@@ -86,7 +86,7 @@ describe 'Detexify' do
     r.should be_a(Array)
     r.each do |element|
       element.should be_a(Hash)
-      %w(id symbol samples).each do |key|
+      %w(id symbol).each do |key|
         element.should have_key(key)        
       end
       %w(command mathmode textmode uri).each do |key|
