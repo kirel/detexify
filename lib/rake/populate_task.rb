@@ -13,14 +13,14 @@ class PopulateTask < Rake::TaskLib
   end
   
   def define
-    desc "Populate a CLASSIFIER with existing data from COUCH."
+    desc "Populate a CLASSIFIER with existing data from TRAINCOUCH."
     task @name do
-      unless ENV['CLASSIFIER'] && ENV['COUCH']
-        abort "You must set CLASSIFIER and COUCH environment variables!"
+      unless ENV['CLASSIFIER'] && ENV['TRAINCOUCH']
+        abort "You must set CLASSIFIER and TRAINCOUCH environment variables!"
       end
       
       classifier = Classinatra::Client.at(ENV['CLASSIFIER'])
-      couch = Armchair.new(ENV['COUCH'])
+      couch = Armchair.new(ENV['TRAINCOUCH'])
       couch.create!
       
       count = couch.size.to_f

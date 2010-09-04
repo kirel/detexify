@@ -1,0 +1,10 @@
+start classifier: cd code/classinatra && rackup
+start couch: couchdb
+
+cs code/detexify
+CLASSIFIER=http://localhost:9292
+COUCH=http://127.0.0.1:5984/detexify-live
+TESTCOUCH=http://127.0.0.1:5984/detexify-test
+TRAINCOUCH=http://127.0.0.1:5984/detexify-train
+rake populate
+rake benchmark
