@@ -1,36 +1,34 @@
 require 'restclient'
 require 'json'
 require 'base64'
-require 'puddle'
 require 'armchair'
 require 'classinatra/client'
+require 'threadify'
 
 class PopulateTask < Rake::TaskLib
-  
+
   def initialize name = :populate
     @name = name
     define
   end
-  
+
   def define
     desc "Populate a CLASSIFIER with existing data from TRAINCOUCH."
     task @name do
       unless ENV['CLASSIFIER'] && ENV['TRAINCOUCH']
         abort "You must set CLASSIFIER and TRAINCOUCH environment variables!"
       end
-      
+
       classifier = Classinatra::Client.at(ENV['CLASSIFIER'])
       couch = Armchair.new(ENV['TRAINCOUCH'])
       couch.create!
-      
+
       count = couch.size.to_f
       progress = 0.0
       percent = 0.0
 
       start = Time.now.to_i
-      pool = Puddle.new
-      couch.each do |doc|
-        pool.process do
+      couch.each do |doc| #threadify(2) ist nicht schneller
           next unless doc['data'] && doc['id']
           data = JSON(doc['data'])
           id = doc['id']
@@ -48,10 +46,8 @@ class PopulateTask < Rake::TaskLib
           end
           progress += 1
           puts "#{percent = (progress*100.0/count).floor}% geladen" if (progress*100.0/count).floor > percent
-        end
       end # count.each
       puts "done. #{(Time.now.to_i-start)} secs."
-      pool.drain
     end
   end
 

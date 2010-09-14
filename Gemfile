@@ -6,6 +6,8 @@ gem "sinatra"
 gem "rest-client", :require => 'rest_client'
 gem "httparty"
 gem "armchair"
+# gem "couchrest"
+gem "threadify"
 gem "thin" # for deployment on heroku
 
 group :test do
