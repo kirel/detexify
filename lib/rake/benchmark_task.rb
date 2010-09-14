@@ -165,8 +165,8 @@ class BenchmarkTask < Rake::TaskLib
         total_count = couch.view('tools/by_id', :reduce => true)['rows'].first['value']
 
         min_samples = 100 # only use classes with at least this many sampes
-        max_samples = 60 # use max this many samples - should be at leas 3 ;)
-        max_classes = 10 # use max this many classes
+        max_samples = 75 # use max this many samples - should be at leas 3 ;)
+        max_classes = 100 # use max this many classes
 
         timeleft = TimeLeft.new max_classes
         percent = 0.0
@@ -180,7 +180,7 @@ class BenchmarkTask < Rake::TaskLib
 
           if count > min_samples
             classes_added += 1
-            res = couch.view('tools/by_id', :reduce => false, :include_docs => true, :key => symbol.to_sym.to_s)
+            res = couch.view('tools/by_id', :reduce => false, :limit => max_samples, :include_docs => true, :key => symbol.to_sym.to_s)
             docs = res['rows'][0, max_samples].map { |row| row['doc'] }
 
             puts '='*80
