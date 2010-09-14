@@ -5,6 +5,7 @@ require 'armchair'
 require 'classinatra/client'
 require 'latex/symbol'
 require 'threadify'
+require 'stats'
 
 require 'pp'
 
@@ -68,36 +69,6 @@ class BenchmarkTask < Rake::TaskLib
 
   end
 
-  class Stats
-
-    def initialize
-      @tests = 0
-      @top = [0]*10
-    end
-
-    attr_reader :tests
-
-    def top x
-      @top[x-1]
-    end
-
-    def percentage_top x
-      top(x)*100.0/tests
-    end
-
-    def top! x
-      @tests += 1
-      x.upto(10).each do |i|
-        @top[i-1] += 1
-      end
-    end
-
-    def failed!
-      @tests += 1
-    end
-
-  end
-
   def initialize name = :populate
     @name = name
     define
@@ -117,7 +88,7 @@ class BenchmarkTask < Rake::TaskLib
       timeleft = TimeLeft.new count
       percent = 0.0
 
-      # THE ALLMIGHTY STATS
+      # global stats
       stats = Stats.new
       per_symbol_stats = Hash.new { |h,k| h[k] = Stats.new }
 
@@ -129,9 +100,9 @@ class BenchmarkTask < Rake::TaskLib
           tries += 1
           res = cla.classify data
           hits = res.sort_by {|r| r[:score] }.map { |r| r[:id] }
-          rank = hits.index(id)
+          rank = hits.index(id) + 1
           if rank
-            stats.top! rank + 1
+            stats.top! rank
             per_symbol_stats[id].top! rank
           else
             stats.failed!
