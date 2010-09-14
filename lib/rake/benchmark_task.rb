@@ -3,57 +3,61 @@ require 'json'
 require 'base64'
 require 'armchair'
 require 'classinatra/client'
+require 'latex/symbol'
+require 'threadify'
+
+require 'pp'
 
 class BenchmarkTask < Rake::TaskLib
-  
+
   class TimeLeft
-    
+
     def initialize num
       @all = num
       @start = Time.now
       @done = 0
     end
-    
+
     attr_reader :start, :finish, :done
-    
+
     def done! num = 1
       @done += num.to_i
       if @done >= @all
         @finish = Time.now
       end
     end
-    
+
     def left
       [@all - @done, 0].max
     end
-    
+
     def per
       per = ((@finish || Time.now) - @start)/@done
     end
-    
+
     # seconds left
     def to_f
       per = (Time.now - @start)/@done
       per * left
     end
-    
+
     def to_i
       self.to_f.to_i
     end
-    
+
     # time when probably done
     def to_time
       @finish || Time.now + self.to_f
     end
-    
+
     def to_s
       "#{self.to_i} seconds left"
     end
-    
+
     def done?
       !!@finish
     end
-    
+
     def total
       if done?
         @finish - @start
@@ -61,44 +65,44 @@ class BenchmarkTask < Rake::TaskLib
         self.to_time - @start
       end
     end
-    
+
   end
-  
+
   class Stats
-    
+
     def initialize
       @tests = 0
       @top = [0]*10
     end
-    
+
     attr_reader :tests
-    
+
     def top x
       @top[x-1]
     end
-    
+
     def percentage_top x
       top(x)*100.0/tests
     end
-    
+
     def top! x
       @tests += 1
       x.upto(10).each do |i|
-        @top[i-1] += 1        
+        @top[i-1] += 1
       end
     end
-    
+
     def failed!
       @tests += 1
     end
-    
+
   end
-  
+
   def initialize name = :populate
     @name = name
     define
   end
-  
+
   def define
     desc "Test CLASSIFIER with data from TESTCOUCH. Requires population first."
     task :benchmark do
@@ -127,7 +131,7 @@ class BenchmarkTask < Rake::TaskLib
           hits = res.sort_by {|r| r[:score] }.map { |r| r[:id] }
           rank = hits.index(id)
           if rank
-            stats.top! rank + 1 
+            stats.top! rank + 1
             per_symbol_stats[id].top! rank
           else
             stats.failed!
@@ -173,7 +177,7 @@ class BenchmarkTask < Rake::TaskLib
       end
       puts "Overall #{stats.tests} Tests for #{per_symbol_stats.size} Symbols in #{timeleft.total} secs needing #{timeleft.per} secs per test."
     end
-    
+
     namespace :benchmark do
       desc "Prepare TESTCOUCH and TRAINCOUCH from COUCH as... testcouch and benchcouch..."
       task :prepare do
@@ -181,52 +185,50 @@ class BenchmarkTask < Rake::TaskLib
           abort "You must set COUCH, TESTCOUCH and TRAINCOUCH environment variables!"
         end
 
-        couch = Armchair.new(ENV['COUCH'])
-        testcouch = Armchair.new(ENV['TESTCOUCH'])
-        traincouch = Armchair.new(ENV['TRAINCOUCH'])
-        testcouch.create!
-        traincouch.create!
+        couch = CouchRest.database(ENV['COUCH'])
+        testcouch = CouchRest.database(ENV['TESTCOUCH'])
+        testcouch.recreate!
+        traincouch = CouchRest.database(ENV['TRAINCOUCH'])
+        traincouch.recreate!
 
-        count = couch.size
-        timeleft = TimeLeft.new count
+        total_count = couch.view('tools/by_id', :reduce => true)['rows'].first['value']
+
+        min_samples = 100 # only use classes with at least this many sampes
+        max_samples = 60 # use max this many samples - should be at leas 3 ;)
+        max_classes = 10 # use max this many classes
+
+        timeleft = TimeLeft.new max_classes
         percent = 0.0
 
-        ### read all the docs
-        docs = {}
-        max = 9
-        min = 3
-        classes = 30
-        couch.each do |doc|
-          next unless doc['id'] && doc['data']
-          docs[doc['id']] ||= []
-          docs[doc['id']] << doc if docs[doc['id']].size <= max
-          timeleft.done! 1
-          puts "#{percent = (timeleft.done*100.0/count).floor}% read (#{timeleft})" if (timeleft.done*100.0/count).floor > percent
+        classes_added = 0
+
+        Latex::Symbol::List.each do |symbol|
+          break if classes_added == max_classes
+
+          count = couch.view('tools/by_id', :reduce => true, :key => symbol.to_sym.to_s)['rows'].first['value']
+
+          if count > min_samples
+            classes_added += 1
+            res = couch.view('tools/by_id', :reduce => false, :include_docs => true, :key => symbol.to_sym.to_s)
+            docs = res['rows'][0, max_samples].map { |row| row['doc'] }
+
+            puts '='*80
+            puts "(#{classes_added}) Prodessing #{docs.size} samples of #{count} available for #{symbol}"
+
+            border = docs.size/3
+            test_docs = docs[0,border] # one third test
+            train_docs = docs[border..-1] # two thirds training
+
+            puts "Putting #{test_docs.size} samples into the test couch."
+            testcouch.bulk_save(test_docs)
+            puts "Putting #{train_docs.size} samples into the training couch."
+            traincouch.bulk_save(train_docs)
+            timeleft.done! 1
+            puts "#{percent = (timeleft.done*100.0/max_classes).floor}% done (#{timeleft})" if (timeleft.done*100.0/max_classes).floor > percent
+          end
         end # count.each
-        puts "reading done. #{timeleft.total} secs."
-        puts 'About to distribute...'
 
-        ### shrink
-        docs.delete_if { |_,d| d.size < min }
-        docs.delete(docs.keys.first) while docs.size > classes
-
-        ### distribute
-        
-        count = docs.size
-        timeleft = TimeLeft.new count
-        percent = 0.0
-
-        docs.each do |_,d|
-          distribute = d.shuffle
-          distribute[0..(distribute.size/3)].each { |doc| testcouch << doc }
-          distribute[((distribute.size/3)+1)..(-1)].each { |doc| traincouch << doc }
-
-          timeleft.done! 1
-          puts "#{percent = (timeleft.done*100.0/count).floor}% written (#{timeleft})" if (timeleft.done*100.0/count).floor > percent
-        end
-
-        puts "Distribution done. #{timeleft.total} secs."
-
+        puts "Done. Saved training and test data for #{classes_added} classes. #{timeleft.total} secs."
       end
     end
   end
