@@ -9,11 +9,11 @@ module Classinatra
       end
 
       def classify data
-        self.class.post("/classify", { :body => data }).map { |h| h.symbolize_keys!.update :id => Base64.decode64(h[:id]) }
+        self.class.post("/classify", { :body => data, :headers => {"Content-Type" => 'application/json'} }).map { |h| h.symbolize_keys!.update :id => Base64.decode64(h[:id]) }
       end
 
       def train id, data
-        self.class.post "/train/#{Base64.encode64(id.to_s)}", { :body => data }
+        self.class.post "/train/#{Base64.encode64(id.to_s).strip}", { :body => data, :headers => {"Content-Type" => 'application/json'} }
       end
     end
 
