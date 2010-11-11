@@ -40,12 +40,22 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
   left: 370px;
 }
 
-#status {
+#status, #announcement {
   color: red;
   display: none;
   font-size: 16px;
   padding: 0 0 0 20px;
   background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/exclamation.png) no-repeat;
+}
+
+#announcement {
+  display: block;
+  font-size: 14px;
+}
+
+#announcement h2, #announcement p {
+  display: inline;
+  font-size: 14px;
 }
 
 #canvascontrols #clear {
