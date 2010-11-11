@@ -4,70 +4,12 @@ require 'base64'
 require 'armchair'
 require 'classinatra/client'
 require 'latex/symbol'
-require 'threadify'
 require 'stats'
+require 'timeleft'
 
 require 'pp'
 
 class BenchmarkTask < Rake::TaskLib
-
-  class TimeLeft
-
-    def initialize num
-      @all = num
-      @start = Time.now
-      @done = 0
-    end
-
-    attr_reader :start, :finish, :done
-
-    def done! num = 1
-      @done += num.to_i
-      if @done >= @all
-        @finish = Time.now
-      end
-    end
-
-    def left
-      [@all - @done, 0].max
-    end
-
-    def per
-      per = ((@finish || Time.now) - @start)/@done
-    end
-
-    # seconds left
-    def to_f
-      per = (Time.now - @start)/@done
-      per * left
-    end
-
-    def to_i
-      self.to_f.to_i
-    end
-
-    # time when probably done
-    def to_time
-      @finish || Time.now + self.to_f
-    end
-
-    def to_s
-      "#{self.to_i} seconds left"
-    end
-
-    def done?
-      !!@finish
-    end
-
-    def total
-      if done?
-        @finish - @start
-      else
-        self.to_time - @start
-      end
-    end
-
-  end
 
   def initialize name = :populate
     @name = name
@@ -135,12 +77,12 @@ class BenchmarkTask < Rake::TaskLib
         end
       end
       puts 'Flop 10:'
-      per_symbol_stats.dup.sort_by { |id, st| st.top(10) }[0,10].each do |id, st|
-        puts "#{Latex::Symbol[id]} - #{st.percentage_top(10)}% top 10"
+      per_symbol_stats.dup.sort_by { |id, st| st.top(1) }[0,10].each do |id, st|
+        puts "#{Latex::Symbol[id]} - #{st.percentage_top(1)}% top 1"
       end
       puts 'Top 10:'
-      per_symbol_stats.dup.sort_by { |id, st| -st.top(10) }[0,10].each do |id, st|
-        puts "#{Latex::Symbol[id]} - #{st.percentage_top(10)}% top 10"
+      per_symbol_stats.dup.sort_by { |id, st| -st.top(1) }[0,10].each do |id, st|
+        puts "#{Latex::Symbol[id]} - #{st.percentage_top(1)}% top 1"
       end
       puts 'Global stats:'
       1.upto(10) do |p|
@@ -164,9 +106,9 @@ class BenchmarkTask < Rake::TaskLib
 
         total_count = couch.view('tools/by_id', :reduce => true)['rows'].first['value']
 
-        min_samples = 100 # only use classes with at least this many sampes
-        max_samples = 75 # use max this many samples - should be at leas 3 ;)
-        max_classes = 100 # use max this many classes
+        min_samples = 50 # only use classes with at least this many sampes
+        max_samples = 50 # use max this many samples - should be at leas 3 ;)
+        max_classes = 50 # use max this many classes
 
         timeleft = TimeLeft.new max_classes
         percent = 0.0
@@ -178,7 +120,7 @@ class BenchmarkTask < Rake::TaskLib
 
           count = couch.view('tools/by_id', :reduce => true, :key => symbol.to_sym.to_s)['rows'].first['value']
 
-          if count > min_samples
+          if count > min_samples && symbol.to_sym.to_s !~ /wasysym|tipa|text/
             classes_added += 1
             res = couch.view('tools/by_id', :reduce => false, :limit => max_samples, :include_docs => true, :key => symbol.to_sym.to_s)
             docs = res['rows'][0, max_samples].map { |row| row['doc'] }

@@ -1,9 +1,7 @@
-require 'restclient'
 require 'json'
-require 'base64'
-require 'armchair'
+require 'couchrest'
 require 'classinatra/client'
-require 'threadify'
+require 'timeleft'
 
 class PopulateTask < Rake::TaskLib
 
@@ -19,24 +17,31 @@ class PopulateTask < Rake::TaskLib
         abort "You must set CLASSIFIER and TRAINCOUCH environment variables!"
       end
 
+      couch = CouchRest.database(ENV['TRAINCOUCH'])
       classifier = Classinatra::Client.at(ENV['CLASSIFIER'])
-      couch = Armchair.new(ENV['TRAINCOUCH'])
-      couch.create!
 
-      count = couch.size.to_f
-      progress = 0.0
+      # total_count = couch.view('tools/by_id', :reduce => true)['rows'].first['value']
+
+      samples = 50
+
+      timeleft = TimeLeft.new Latex::Symbol::List.size
       percent = 0.0
 
-      start = Time.now.to_i
-      couch.each do |doc| #threadify(2) ist nicht schneller
-          next unless doc['data'] && doc['id']
+      Latex::Symbol::List.each do |symbol|
+
+        res = couch.view('tools/by_id', :reduce => false, :limit => samples, :include_docs => true, :key => symbol.to_sym.to_s)
+        docs = res['rows'].map { |row| row['doc'] }
+
+        docs.each do |doc|
+          next unless data = doc['data'] && doc['id']
           data = JSON(doc['data'])
           id = doc['id']
           tries = 0
           begin
             tries += 1
-            classifier.train id, data
-          rescue RestClient::Exception => e
+            r = classifier.train id, data
+            print '*'
+          rescue Net::HTTPError => e
             puts "Error: {e.message}"
             if tries < 4
               puts "retrying in #{tries**2} seconds"
@@ -44,10 +49,14 @@ class PopulateTask < Rake::TaskLib
               retry
             end
           end
-          progress += 1
-          puts "#{percent = (progress*100.0/count).floor}% geladen" if (progress*100.0/count).floor > percent
-      end # count.each
-      puts "done. #{(Time.now.to_i-start)} secs."
+        end
+
+        timeleft.done! 1
+        puts
+        puts "#{percent = (timeleft.done*100.0/Latex::Symbol::List.size).floor}% done (#{timeleft})" if (timeleft.done*100.0/Latex::Symbol::List.size).floor > percent
+      end
+
+      puts "Done. #{timeleft.total} secs."
     end
   end
 
