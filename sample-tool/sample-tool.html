@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Sample Tool</title>
+  <script type="text/javascript" charset="utf-8" src="jquery-latest.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="sammy-latest.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="sammy.json.js"></script>
+  <script type="text/javascript" charset="utf-8" src="sammy.mustache.js"></script>
+  <script type="text/javascript" charset="utf-8" src="raphael-min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="underscore-min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+
+    var stroke2path = function(stroke) {
+      var first = _.first(stroke);
+      var path = _.map(_.rest(stroke), function(point) { return ["L", point.x, point.y]; })
+      if (path.length == 0)
+        return [["M", first.x, first.y], ["l", 0, 0.1]];
+      else
+        return [["M", first.x, first.y]].concat(path);
+    }
+
+    var app = $.sammy(function() {
+      this.use(Sammy.Mustache, 'ms');
+      this.use(Sammy.JSON);
+
+      this.get('#/', function() {
+        var c = this;
+        $.getJSON('_view/by_id?reduce=true&group=true', function(data) {
+          var template = '<ul>{{#rows}}<li><a href="#/{{key}}">{{key}}</a> - {{value}}</li>{{/rows}}</ul>'
+          $('#main').html(c.ms(template, data));
+        });
+      });
+
+      this.get('#/:symid', function() {
+        var c = this;
+        // get samples and display them
+        var symid = this.params['symid'];
+        $.getJSON('_view/by_id?reduce=false&key="'+encodeURIComponent(symid)+'"&include_docs=true', function(data) {
+          $('#main').text('');
+          // var template = '<ul>{{#rows}}<li><a href="#/{{key}}">{{key}}</a> - {{value}}</li>{{/rows}}</ul>'
+          // $('#main').html(c.ms(template, data));
+          console.log(data);
+          $('#main').html('<ul id="samples"></ul>');
+          $.each(data.rows, function(index, sam) {
+            var template = '<li><div id="{{id}}"><form action="#/{{id}}" method="DELETE"></form></div></li>';
+            $('#samples').append(c.ms(template, sam));
+            $('#'+sam.id).click(function(){
+              console.log('delete '+sam.id);
+              $('form', '#'+sam.id).submit();
+            });
+            // draw doc now
+            var paper = Raphael(sam.id, 400, 400);
+            $.each(sam.doc.data, function(i, stroke) {
+              paper.path(stroke2path(stroke)).attr({'stroke-width': 5, 'stroke-linecap': 'round'});
+            });
+          });
+          $('#main').prepend('<a href="#/">back</a>');
+        });
+      });
+
+      this.del('#/:samid', function() {
+        var samid = this.params['samid'];
+        $('#'+samid).closest('li').addClass('deleting');
+        $.getJSON('../../'+samid, function(doc) {
+          $.ajax({
+            url: '../../'+doc._id+'?rev='+doc._rev,
+            type: 'DELETE',
+            success: function(result) {
+              $('#'+doc._id).closest('li').addClass('deleted');
+            }
+          });
+        });
+        return false;
+      });
+
+    });
+
+    $(function() {
+      app.run('#/');
+    });
+  </script>
+  <style type="text/css" media="screen">
+    ul#samples li {
+      display: inline;
+      float: left;
+      border: 1px solid #eee;
+      margin: 2px;
+    }
+    ul#samples li.deleting {
+      border: 1px solid red;
+    }
+    ul#samples li.deleted {
+      border: 1px solid green;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main">
+      </div>
+    </div>
+  </body>
+  </html>
