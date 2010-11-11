@@ -32,6 +32,7 @@
 - \textexclamdown
 - \textvisiblespace
 - \textgreater
+- "!`" # inverted exclamation mark
 # Table 3: LATEX 2ε Commands Deﬁned to Work in Both Math and Text Mode
 - bothmodes:
   - \$
@@ -576,6 +577,11 @@
     - \bigoplus
     - \bigvee
     - \oint
+# Table 52: cmll Binary Operators
+- package: cmll
+  mathmode:
+    - \parr
+    - \with
 # Table 53: AMS Variable-sized Math Operators
 - package: amsmath
   mathmode:
@@ -986,7 +992,7 @@
     - \ell
     - \hbar
     - \in
-    - \not\in #added by me
+    - \notin #added by me
     - \partial
     - \wp
     - \exists
@@ -1135,30 +1141,126 @@
     - \texttwosuperior
     - \textminus
     - \textsurd
+- package: mathdots
+  mathmode:
+    - \iddots
 # Table 196: Math Alphabets
 - package: amssymb
   mathmode:
-    - \mathbb{N}
-    - \mathbb{Z}
-    - \mathbb{Q}
-    - \mathbb{R}
-    - \mathbb{C}
+    - \mathcal{A}
+    - \mathcal{B}
+    - \mathcal{C}
+    - \mathcal{D}
+    - \mathcal{E}
     - \mathcal{F}
+    - \mathcal{G}
     - \mathcal{H}
+    - \mathcal{I}
+    - \mathcal{J}
+    - \mathcal{K}
     - \mathcal{L}
+    - \mathcal{M}
+    - \mathcal{N}
     - \mathcal{O}
     - \mathcal{P}
+    - \mathcal{Q}
+    - \mathcal{R}
+    - \mathcal{S}
+    - \mathcal{T}
+    - \mathcal{U}
+    - \mathcal{V}
+    - \mathcal{W}
+    - \mathcal{X}
+    - \mathcal{Y}
+    - \mathcal{Z}
+    - \mathfrak{A}
+    - \mathfrak{B}
+    - \mathfrak{C}
+    - \mathfrak{D}
+    - \mathfrak{E}
+    - \mathfrak{F}
+    - \mathfrak{G}
+    - \mathfrak{H}
+    - \mathfrak{I}
+    - \mathfrak{J}
+    - \mathfrak{K}
+    - \mathfrak{L}
+    - \mathfrak{M}
+    - \mathfrak{N}
+    - \mathfrak{O}
+    - \mathfrak{P}
+    - \mathfrak{Q}
+    - \mathfrak{R}
     - \mathfrak{S}
+    - \mathfrak{T}
+    - \mathfrak{U}
+    - \mathfrak{V}
+    - \mathfrak{W}
+    - \mathfrak{X}
+    - \mathfrak{Y}
+    - \mathfrak{Z}
 - package: bbold
   mathmode:
     - \mathbb{1}
 - package: dsfont
   mathmode:
+    - \mathds{1}
+    - \mathds{h}
+    - \mathds{k}
+    - \mathds{A}
+    - \mathds{B}
+    - \mathds{C}
+    - \mathds{D}
+    - \mathds{E}
+    - \mathds{F}
+    - \mathds{G}
+    - \mathds{H}
+    - \mathds{I}
+    - \mathds{J}
+    - \mathds{K}
+    - \mathds{L}
+    - \mathds{M}
     - \mathds{N}
-    - \mathds{Z}
+    - \mathds{O}
+    - \mathds{P}
     - \mathds{Q}
     - \mathds{R}
-    - \mathds{C}
+    - \mathds{S}
+    - \mathds{T}
+    - \mathds{U}
+    - \mathds{V}
+    - \mathds{W}
+    - \mathds{X}
+    - \mathds{Y}
+    - \mathds{Z}
+- package: mathrsfs
+  mathmode:
+    - \mathscr{A}
+    - \mathscr{B}
+    - \mathscr{C}
+    - \mathscr{D}
+    - \mathscr{E}
+    - \mathscr{F}
+    - \mathscr{G}
+    - \mathscr{H}
+    - \mathscr{I}
+    - \mathscr{J}
+    - \mathscr{K}
+    - \mathscr{L}
+    - \mathscr{M}
+    - \mathscr{N}
+    - \mathscr{O}
+    - \mathscr{P}
+    - \mathscr{Q}
+    - \mathscr{R}
+    - \mathscr{S}
+    - \mathscr{T}
+    - \mathscr{U}
+    - \mathscr{V}
+    - \mathscr{W}
+    - \mathscr{X}
+    - \mathscr{Y}
+    - \mathscr{Z}
 # Table197: gensymbSymbolsDeﬁnedtoWorkinBothMathandTextMode
 - package: gensymb
   bothmodes:
@@ -1198,9 +1300,10 @@
     - \pisces
     - \ascnode
     - \descnode
+    - \vernal
+  textmode:
     - \conjunction
     - \opposition
-    - \vernal
 # Table 202: marvosym Astronomical Symbols
 - package: marvosym
   textmode:
