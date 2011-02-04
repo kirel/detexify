@@ -48,6 +48,10 @@ body.classify #canvasspinner, body.symbols #canvasspinner {
   background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/exclamation.png) no-repeat;
 }
 
+#announcement a {
+  color: red;
+}
+
 #announcement {
   display: block;
   font-size: 14px;
