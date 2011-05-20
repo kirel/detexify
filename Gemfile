@@ -1,3 +1,4 @@
+source :rubygems
 gem "json"
 gem "sinatra"
 gem "rest-client", :require => 'rest_client'
