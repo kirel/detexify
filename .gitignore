@@ -6,3 +6,4 @@
 /images
 /coverage
 .bundle
+.env
