@@ -11,3 +11,9 @@ SymbolTask.new
 PopulateTask.new
 BenchmarkTask.new
 SetupTask.new
+
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec

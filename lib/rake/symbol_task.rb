@@ -4,7 +4,7 @@ require 'latex/symbol'
 require 'aws/s3'
 
 class SymbolTask < Rake::TaskLib
-  
+
   TEMPLATE = ERB.new <<-LATEX #open('template.tex.erb').read
     \\documentclass[10pt]{article}
     \\usepackage[utf8]{inputenc}
@@ -18,7 +18,7 @@ class SymbolTask < Rake::TaskLib
 
     \\end{document}
   LATEX
-  
+
   TMP = 'tmp'
   OUT = 'images/latex'
 
@@ -26,7 +26,7 @@ class SymbolTask < Rake::TaskLib
 
   # initialize sets the name and calls a block to get
   #   the rest of the options
-  def initialize(name = :symbols)
+  def initialize(name = :generate)
       @name = name
       yield self if block_given?
       define
@@ -39,47 +39,49 @@ class SymbolTask < Rake::TaskLib
       directory TMP
       directory OUT
     # end
-        
+
     all_image_tasks = Latex::Symbol::List.map do |symbol|
       define_single_tex_task symbol
-      define_single_dvi_task symbol      
+      define_single_dvi_task symbol
       define_single_image_task symbol
     end
-    
-    desc "create png images from all symbols"
-    task @name => all_image_tasks
-    
-    desc "upload all pngs found in images/* to S3"
-    task :upload => @name do
-      abort 'You suck!' unless ENV['AWS_KEY'] && ENV['AWS_SECRET']
-      AWS::S3::Base.establish_connection!(
-        :access_key_id     => ENV['AWS_KEY'],
-        :secret_access_key => ENV['AWS_SECRET']
-      )
-      
-      bucket = 'detexify.kirelabs.org' # TODO make configurable
-      Dir.glob('images/**/*.png').each do |path|
-        unless AWS::S3::S3Object.exists? path, bucket
-          puts "Uploading #{path}..."
-          AWS::S3::S3Object.store(path, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000')
-          puts 'done.'
-        else
-          puts "#{path} already uploaded."
+
+    namespace :symbols do
+      desc "create png images from all symbols"
+      task @name => all_image_tasks
+
+      desc "upload all pngs found in images/* to S3"
+      task :upload => @name do
+        abort 'Need to set AWS_KEY and AWS_SECRET!' unless ENV['AWS_KEY'] && ENV['AWS_SECRET']
+        AWS::S3::Base.establish_connection!(
+          :access_key_id     => ENV['AWS_KEY'],
+          :secret_access_key => ENV['AWS_SECRET']
+        )
+
+        bucket = 'detexify.kirelabs.org' # TODO make configurable
+        Dir.glob('images/**/*.png').each do |path|
+          unless AWS::S3::S3Object.exists? path, bucket
+            puts "Uploading #{path}..."
+            AWS::S3::S3Object.store(path, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000')
+            puts 'done.'
+          else
+            puts "#{path} already uploaded."
+          end
+          # legacy
+          oldpath = path.sub('latex', 'symbols')
+          unless AWS::S3::S3Object.exists? oldpath, bucket
+            puts "Uploading #{oldpath}... DEPRECATED"
+            AWS::S3::S3Object.store(oldpath, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000')
+            puts 'done.'
+          else
+            puts "#{oldpath} already uploaded."
+          end
         end
-        # legacy
-        oldpath = path.sub('latex', 'symbols')
-        unless AWS::S3::S3Object.exists? oldpath, bucket
-          puts "Uploading #{oldpath}... DEPRECATED"
-          AWS::S3::S3Object.store(oldpath, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000') 
-          puts 'done.'
-        else
-          puts "#{oldpath} already uploaded."
-        end
-      end
+      end # namespace
     end
   end
-  
-  
+
+
   def define_single_image_task symbol
     file "#{File.join(OUT, symbol.filename)}.png" => [OUT, "#{File.join(TMP, symbol.filename)}.dvi"] do |t|
       # Now convert to image
@@ -92,7 +94,7 @@ class SymbolTask < Rake::TaskLib
           puts "Major Failure creating image! (status = #{res.exitstatus})"
         end
       end
-      
+
     end
     "#{File.join(OUT, symbol.filename)}.png" # need the names
   end
@@ -122,5 +124,5 @@ class SymbolTask < Rake::TaskLib
       end
     end
   end
-  
+
 end

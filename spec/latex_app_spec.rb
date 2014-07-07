@@ -42,55 +42,55 @@ describe 'Detexify' do
   
   it "classifies a wellformed request" do
     post '/classify', :strokes => JSON(@strokes)
-    last_response.should be_ok
+    expect( last_response ).to be_ok
     r = JSON last_response.body
-    r.should be_a(Array)
+    expect( r ).to be_a(Array)
     r.each do |element|
-      element.should be_a(Hash)
+      expect( element ).to be_a(Hash)
       %w(symbol score).each do |key|
-        element.should have_key(key)
-        element['symbol'].should be_a(Hash)
+        expect( element ).to have_key(key)
+        expect( element['symbol'] ).to be_a(Hash)
         %w(id command mathmode textmode uri).each do |key|
-          element['symbol'].should have_key(key)
-        end             
+          expect( element['symbol'] ).to have_key(key)
+        end
       end
     end
   end
   
   it "trains a wellformed request" do
     post '/train', {:id => @symbol.id, :strokes => JSON(@strokes)}
-    last_response.should be_ok
+    expect( last_response ).to be_ok
   end
   
   it "won't train illegal ids" do
     post '/train', {:id => 'bullshit', :strokes => JSON(@strokes)}
-    last_response.status.should == 400
+    expect( last_response.status ).to be == 400
   end
 
   it "won't train without strokes" do
     post '/train', {:id => @symbol.id}
-    last_response.status.should == 400
+    expect( last_response.status ).to be == 400
   end
 
   it "won't train malformed strokes" do
     post '/train', {:id => @symbol.id, :strokes => 'malformed'}
-    last_response.status.should == 400
+    expect( last_response.status ).to be == 400
   end
   
   it "lists symbols as json" do
     get '/symbols'
-    last_response.should be_ok
+    expect( last_response ).to be_ok
     # verify structure of response
     # [{id:..., command:..., textmode:..., ...}, ...]
     r = JSON(last_response.body)
-    r.should be_a(Array)
+    expect( r ).to be_a(Array)
     r.each do |element|
-      element.should be_a(Hash)
+      expect( element ).to be_a(Hash)
       %w(id symbol).each do |key|
-        element.should have_key(key)        
+        expect( element ).to have_key(key)
       end
       %w(command mathmode textmode uri).each do |key|
-        element['symbol'].should have_key(key)
+        expect( element['symbol'] ).to have_key(key)
       end
     end
   end
@@ -98,7 +98,7 @@ describe 'Detexify' do
   it "should limit the results if requested" do
     post '/classify', :strokes => JSON(@strokes), :limit => 1
     r = JSON last_response.body
-    r.should have(1).elements    
+    expect( r.length ).to be 1
   end
 
   it "should skip results if requested" do
@@ -106,13 +106,13 @@ describe 'Detexify' do
     res = JSON last_response.body
     post '/classify', :strokes => JSON(@strokes), :skip => 1
     r = JSON last_response.body
-    r.should == res[1..-1]
+    expect( r ).to be == res[1..-1]
   end
 
   it "should limit the results if also skipped" do
     post '/classify', :strokes => JSON(@strokes), :skip => 1, :limit => 1
     r = JSON last_response.body
-    r.should have(1).elements
+    expect( r.length ).to be 1
   end
 
   it "should skip results if also limited" do
@@ -120,7 +120,7 @@ describe 'Detexify' do
     res = JSON last_response.body
     post '/classify', :strokes => JSON(@strokes), :skip => 1, :limit => 1
     r = JSON last_response.body
-    r.should === res[1, 1]    
+    expect( r ).to be === res[1, 1]
   end
   
 end

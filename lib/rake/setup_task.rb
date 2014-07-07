@@ -40,5 +40,4 @@ class SetupTask < Rake::TaskLib
     end
   end
 
-
 end
