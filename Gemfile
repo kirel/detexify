@@ -12,9 +12,13 @@ gem "threadify"
 gem "thin" # for deployment on heroku
 
 group :test do
-  gem "rspec", '<2'
+  gem "rspec"
   gem "fakeweb"
   gem "rack-test"
+end
+
+group :development do
+  gem 'dotenv'
 end
 
 group :rake do

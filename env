@@ -1,4 +1,0 @@
-export COUCH=http://localhost:5984/detexify-live
-export TESTCOUCH=http://localhost:5984/detexify-test-mini
-export TRAINCOUCH=http://localhost:5984/detexify-train-mini
-export CLASSIFIER=http://localhost:3000
