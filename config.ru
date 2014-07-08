@@ -1,6 +1,6 @@
 require './init'
 
-use Rack::Static, :urls => ["/favicon.ico", "/classify.html", "/symbols.html", "/css", "/images", "/flash", "/js"], :root => "public"
+use Rack::Static, :urls => ["/favicon.ico", "/index.html", "/symbols.html", "/stylesheets", "/images", "/flash", "/javascripts"], :root => "public"
 
 map '/api' do
   run Detexify::LatexApp
