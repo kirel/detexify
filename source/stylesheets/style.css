@@ -1,4 +1,5 @@
-/* @override http://localhost:4567/css/style.css */
+//= require_tree .
+//= require_self
 
 a:link, a:visited {
   color: royalblue;
@@ -190,7 +191,7 @@ body.classify ul.nav li.symbols a:link,
 body.symbols ul.nav li.classify a:link,
 body.classify ul.nav li.symbols a:visited,
 body.symbols ul.nav li.classify a:visited {
-  
+
 
 }
 
@@ -263,7 +264,7 @@ canvas#tafel {
 }
 
 body.symbols .infoarea {
-  
+
 }
 
 ul.symbols {

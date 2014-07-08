@@ -6,3 +6,5 @@
 /images
 /coverage
 .bundle
+/.sass-cache
+/.cache

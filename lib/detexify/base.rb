@@ -7,8 +7,8 @@ module Detexify
   # a symbol needs to respond to #to_sym and #to_json
   # settings.couch needs to respond to #<<
   # settings.classifier is a classifier #train #classify #stats
-  class Base < Sinatra::Base 
-    
+  class Base < Sinatra::Base
+
     get '/symbols' do
       @rsp ||= JSON(settings.symbols.map {|s|{:id => s.to_sym, :symbol => s}})
     end
@@ -33,7 +33,7 @@ module Detexify
         hit.merge(:symbol => symbol) if symbol
       end.compact + nohits.map { |sym| {:id => sym, :symbol => settings.symbols[sym], :score => 99999 } }
       if params[:skip] || params[:limit]
-        skip =  params[:skip].to_i.to_s == params[:skip] && params[:skip].to_i || 0 
+        skip =  params[:skip].to_i.to_s == params[:skip] && params[:skip].to_i || 0
         limit = params[:limit].to_i.to_s == params[:limit] && params[:limit].to_i || hits.size
         hits = hits[skip,limit]
       end
@@ -45,12 +45,12 @@ module Detexify
 
     # GUI
 
-    get '/' do
-      redirect '/classify.html'
-    end
+    # get '/' do
+    #   redirect '/classify.html'
+    # end
 
     protected
-    
+
     def e(message)
       content_type 'application/json'
       halt 400, JSON(:error => message)
@@ -81,5 +81,5 @@ module Detexify
     end
 
   end # Detexify::Base
-  
+
 end

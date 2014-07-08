@@ -1,9 +1,9 @@
 $(function(){
-  // requests to classinatra  
+  // requests to classinatra
   var abort, active, sentstrokes;
-  
-  var latex_classifier = new Detexify({ baseuri: '/' });
-  
+
+  var latex_classifier = new Detexify({ baseuri: '/api/' });
+
   function positionUpLink() {
     $('#up').css({
       'position': 'fixed',
@@ -11,13 +11,13 @@ $(function(){
       'left'    : $('#hitarea').offset().left+540
     });
   }
-  
+
   $(window).resize(positionUpLink);
-  
+
   function classify(strokes) {
     abort = false;
     if (active === 0) {
-      $('#canvasspinner').show('scale');      
+      $('#canvasspinner').show('scale');
     }
     active = active + 1;
     sentstrokes = sentstrokes + 1;
@@ -38,7 +38,7 @@ $(function(){
             .click(function(){
               $.gritter.add({title:'Thanks!', text:'Thank you for training!', time: 1000})
               $(this).tooltip(0).hide();
-              $('#canvasspinner').show('scale');            
+              $('#canvasspinner').show('scale');
               latex_classifier.train($(this).closest('li').attr('id'), strokes, function(json){
                 // TODO DRY
                 $('#canvasspinner').hide('scale');
@@ -59,15 +59,15 @@ $(function(){
           setuptraining();
           return false;
         });
-                
+
         $('#hitarea').show();
 
         positionUpLink();
-        
+
       }
     });
   }
-  
+
   // Canvas
   var c = $.canvassify('#tafel', {callback: classify});
   active = 0;
@@ -78,7 +78,7 @@ $(function(){
     c.clear();
     $('#hitarea').hide();
     $('#symbols').empty();
-    $('#canvasspinner').hide();    
+    $('#canvasspinner').hide();
     return false;
   });
   $("#canvaserror").hide();

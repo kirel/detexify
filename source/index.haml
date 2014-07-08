@@ -1,0 +1,131 @@
+---
+title: Detexify LaTeX handwritten symbol recognition
+description: An approach to simplify finding LaTeX symbols.
+keywords: math,LaTeX,productivity,typesetting,science,machine learning,PhD
+body_classes: classify
+js: classify
+---
+#everything
+  #status
+  #announcement
+  %h1
+    Detexify
+    %sup 2
+    \- LaTeX symbol classifier
+  %ul.nav
+    %li.classify
+      %a{:href => "/"} classify
+    %li.symbols
+      %a{:href => "/symbols.html"} symbols
+  #canvasarea
+    %img#drawhere{:alt => "Draw here!", :src => "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/draw_here.png"}/
+    #canvascontainer
+      #tafel{:style => "width: 400px; height: 400px; border: 1px solid #000;"}
+      #canvasspinner.spinner
+        %img{:alt => "Loading...", :src => "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/spinner.gif"}/
+    #canvascontrols
+      %a#clear{:href => "#"} clear
+    #canvaserror This canvas is fubar :(
+  #infoarea
+    %h2 What is this?
+    %p
+      Anyone who works with LaTeX knows how time-consuming it can be
+      to find a symbol in
+      %a{:href => "http://www.ctan.org/tex-archive/info/symbols/comprehensive/"} symbols-a4.pdf
+      that you just can't memorize. Detexify is an attempt to simplify this search.
+    %h2 How do I use it?
+    %p
+      Just draw the symbol you are looking for into the square area above and look what happens!
+    %h2 My symbol isn't found!
+    %p
+      The symbol may not be trained enough
+      or it is not yet in the list of supported symbols.
+      In the first case you can do the training yourself.
+      %strike In the second case just drop me a line (danishkirel@gmail.com)!
+      ( I don't really find the time to actively maintain this version of Detexify but I am working
+      on a version that is much easier to maintain and has other benefits. )
+    %h2 I like this. How can I help?
+    %p
+      You could spare some time training Detexify. You could also
+      look at the source of the
+      %a{:href => "https://github.com/kirel/detexify-hs-backend"} backend
+      and
+      %a{:href => "http://github.com/kirel/detexify"} frontend
+      on Github (but better look at the
+      = succeed ")." do
+        %a{:href => "#new"} new version
+      If you really, really like this
+      you can also donate.
+    %a{:href => "http://www.pledgie.com/campaigns/14561"}
+      %img{:alt => "Click here to lend your support to: Detexify and make a donation at www.pledgie.com !", :border => "0", :src => "http://www.pledgie.com/campaigns/14561.png?skin_name=chrome"}/
+    or
+    %a.FlattrButton{:href => "http://detexify.kirelabs.org", :style => "display:none;"}
+    %h2 Why should I donate?
+    %p
+      Hosting of detexify costs some money. If Detexify helps you, you might want to help cover these costs. The backend where all the computation is done is running on a server that is sponsored by my employer
+      %a{:href => "http://www.zweitag.de"} Zweitag GmbH
+      but the fontend is hosted separately and still needs to be payed for.
+    %h2 This doesn't work at all!?
+    %p
+      Detexify relies on HTML5 features so you need a fairly recent browser.
+      Opera 9.6 / Firefox 3.5 / Safari 4 / Chrome should do the trick.
+    %h2 Do you support Unicode?
+    %p
+      No. The
+      %a{:href => "#new"} new version
+      will. Meanwhile use
+      = succeed "!" do
+        %a{:href => "http://shapecatcher.com"} http://shapecatcher.com
+    %h2#new What is that new version you are talking about?
+    %p
+      The new version is a complete rewrite (codename sketch-a-char) and I already talked about it
+      = succeed "." do
+        %a{:href => "http://detexify.posterous.com/update-on-detexify"} here
+      If you are a developer you might want to check out
+      %a{:href => "https://github.com/kirel/sketch-a-char"} sketch-a-char
+      on Github.
+    %h2 Who created Detexify?
+    %p
+      Philipp Kühl had the initial idea and
+      %a{:href => "http://kirelabs.org"} Daniel Kirsch
+      made it happen.
+    #sponsors
+      %ul
+        %li
+          The backend server is sponsored by
+          %br/
+          %a{:href => "http://www.zweitag.de"}
+            %img{:alt => "Zweitag GmbH", :src => "/images/zweitag-logo.png"}/
+  #hitarea
+    #donate
+      %em Did this help?
+      %span Hosting Detexify costs money and if it helps you may consider helping to pay the hosting bill.
+      %a{:href => "http://www.pledgie.com/campaigns/14561"}
+        %img{:alt => "Click here to lend your support to: Detexify and make a donation at www.pledgie.com !", :border => "0", :src => "http://www.pledgie.com/campaigns/14561.png?skin_name=chrome"}/
+    %ul#symbols.symbols
+    #morearea
+      The symbol is not in the list?
+      %a#more{:href => "#"} Select from the complete list!
+    %a#up{:href => "#"} up ↑
+    #traintip.tooltip
+      Is this the right symbol? Please
+      %strong click
+      to train!
+:javascript
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+:javascript
+  try {
+  var pageTracker = _gat._getTracker("UA-8668142-3");
+  pageTracker._trackPageview();
+  } catch(err) {}
+:javascript
+  (function() {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.5.0/load.js?mode=auto';
+
+      t.parentNode.insertBefore(s, t);
+  })();

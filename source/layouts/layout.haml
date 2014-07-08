@@ -1,0 +1,13 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => current_page.data.description, :name => "description"}
+    %meta{:content => current_page.data.keywords, :name => "keywords"}
+    %title= current_page.data.title || "Detexify"
+    = stylesheet_link_tag "style"
+    = javascript_include_tag "shared"
+    = javascript_include_tag current_page.data.js if current_page.data.js
+  %body{class: current_page.data.body_classes }
+    = yield

@@ -1,15 +1,15 @@
 // requires canvassify, mathtex
 
 $(function(){
-  $('#spinner').show();  
+  $('#spinner').show();
 
   // Canvas
   var c = $.canvassify('#tafel');
-  
+
 
   var symbols = [];
   var filter = "";
-  var latex_classifier = new Detexify({ baseuri: '/' });
+  var latex_classifier = new Detexify({ baseuri: '/api/' });
 
   var localesort = function(a,b){ return (''+a).localeCompare(''+b); }
   var alphasort = function(a,b){ return localesort(a.command, b.command); }
@@ -28,7 +28,7 @@ $(function(){
       $(num).css('color','rgb('+(255-n*10)+','+(n*10)+',0)');
     } else {
       $(num).css('color','green');
-    }    
+    }
   }
 
   var filtered = function(symbols) {
@@ -85,7 +85,7 @@ $(function(){
       'left'    : $('#everything').offset().left+560
     });
   }
-  
+
   $(window).resize(positionUpLink);
 
   $('#sort').change(function(){
@@ -102,16 +102,16 @@ $(function(){
     }
     populateSymbolListWrapper(symbols);
   });
-  
+
   jQuery.fn.handleKeyboardChange = function(nDelay)
   {
     // Utility function to test if a keyboard event should be ignored
-    function shouldIgnore(event) 
-    { 
+    function shouldIgnore(event)
+    {
       var mapIgnoredKeys = {
         9:true, // Tab
         16:true, 17:true, 18:true, // Shift, Alt, Ctrl
-        37:true, 38:true, 39:true, 40:true, // Arrows 
+        37:true, 38:true, 39:true, 40:true, // Arrows
         91:true, 92:true, 93:true // Windows keys
       };
       return mapIgnoredKeys[event.which];
@@ -135,7 +135,7 @@ $(function(){
     function clearPreviousTimeout()
     {
       if( timeout )
-      { 
+      {
         clearTimeout(timeout);
       }
     }
@@ -146,7 +146,7 @@ $(function(){
       if( shouldIgnore(event) ) return;
       // User pressed a key, stop the timeout for now
       clearPreviousTimeout();
-      return null; 
+      return null;
     })
     .keyup(function(event)
     {
@@ -181,7 +181,7 @@ $(function(){
     // get the previous li's
     id = $(this).closest("li").prev().attr('id');
     num = $(this).closest("li").prev().find('.info .samples .number');
-    $('#canvasspinner').show('scale');            
+    $('#canvasspinner').show('scale');
     latex_classifier.train(id, c.strokes, function(json){
       num.text(parseInt(num.text())+1);
       colorcode(num);
@@ -206,8 +206,8 @@ $(function(){
   $('#trainingarea').mouseenter(function(){$("#drawhere").fadeOut("slow");});
 
   $("#canvaserror").hide();
-  
-  $.getJSON("/symbols", function(json) {
+
+  $.getJSON("/api/symbols", function(json) {
     symbols = json;
     symbols.sort(alphasort);
     populateSymbolListWrapper(symbols);
