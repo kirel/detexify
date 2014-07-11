@@ -30,5 +30,4 @@ end
 
 group :rake do
   gem "rake"
-  gem "aws-s3"
 end

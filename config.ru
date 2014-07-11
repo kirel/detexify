@@ -6,6 +6,4 @@ map '/api' do
   run Detexify::LatexApp
 end
 
-map '/' do
-  run Detexify::LatexApp
-end
+run Class.new(Sinatra::Base) { get('/') { redirect '/classify.html' } }

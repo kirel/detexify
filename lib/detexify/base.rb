@@ -43,12 +43,6 @@ module Detexify
       JSON(hits)
     end
 
-    # GUI
-
-    get '/' do
-      redirect '/classify.html'
-    end
-
     protected
 
     def e(message)

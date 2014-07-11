@@ -37,22 +37,16 @@ module Latex
     def to_sym
       @id.to_sym
     end
-    
+
     def filename
-      # id.to_s
       'symbol' + Digest::MD5.hexdigest(id.to_s)
     end
     alias css_class filename
-    
-    def uri
-      "http://detexify.kirelabs.org.s3.amazonaws.com/images/latex/#{filename}.png"
-    end
-    
+
     def to_hash
       h = {}
       A.each { |a| !self[a].nil? && (h[a] = self[a]) }
       h[:id] = self[:id]
-      h[:uri] = uri
       h[:css_class] = css_class
       h
     end

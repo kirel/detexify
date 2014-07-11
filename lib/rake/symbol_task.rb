@@ -1,7 +1,6 @@
 require 'rake/tasklib'
 require 'erb'
 require 'latex/symbol'
-require 'aws/s3'
 
 class SymbolTask < Rake::TaskLib
 
@@ -57,41 +56,12 @@ class SymbolTask < Rake::TaskLib
       end
 
       task :resize => @name do
-        system 'mogrify -path images/latex -thumbnail "70x60>" images/latex/*.png'
+        system 'mogrify -path images/latex -thumbnail "70x50>" images/latex/*.png'
       end
 
       desc "create png images from all symbols"
       task @name => all_image_tasks
-
-      desc "upload all pngs found in images/* to S3"
-      task :upload => @name do
-        abort 'Need to set AWS_KEY and AWS_SECRET!' unless ENV['AWS_KEY'] && ENV['AWS_SECRET']
-        AWS::S3::Base.establish_connection!(
-          :access_key_id     => ENV['AWS_KEY'],
-          :secret_access_key => ENV['AWS_SECRET']
-        )
-
-        bucket = 'detexify.kirelabs.org' # TODO make configurable
-        Dir.glob('images/**/*.png').each do |path|
-          unless AWS::S3::S3Object.exists? path, bucket
-            puts "Uploading #{path}..."
-            AWS::S3::S3Object.store(path, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000')
-            puts 'done.'
-          else
-            puts "#{path} already uploaded."
-          end
-          # legacy
-          oldpath = path.sub('latex', 'symbols')
-          unless AWS::S3::S3Object.exists? oldpath, bucket
-            puts "Uploading #{oldpath}... DEPRECATED"
-            AWS::S3::S3Object.store(oldpath, open(path), bucket, :access => :public_read, 'Cache-Control' => 'max-age=315360000')
-            puts 'done.'
-          else
-            puts "#{oldpath} already uploaded."
-          end
-        end
-      end # namespace
-    end
+    end # namespace
   end
 
 
