@@ -1,0 +1,40 @@
+#classify--canvas-area
+  position: relative
+
+.canvas
+  width: $canvas-width
+  height: $canvas-height
+  border: 1px solid black
+  z-index: 1
+
+#drawhere
+  pointer-events: none
+  position: absolute
+  left: 0
+  top: 0
+  width: $canvas-width
+  height: $canvas-height
+  background: image-url("images/draw_here.png") center no-repeat
+  z-index: -1
+  opacity: 1
+  transition: opacity 0.5s
+  .canvas.dirty ~ &
+    opacity: 0
+
+#clear
+  position: absolute
+  display: inline-block
+  top: 0
+  right: 0
+  @extend .fa, .fa-times
+  color: red
+  text-decoration: none
+  padding: 3px
+  font-size: 50px
+  width: 50px
+  height: 50px
+  z-index: 2
+  opacity: 0
+  transition: opacity 0.5s
+  .canvas.dirty ~ &
+    opacity: 1

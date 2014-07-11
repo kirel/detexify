@@ -5,67 +5,56 @@ keywords: math,LaTeX,productivity,typesetting,science,machine learning,PhD
 body_classes: symbols
 js: symbols
 ---
-#everything
-  #status
-  %h1
-    Detexify
-    %sup 2
-    \- Symbol table
-  %ul.nav
-    %li.classify
-      %a{:href => "/"} classify
-    %li.symbols
-      %a{:href => "/symbols.html"} symbols
-  #infoarea
+#symbols
+  %header
+    #status
+    %nav
+      %ul.nav
+        %li.classify
+          %a{:href => "/classify.html"} classify
+        %li.symbols
+          %a{:href => "/symbols.html"} symbols
+    %h1 Detexify
+    %h2 Symbol table
+  #symbols--fixer
+  #symbols--info-area
     %h2 What is this?
     %p
       This is the symbol table. Supported symbols are listed here (alphabetically).
     %p
-      Symbols can also be trained here. Just pick a symbol you sometimes need but tend to forget and click it. A canvas will open for your training input.
+      %strike
+        Symbols can also be trained here. Just pick a symbol you sometimes need but tend to forget and click it. A canvas will open for your training input.
     %p
       If there are symbols missing
-      %strike be sure to drop me a line (danishkirel@gmail.com)
-      = succeed "." do
-        %a{:href => "classify.html#sketch-a-char"} *
+      drop me a line or create a
+      = succeed '.' do
+        %a(href="https://github.com/kirel/detexify#adding-symbols") pull-request
       If you have more specific LaTeX questions though, you will have more success contacting your
       %a{:href => "http://www.tug.org/usergroups.html"} TeX user group
       or try the excellent
       = succeed "." do
         %a{:href => "http://tex.stackexchange.com/"} TeX Stackexchange
-  #controls
-    Sort by
-    %select#sort
-      %option{:selected => "", :value => "alpha"} command
-      %option{:value => "package"} package
-      / <option value='samples'>number of samples</option>
-    \&mdash;
-    Filter by
-    %input#filter{:type => "text"}/
-  %span#spinner.spinner
-    %img{:alt => "Loading...", :src => "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/spinner.gif"}/
-  %ul#symbols.symbols
-  %a#up{:href => "#"} up ↑
-  #safespot{:style => "display:none;"}
-    #trainingarea
-      %img#drawhere{:alt => "Draw below and then click 'train'!", :src => "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/draw_here_then_train.png"}/
-      #canvascontainer
-        #tafel{:style => "width: 400px; height: 400px; border: 1px solid #000;"}
-        #canvasspinner.spinner
-          %img{:alt => "Loading...", :src => "http://detexify-web.kirelabs.org.s3.amazonaws.com/images/spinner.gif"}/
-      #canvascontrols
-        %a#clear{:href => "#"} clear
-        %a#train{:href => "#"} train
-      #canvaserror This canvas is fubar :(
-    %div
-      #traintip.tooltip
-        Please
-        %strong click
-        to train!
-    :javascript
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    :javascript
-      try {
-      var pageTracker = _gat._getTracker("UA-8668142-3");
-      pageTracker._trackPageview();
-      } catch(err) {}
+    #symbols--ad
+      :plain
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- Detexify upper -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:50px"
+             data-ad-client="ca-pub-7217292717360456"
+             data-ad-slot="2804888725"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  #symbols--list-area
+    #symbols--controls
+      Sort by
+      %select#sort
+        %option{:selected => "", :value => "alpha"} command
+        %option{:value => "package"} package
+        / <option value='samples'>number of samples</option>
+      \&mdash;
+      Filter by
+      %input#filter{:type => "text"}/
+    #symbols--loading
+      .spinner
+      loading...
+    %ul#symbols-list.symbol-list
+    %a#up{:href => "#"} up ↑

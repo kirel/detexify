@@ -14,6 +14,9 @@ GEM
       builder
       mime-types
       xml-simple
+    bourbon (3.2.3)
+      sass (~> 3.2)
+      thor
     builder (3.2.2)
     chunky_png (1.3.1)
     coffee-script (2.2.0)
@@ -43,6 +46,8 @@ GEM
     execjs (2.2.0)
     fakeweb (1.3.0)
     ffi (1.9.3)
+    font-awesome-sass (4.1.0)
+      sass (~> 3.2)
     fssm (0.2.10)
     haml (4.0.5)
       tilt
@@ -97,6 +102,9 @@ GEM
     minitest (4.7.5)
     multi_json (1.10.1)
     multi_xml (0.5.5)
+    neat (1.5.1)
+      bourbon (>= 3.1)
+      sass (~> 3.2.19)
     padrino-helpers (0.12.2)
       i18n (~> 0.6, >= 0.6.7)
       padrino-support (= 0.12.2)
@@ -166,13 +174,16 @@ PLATFORMS
 DEPENDENCIES
   armchair
   aws-s3
+  bourbon
   couchrest
   dotenv
   fakeweb
+  font-awesome-sass
   httparty
   json
   middleman (~> 3.3.2)
   middleman-livereload (~> 3.1.0)
+  neat
   rack-test
   rake
   rest-client

@@ -1,0 +1,249 @@
+@import bourbon
+@import media-queries
+@import jquery.gritter
+@import normalize
+@import font-awesome
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700)
+
+@import variables
+@import layout
+@import typography
+// components
+@import spinner
+@import canvas
+// uniques
+@import navigation
+
+// Classify
+#classify header
+  +left-column
+  margin-bottom: $default-margin/2
+  nav
+    float: right
+  h1, nav
+    margin: 0
+
+#classify--canvas-area
+  +left-column
+
+#classify--hits
+  +right-column
+
+#classify--info-area
+  +left-column
+
+#showmore
+  text-align: center
+
+// Symbols
+#symbols header
+  +left-column
+  margin-bottom: $default-margin/2
+  nav
+    float: right
+  h1, h2, nav
+    margin: 0
+
+#symbols--fixer
+  +left-column
+
+#symbols--info-area
+  +right-column
+
+#symbols--list-area
+  +left-column
+
+#symbols--loading
+  .classifying &
+    display: block
+  text-align: center
+  .spinner
+    margin-right: $default-margin/2
+    display: inline-block
+    vertical-align: middle
+
+#symbols--controls
+  margin-bottom: $default-margin
+  input
+    width: 150px
+
+// Header
+
+#status, #announcement
+  color: red
+  display: none
+  font-size: 16px
+  padding: 0 0 0 20px
+  background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/exclamation.png) no-repeat
+
+#announcement a
+  color: red
+
+#announcement
+  display: block
+  font-size: 14px
+
+#announcement h2, #announcement p
+  display: inline
+  font-size: 14px
+
+/*** Infoarea ***/
+
+#infoarea
+  .paypal, .flattr
+    display: inline-block
+
+#canvascontrols #train
+  color: green
+  text-decoration: none
+  font-weight: bold
+  font-size: 16px
+  padding: 0 5px 1px 20px
+  margin-left: 0px
+  background: url(http://detexify-web.kirelabs.org.s3.amazonaws.com/images/add.png) no-repeat 2px 1px
+  border: 1px solid gray
+  -webkit-border-bottom-right-radius: 10px
+  -moz-border-radius-bottomright: 10px
+  border-bottom-right-radius: 10px
+  -webkit-border-bottom-left-radius: 10px
+  -moz-border-radius-bottomleft: 10px
+  border-bottom-left-radius: 10px
+
+ul.nav
+  list-style: none
+  padding: 0
+  margin: 0
+
+ul.nav li
+  display: inline-block
+  font-size: 20px
+
+ul.nav li a:link, ul.nav li a:visited
+  font-size: 20px
+  text-decoration: none
+
+#donate
+  color: gray
+  font-size: 80%
+  text-align: center
+  h3
+    font-weight: normal
+    font-style: normal
+    font-size: 20px
+    margin: $default-margin/2 0
+  p
+    text-align: center
+    font-size: 11px
+    color: gray
+    margin: $default-margin/2 0
+  .paypal, .flattr
+    display: inline-block
+
+h1 img
+  height: 1.5em
+  margin-bottom: -.5em
+
+#hits--loading
+  display: none
+  .classifying &
+    display: block
+  text-align: center
+  .spinner
+    margin-right: $default-margin/2
+    display: inline-block
+    vertical-align: middle
+
+#hits--loaded
+  display: none
+  .classified &
+    display: block
+
+#hittip
+  display: none
+  padding: 10px
+  border: 1px solid black
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  border-radius: 5px
+  background: white
+
+ul.symbol-list
+  display: table
+  border-collapse: collapse
+  width: $width
+  margin: 0
+  padding: 0
+
+  li
+    display: table-row
+    border-top: 1px dotted gray
+    list-style: none
+    padding: 0
+    overflow: hidden
+
+    .info
+      display: table-cell
+      vertical-align: middle
+      text-align: left
+      padding: 1em 0 1em 1em
+      font-size: 14px
+      code
+        font-size: 20px
+        line-height: 30px
+
+    .symbol
+      display: table-cell
+      text-align: center
+      vertical-align: middle
+      padding: 10px 5px
+      width: 80px
+
+    .symbol img
+      display: block
+      border: none
+      max-width: 70px
+      max-height: 60px
+      margin: auto
+
+    &:hover
+      background-color: whitesmoke
+
+    &.active:hover,
+    &.active
+      background-color: cornsilk
+
+.samples
+  font-size: .8em
+
+#controls
+  margin-bottom: 10px
+
+#up
+  font-size: 1.2em
+  background: white
+
+#trainingarea
+  width: 400px
+  margin: 10px auto
+
+#trainingarea, #trainingli
+  display: none
+
+#trainingli:hover
+  background-color: transparent
+
+ul.symbols li .info .fontenc, ul.symbols li .info .package, ul.symbols li .info .texmode
+  font-size: 1em
+
+div#sponsors
+  margin-top: 30px
+
+div#sponsors ul, div#sponsors ul li
+  font-size: 0.92em
+  margin-left: 0
+  padding-left: 0
+  list-style: none
+  text-align: center
+
+#canvas--ad, #symbols--ad
+  text-align: center

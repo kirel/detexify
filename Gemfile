@@ -20,6 +20,9 @@ end
 group :development do
   gem "middleman", "~>3.3.2"
   gem "middleman-livereload", "~> 3.1.0"
+  gem "bourbon"
+  gem "neat"
+  gem "font-awesome-sass"
   gem 'dotenv'
 end
 

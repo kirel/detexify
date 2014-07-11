@@ -30,21 +30,32 @@
     var current_stroke;
     var current_path;
     canvassified.strokes = [];
+
+    var dirtyClass = 'dirty';
     
     var start = function (evt) {
+      $(container).addClass(dirtyClass);
+      evt.preventDefault();
+      evt.stopPropagation();
       drawing = true;
       var x,y;
-      x = evt.pageX - $(container).offset().left;
-      y = evt.pageY - $(container).offset().top;
+      pageX = evt.originalEvent.touches ? evt.originalEvent.touches[0].pageX : evt.pageX
+      pageY = evt.originalEvent.touches ? evt.originalEvent.touches[0].pageY : evt.pageY
+      x = pageX - $(container).offset().left;
+      y = pageY - $(container).offset().top;
 
       current_stroke = [new Point(x,y)]; // initialize new stroke
       current_path = paper.path(stroke2path(current_stroke)).attr({'stroke-width': 5, 'stroke-linecap': 'round'});
     }
     var stroke = function(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
       if (drawing) {
         var x,y;
-        x = evt.pageX - $(this).offset().left;
-        y = evt.pageY - $(this).offset().top;
+        pageX = evt.originalEvent.touches ? evt.originalEvent.touches[0].pageX : evt.pageX
+        pageY = evt.originalEvent.touches ? evt.originalEvent.touches[0].pageY : evt.pageY
+        x = pageX - $(this).offset().left;
+        y = pageY - $(this).offset().top;
 
         // console.log('pushing point at',x, y);
         
@@ -58,6 +69,8 @@
     var stop = function(evt) {
       // console.log('stopping');
       // console.log(evt);
+      evt.preventDefault();
+      evt.stopPropagation();
       if (drawing) {
         canvassified.strokes.push(current_stroke);
         if (config.callback) config.callback(canvassified.strokes);
@@ -68,10 +81,12 @@
     $(container).mousedown(start)
       .mousemove(stroke)
       .mouseup(stop)
-      .mouseleave(stop);
-    
+      .mouseleave(stop)
+      .on('touchstart', start).on('touchend touchleave touchcancel', stop).on('touchmove', stroke);
+
     // maintainence functions
     canvassified.clear = function() {
+      $(container).removeClass(dirtyClass)
       this.strokes = [];
       paper.clear();
     }

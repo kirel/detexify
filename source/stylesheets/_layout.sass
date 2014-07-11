@@ -1,0 +1,28 @@
+*, *::before, *::after
+  +box-sizing(border-box)
+
+html
+  overflow-y: scroll
+
+body
+  padding-top: $default-margin
+
+.container
+  padding: 0 $default-margin
+  position: relative
+  margin: 0 auto
+  width: $width + 2*$default-margin
+  +min-screen($double-column + 2*$default-margin)
+    width: $double-column + 2*$default-margin
+
+=left-column
+  width: $width
+  float: left
+  margin: 0 0 $default-margin 0
+  +min-screen($double-column)
+    margin-right: $divide
+
+=right-column
+  width: $width
+  float: right
+  margin: 0 0 $default-margin 0

@@ -45,9 +45,9 @@ module Detexify
 
     # GUI
 
-    # get '/' do
-    #   redirect '/classify.html'
-    # end
+    get '/' do
+      redirect '/classify.html'
+    end
 
     protected
 
