@@ -12,8 +12,12 @@ PopulateTask.new
 BenchmarkTask.new
 SetupTask.new
 
-require 'rspec/core/rake_task'
+begin
+  require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec)
+  RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
+  task :default => :spec
+rescue LoadError
+  puts 'No rspec present.'
+end
