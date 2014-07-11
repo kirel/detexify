@@ -24,6 +24,8 @@ group :development do
   gem "neat"
   gem "font-awesome-sass"
   gem 'dotenv'
+  gem 'rmagick'
+  gem 'sprite-factory'
 end
 
 group :rake do

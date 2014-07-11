@@ -25,7 +25,7 @@
   {{#symbols}}
   <li id="{{id}}">
     <div class="symbol">
-      <img src="{{uri}}">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="{{css_class}}">
     </div>
     <div class="info">
       {{#showscore}}<span class="score">Score: {{score}}</span><br>{{/showscore}}

@@ -47,6 +47,19 @@ class SymbolTask < Rake::TaskLib
     end
 
     namespace :symbols do
+      desc "create sprite"
+      task :sprite => :resize do
+        require 'sprite_factory'
+        SpriteFactory.cssurl = "image-url('$IMAGE')"    # use a sass-rails helper method to be evaluated by the rails asset pipeline
+        SpriteFactory.run!('images/latex', style: 'sass', pngcrush: true, layout: 'packed',
+                           output_style: 'source/stylesheets/symbols.sass',
+                           output_image: 'source/images/symbols.png')
+      end
+
+      task :resize => @name do
+        system 'mogrify -path images/latex -thumbnail "70x60>" images/latex/*.png'
+      end
+
       desc "create png images from all symbols"
       task @name => all_image_tasks
 

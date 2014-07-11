@@ -40,8 +40,9 @@ module Latex
     
     def filename
       # id.to_s
-      Digest::MD5.hexdigest id.to_s
+      'symbol' + Digest::MD5.hexdigest(id.to_s)
     end
+    alias css_class filename
     
     def uri
       "http://detexify.kirelabs.org.s3.amazonaws.com/images/latex/#{filename}.png"
@@ -52,6 +53,7 @@ module Latex
       A.each { |a| !self[a].nil? && (h[a] = self[a]) }
       h[:id] = self[:id]
       h[:uri] = uri
+      h[:css_class] = css_class
       h
     end
     

@@ -36,8 +36,7 @@ Symbols are configured in [lib/latex/symbols.yml](lib/latex/symbols.yml).
 
 For me:
 
-4. generate the symbol images `$ rake symbols:generate`
-5. upload them `$ rake symbols:upload`
+4. generate the symbol sprite `$ bundle exec rake symbols:sprite`
 6. Redeploy `git push heroku master`
 
 ### Populate the backend
