@@ -1,0 +1,1 @@
+function Detexify(i){var s=this;s.config=$.extend({baseuri:"/api/"},i||{}),s.train=function(i,n,t){$.post(s.config.baseuri+"train",{id:i,strokes:JSON.stringify(n)},t,"json")},s.classify=function(i,n){$.post(s.config.baseuri+"classify",{strokes:JSON.stringify(i)},n,"json")}}
