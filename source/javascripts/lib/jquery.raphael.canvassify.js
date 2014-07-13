@@ -36,6 +36,7 @@
     var start = function (evt) {
       $(container).addClass(dirtyClass);
       evt.preventDefault();
+      if (evt.originalEvent) evt.originalEvent.preventDefault();
       evt.stopPropagation();
       drawing = true;
       var x,y;
@@ -50,6 +51,7 @@
     }
     var stroke = function(evt) {
       evt.preventDefault();
+      if (evt.originalEvent) evt.originalEvent.preventDefault();
       evt.stopPropagation();
       if (drawing) {
         var x,y;
