@@ -46,6 +46,7 @@
 
       current_stroke = [new Point(x,y)]; // initialize new stroke
       current_path = paper.path(stroke2path(current_stroke)).attr({'stroke-width': 5, 'stroke-linecap': 'round'});
+      return false;
     }
     var stroke = function(evt) {
       evt.preventDefault();
@@ -65,6 +66,7 @@
       // else {
       //   console.log('not drawing');
       // }
+      return false;
     }
     var stop = function(evt) {
       // console.log('stopping');
@@ -76,6 +78,7 @@
         if (config.callback) config.callback(canvassified.strokes);
         drawing = false;
       }
+      return false;
     }
 
     $(container).mousedown(start)
