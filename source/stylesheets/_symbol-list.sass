@@ -1,0 +1,45 @@
+ul.symbol-list
+  display: table
+  border-collapse: collapse
+  margin: 0
+  padding: 0
+  width: 100%
+
+  li
+    display: table-row
+    border-top: 1px dotted gray
+    list-style: none
+    padding: 0
+    overflow: hidden
+
+    .info
+      display: table-cell
+      vertical-align: middle
+      text-align: left
+      padding: 1em 0 1em 1em
+      font-size: rem(12)
+      code.command
+        font-size: rem(14)
+        line-height: rem(30)
+      code.package
+        font-size: rem(12)
+
+    .symbol
+      display: table-cell
+      text-align: center
+      vertical-align: middle
+      width: 60px
+
+    .symbol img
+      display: block
+      border: none
+      max-width: 60px
+      max-height: 40px
+      margin: auto
+
+    &:hover
+      background-color: whitesmoke
+
+    &.active:hover,
+    &.active
+      background-color: cornsilk

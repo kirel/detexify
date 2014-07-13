@@ -1,3 +1,19 @@
+=when-two-columns
+  +min-screen($double-column-width + 2*$outer-padding)
+    @content
+
+=left-column
+  width: $single-column-width
+  float: left
+  margin: 0 0 $default-margin 0
+  +when-two-columns
+    margin-right: $divide
+
+=right-column
+  width: $single-column-width
+  float: right
+  margin: 0 0 $default-margin 0
+
 *, *::before, *::after
   +box-sizing(border-box)
 
@@ -8,21 +24,9 @@ body
   padding-top: $default-margin
 
 .container
-  padding: 0 $default-margin
+  padding: 0 $outer-padding
   position: relative
   margin: 0 auto
-  width: $width + 2*$default-margin
-  +min-screen($double-column + 2*$default-margin)
-    width: $double-column + 2*$default-margin
-
-=left-column
-  width: $width
-  float: left
-  margin: 0 0 $default-margin 0
-  +min-screen($double-column)
-    margin-right: $divide
-
-=right-column
-  width: $width
-  float: right
-  margin: 0 0 $default-margin 0
+  width: $single-column-width + 2*$outer-padding
+  +when-two-columns
+    width: $double-column-width + 2*$outer-padding

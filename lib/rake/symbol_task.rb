@@ -56,7 +56,7 @@ class SymbolTask < Rake::TaskLib
       end
 
       task :resize => @name do
-        system 'mogrify -path images/latex -thumbnail "70x50>" images/latex/*.png'
+        system 'mogrify -path images/latex -thumbnail "60x40>" images/latex/*.png'
       end
 
       desc "create png images from all symbols"

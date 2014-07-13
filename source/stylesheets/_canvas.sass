@@ -4,6 +4,7 @@
 .canvas
   width: $canvas-width
   height: $canvas-height
+  margin: auto
   border: 1px solid black
   z-index: 1
 
@@ -25,7 +26,7 @@
   position: absolute
   display: inline-block
   top: 0
-  right: 0
+  right: ($single-column-width - $canvas-width)/2
   @extend .fa, .fa-times
   color: red
   text-decoration: none

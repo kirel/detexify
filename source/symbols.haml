@@ -44,14 +44,15 @@ js: symbols
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   #symbols--list-area
     #symbols--controls
-      Sort by
-      %select#sort
-        %option{:selected => "", :value => "alpha"} command
-        %option{:value => "package"} package
-        / <option value='samples'>number of samples</option>
-      \&mdash;
-      Filter by
-      %input#filter{:type => "text"}/
+      #sort
+        Sort by
+        %select
+          %option{:selected => "", :value => "alpha"} command
+          %option{:value => "package"} package
+          / <option value='samples'>number of samples</option>
+      #filter
+        Filter by
+        %input{:type => "text"}/
     #symbols--loading
       .spinner
       loading...

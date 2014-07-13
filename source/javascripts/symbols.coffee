@@ -37,7 +37,7 @@ $ ->
     populateSymbolList filtered(symbols), target
     return
 
-  $("#sort").change ->
+  $("#sort input").change ->
     switch $(this).val()
       when "alpha"
         symbols.sort alphasort
@@ -110,7 +110,7 @@ $ ->
       # though we already fired the event because of the timeout
       fireChange $(this)
 
-  $("#filter").handleKeyboardChange(300).change ->
+  $("#filter input").handleKeyboardChange(300).change ->
     filter = $(this).val()
     populateSymbolListWrapper symbols, target
     return

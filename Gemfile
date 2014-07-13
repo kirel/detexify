@@ -17,7 +17,6 @@ group :test do
   gem "rack-test"
 end
 
-group :development do
   gem "middleman", "~>3.3.2"
   gem "middleman-livereload", "~> 3.1.0"
   gem "bourbon"
@@ -26,7 +25,6 @@ group :development do
   gem 'dotenv'
   gem 'rmagick'
   gem 'sprite-factory'
-end
 
 group :rake do
   gem "rake"
