@@ -32,9 +32,12 @@
     canvassified.strokes = [];
 
     var dirtyClass = 'dirty';
+    var pristineClass = 'pristine';
+    $(container).addClass(pristineClass);
     
     var start = function (evt) {
       $(container).addClass(dirtyClass);
+      $(container).removeClass(pristineClass);
       evt.preventDefault();
       if (evt.originalEvent) evt.originalEvent.preventDefault();
       evt.stopPropagation();

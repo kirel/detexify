@@ -13,14 +13,18 @@
   position: absolute
   left: 0
   top: 0
-  width: $canvas-width
+  width: $single-column-width
   height: $canvas-height
   background: image-url("images/draw_here.png") center no-repeat
   z-index: -1
-  opacity: 1
-  transition: opacity 0.5s
+  opacity: 0
+  +transform(scale(0))
+  transition: all 0.5s
+  .pristine ~ &
+    opacity: 1
+    +transform(scale(.8))
   .canvas.dirty ~ &
-    opacity: 0
+    // not necessary right now
 
 #clear
   position: absolute
