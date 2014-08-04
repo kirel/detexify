@@ -26,7 +26,7 @@
 
       this.get('#/', function() {
         var c = this;
-        $.getJSON('_view/by_id?reduce=true&group=true', function(data) {
+        $.getJSON('/detexify/_design/tools/_view/by_id?reduce=true&group=true', function(data) {
           var template = '<ul>{{#rows}}<li><a href="#/{{key}}">{{key}}</a> - {{value}}</li>{{/rows}}</ul>'
           $('#main').html(c.ms(template, data));
         });
@@ -36,7 +36,7 @@
         var c = this;
         // get samples and display them
         var symid = this.params['symid'];
-        $.getJSON('_view/by_id?reduce=false&key="'+encodeURIComponent(symid)+'"&include_docs=true', function(data) {
+        $.getJSON('/detexify/_design/tools/_view/by_id?reduce=false&key="'+encodeURIComponent(symid)+'"&include_docs=true', function(data) {
           $('#main').text('');
           // var template = '<ul>{{#rows}}<li><a href="#/{{key}}">{{key}}</a> - {{value}}</li>{{/rows}}</ul>'
           // $('#main').html(c.ms(template, data));
@@ -62,9 +62,9 @@
       this.del('#/:samid', function() {
         var samid = this.params['samid'];
         $('#'+samid).closest('li').addClass('deleting');
-        $.getJSON('../../'+samid, function(doc) {
+        $.getJSON('/detexify/'+samid, function(doc) {
           $.ajax({
-            url: '../../'+doc._id+'?rev='+doc._rev,
+            url: '/detexify/'+doc._id+'?rev='+doc._rev,
             type: 'DELETE',
             success: function(result) {
               $('#'+doc._id).closest('li').addClass('deleted');
