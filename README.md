@@ -6,7 +6,7 @@ LaTeX symbol classifier as a webservice. This is the frontend. Uses https://gith
 
 - Install Ruby 2.1.2 and Bundler
 - `$ bundle`
-- `$ bundle exec middleman`
+- `$ bundle exec dotenv middleman`
 
 ## Production setup
 
