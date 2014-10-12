@@ -41,9 +41,12 @@ js: classify
         %h3
           Did this help?
         %p Hosting Detexify costs money and if it helps you may consider helping to pay the hosting bill.
-        .paypal= partial 'paypal'
-        .flattr
-          %a.FlattrButton{:href => "http://detexify.kirelabs.org", :style => "display:none;", rev: "flattr;button:compact;"}
+        .donate-buttons
+          .paypal= partial 'paypal'
+          .flattr
+            %a.FlattrButton{:href => "http://detexify.kirelabs.org", :style => "display:none;", rev: "flattr;button:compact;"}
+          .gratipay
+            %script(data-gratipay-username="kirel" data-gratipay-widget="button" src="//gttp.co/v1.js")
   #classify--info-area
     %h2 What is this?
     %p
@@ -71,9 +74,12 @@ js: classify
       on Github.
       If you really, really like this
       you can also donate.
-    .paypal= partial 'paypal'
-    .flattr
-      %a.FlattrButton{:href => "http://detexify.kirelabs.org", :style => "display:none;", rev: "flattr;button:compact;"}
+    .donate-buttons
+      .paypal= partial 'paypal'
+      .flattr
+        %a.FlattrButton{:href => "http://detexify.kirelabs.org", :style => "display:none;", rev: "flattr;button:compact;"}
+      .gratipay
+        %script(data-gratipay-username="kirel" data-gratipay-widget="button" src="//gttp.co/v1.js")
     %p
       The backend server is running on <a href="https://www.digitalocean.com/?refcode=2ed6dc53403b">Digital Ocean (referral link)</a>
       so you can also reduce my hosting costs by using that referral link.
