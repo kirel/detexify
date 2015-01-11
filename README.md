@@ -28,7 +28,7 @@ reminder for myself `source ~/.aws`
 
 _You need Latex installed!_
 
-Symbols are configured in [lib/latex/symbols.yml](lib/latex/symbols.yml).
+Symbols are configured in [lib/latex/symbols.yml](lib/latex/symbols.yaml).
 
 1. Add the symbol
 2. run the tests `$ rspec spec`
