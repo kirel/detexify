@@ -80,7 +80,16 @@
           <h2>Want a desktop app?</h2>
           <p>
             Please fill out this mini-survey!
-            <a href='http://goo.gl/forms/K0zoCpfhVq' target='_new'>http://goo.gl/forms/K0zoCpfhVq</a>
+            <a href='http://goo.gl/forms/K0zoCpfhVq' onlick="trackOutboundLink('http://goo.gl/forms/K0zoCpfhVq'); return false;" target='_new'>http://goo.gl/forms/K0zoCpfhVq</a>
+            <script>
+              var trackOutboundLink = function(url) {
+                 ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+                   function () {
+                     document.location = url;
+                   }
+                 });
+              }
+            </script>
           </p>
           <h2>What is this?</h2>
           <p>

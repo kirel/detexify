@@ -51,7 +51,15 @@ js: classify
     %h2 Want a desktop app?
     %p
       Please fill out this mini-survey!
-      %a(href="http://goo.gl/forms/K0zoCpfhVq" target="_new") http://goo.gl/forms/K0zoCpfhVq
+      %a(href="http://goo.gl/forms/K0zoCpfhVq" target="_new" onlick="trackOutboundLink('http://goo.gl/forms/K0zoCpfhVq'); return false;") http://goo.gl/forms/K0zoCpfhVq
+      :javascript
+        var trackOutboundLink = function(url) {
+           ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+             function () {
+               document.location = url;
+             }
+           });
+        }
     %h2 What is this?
     %p
       Anyone who works with LaTeX knows how time-consuming it can be
