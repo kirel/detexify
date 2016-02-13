@@ -48,18 +48,21 @@ js: classify
           .gratipay
             %script(data-gratipay-username="kirel" data-gratipay-widget="button" src="//gttp.co/v1.js")
   #classify--info-area
-    %h2 Want a desktop app?
+    %h2 Want a Mac app?
     %p
-      Please fill out this mini-survey!
-      %a(href="http://goo.gl/forms/K0zoCpfhVq" target="_new" onlick="trackOutboundLink('http://goo.gl/forms/K0zoCpfhVq'); return false;") http://goo.gl/forms/K0zoCpfhVq
+      Download an alpha version
+      = succeed(".") do
+        %a(href="https://www.dropbox.com/s/87m02m8o72yqia7/Detexify%20Mac.zip?dl=0" target="_new" onlick="trackOutboundLink('https://www.dropbox.com/s/87m02m8o72yqia7/Detexify%20Mac.zip?dl=0'); return false;") here
       :javascript
         var trackOutboundLink = function(url) {
-           ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
-             function () {
-               document.location = url;
-             }
+           ga('send', 'event', 'outbound', 'click', url, {
+             'transport': 'beacon',
+             'hitCallback': function(){document.location = url;}
            });
         }
+      There will be bugs and it might eat your computer. Please send feedback to
+      = succeed(".") do
+        %a(href="mailto:mail@danielkirs.ch") mail@danielkirs.ch
     %h2 What is this?
     %p
       Anyone who works with LaTeX knows how time-consuming it can be
