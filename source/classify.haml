@@ -50,9 +50,26 @@ js: classify
   #classify--info-area
     %h2 Want a Mac app?
     %p
-      Download an alpha version
+      Lucky you. The Mac app is finally stable enough.
+      Download the latest version
       = succeed(".") do
-        %a(href="https://www.dropbox.com/s/87m02m8o72yqia7/Detexify%20Mac.zip?dl=0" target="_new" onclick="trackOutboundLink('https://www.dropbox.com/s/87m02m8o72yqia7/Detexify%20Mac.zip?dl=0'); return false;") here
+        %a(href="https://www.dropbox.com/s/8yj6pesvw17v8dd/Detexify.zip?dl=0" target="_new" onclick="trackOutboundLink('https://www.dropbox.com/s/8yj6pesvw17v8dd/Detexify.zip?dl=0'); return false;") here
+
+    %p
+      <em>Restriction:</em> In addition to the LaTeX command the unlicensed version will copy a reminder to purchase a license to the clipboard
+      when you select a symbol.
+
+    %p
+      You can purchase a license here:
+
+      <script src="https://gumroad.com/js/gumroad.js"></script>
+      <a class="gumroad-button" href="https://gum.co/detexify">Buy Detexify for Mac</a>
+
+    %p
+      If you need help contact
+      = succeed(".") do
+        %a(href="mailto:mail@danielkirs.ch") mail@danielkirs.ch
+
       :javascript
         var trackOutboundLink = function(url) {
            ga('send', 'event', 'outbound', 'click', url, {
@@ -60,9 +77,6 @@ js: classify
              'hitCallback': function(){document.location = url;}
            });
         }
-      There will be bugs and it might eat your computer. Please send feedback to
-      = succeed(".") do
-        %a(href="mailto:mail@danielkirs.ch") mail@danielkirs.ch
     %h2 What is this?
     %p
       Anyone who works with LaTeX knows how time-consuming it can be
