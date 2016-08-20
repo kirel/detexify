@@ -2,22 +2,23 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <title>Sample Tool</title>
   <script type="text/javascript" charset="utf-8" src="jquery-latest.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="sammy-latest.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="sammy.json.js"></script>
   <script type="text/javascript" charset="utf-8" src="sammy.mustache.js"></script>
   <script type="text/javascript" charset="utf-8" src="raphael-min.js"></script>
-  <script type="text/javascript" charset="utf-8" src="underscore-min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="lodash.min.js"></script>
   <script type="text/javascript" charset="utf-8">
 
     var stroke2path = function(stroke) {
-      var first = _.first(stroke);
-      var path = _.map(_.rest(stroke), function(point) { return ["L", point.x, point.y]; })
+      var first = _.head(stroke);
+      var path = _.map(_.tail(stroke), function(point) { return ["L", point[0], point[1]]; })
       if (path.length == 0)
-        return [["M", first.x, first.y], ["l", 0, 0.1]];
+        return [["M", first[0], first[1]], ["l", 0, 0.1]];
       else
-        return [["M", first.x, first.y]].concat(path);
+        return [["M", first[0], first[1]]].concat(path);
     }
 
     var app = $.sammy(function() {
@@ -26,32 +27,47 @@
 
       this.get('#/', function() {
         var c = this;
-        $.getJSON('/detexify/_design/tools/_view/by_id?reduce=true&group=true', function(data) {
-          var template = '<ul>{{#rows}}<li><a href="#/{{key}}">{{key}}</a> - {{value}}</li>{{/rows}}</ul>'
-          $('#main').html(c.ms(template, data));
+        $.getJSON('/symbols', function(symbols) {
+          console.log(symbols);
+          symbols = _.sortBy(symbols, function(s) { return -s.sample_count })
+          var template = '<ul id="symbols">{{#symbols}}<li><a href="#/samples/{{id}}">{{id}}</a> - {{sample_count}} - <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="{{css_class}}"></li>{{/symbols}}</ul>'
+          $('#main').html(c.ms(template, {symbols: symbols}));
         });
       });
 
-      this.get('#/:symid', function() {
+      this.get('#/samples/:symid', function() {
         var c = this;
         // get samples and display them
         var symid = this.params['symid'];
-        $.getJSON('/detexify/_design/tools/_view/by_id?reduce=false&key="'+encodeURIComponent(symid)+'"&include_docs=true', function(data) {
-          $('#main').text('');
-          // var template = '<ul>{{#rows}}<li><a href="#/{{key}}">{{key}}</a> - {{value}}</li>{{/rows}}</ul>'
-          // $('#main').html(c.ms(template, data));
-          console.log(data);
-          $('#main').html('<ul id="samples"></ul>');
-          $.each(data.rows, function(index, sam) {
-            var template = '<li><div id="{{id}}"><form action="#/{{id}}" method="DELETE"></form></div></li>';
+        $('#main').text('');
+        $('#main').append('<ul id="samples"></ul>');
+        $.getJSON('/symbols', function(symbols) {
+          symbol = _.mapValues(_.groupBy(symbols, 'id'), _.head)[symid]
+          $('#main').prepend('<div class="symbol"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="'+symbol.css_class+'"></div>');
+        });
+        $.getJSON('/samples/'+encodeURIComponent(symid), function(samples) {
+          console.log(samples);
+          samples = _.sortBy(samples, function(s) { return -s.strokes.length*1000-_.sum(_.map(s.strokes, 'length'))-s.strokes[0][0][0]/400; });
+          $.each(samples, function(index, sam) {
+            var template = '<li class="sample"><div id="sample{{id}}"><span class="sample-stats">'+sam.strokes.length+'/'+_.sum(_.map(sam.strokes, 'length'))+'</span><a href="#" class="delete">X</a></div></li>';
             $('#samples').append(c.ms(template, sam));
-            $('#'+sam.id).click(function(){
+            $('#sample'+sam.id+' a').click(function(evt){
+              evt.preventDefault();
               console.log('delete '+sam.id);
-              $('form', '#'+sam.id).submit();
+              $('#sample'+sam.id).closest('li').addClass('deleting');
+              $.ajax({
+                url: '/samples/'+sam.id,
+                type: 'DELETE',
+                success: function(result) {
+                  $('#sample'+sam.id).closest('li').addClass('deleted');
+                }
+              });
+              return false;
             });
             // draw doc now
-            var paper = Raphael(sam.id, 400, 400);
-            $.each(sam.doc.data, function(i, stroke) {
+            var paper = Raphael('sample'+sam.id, "100%", "100%");
+            paper.setViewBox(0, 0, 400, 400);
+            $.each(sam.strokes, function(i, stroke) {
               paper.path(stroke2path(stroke)).attr({'stroke-width': 5, 'stroke-linecap': 'round'});
             });
           });
@@ -61,16 +77,6 @@
 
       this.del('#/:samid', function() {
         var samid = this.params['samid'];
-        $('#'+samid).closest('li').addClass('deleting');
-        $.getJSON('/detexify/'+samid, function(doc) {
-          $.ajax({
-            url: '/detexify/'+doc._id+'?rev='+doc._rev,
-            type: 'DELETE',
-            success: function(result) {
-              $('#'+doc._id).closest('li').addClass('deleted');
-            }
-          });
-        });
         return false;
       });
 
@@ -81,19 +87,78 @@
     });
   </script>
   <style type="text/css" media="screen">
-    ul#samples li {
+    body, p {
+      font-family: sans-serif;
+    }
+
+    ul#symbols {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    ul#symbols li {
+      flex-grow: 1;
+      flex-basis: 33%;
+      list-style: none;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    ul#symbols li img {
+      vertical-align: middle;
+    }
+
+    ul#samples li.sample {
+      position: relative;
+      z-index: 0;
       display: inline;
       float: left;
+      width: 200px;
+      height: 200px;
       border: 1px solid #eee;
       margin: 2px;
     }
+
+    .sample .sample-stats {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    ul#samples a.delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
     ul#samples li.deleting {
       border: 1px solid red;
     }
     ul#samples li.deleted {
       border: 1px solid green;
+      display: none;
+    }
+    .symbol {
+      position: fixed;
+      left: 50%;
+      z-index: 100;
+      background: white;
+    }
+    .symbol img {
+      display: block;
+      border: none;
+      max-width: 60px;
+      max-height: 40px;
+      margin: auto;
+      background: white;
+    }
+    a.delete {
+      font-size: 3em;
+      font-weight: bold;
     }
   </style>
+  <link rel="stylesheet" href="symbols.css">
   </head>
   <body>
     <div id="container">
