@@ -53,6 +53,10 @@ class SymbolTask < Rake::TaskLib
         SpriteFactory.run!('images/latex', style: 'sass', pngcrush: true, layout: 'packed',
                            output_style: 'source/stylesheets/symbols.sass',
                            output_image: 'source/images/symbols.png')
+        SpriteFactory.cssurl = "url('$IMAGE')"    # use a sass-rails helper method to be evaluated by the rails asset pipeline
+        SpriteFactory.run!('images/latex', style: 'css', pngcrush: true,
+                           output_style: 'sample-tool/public/symbols.css',
+                           output_image: 'sample-tool/public/symbols.png')
       end
 
       task :resize => @name do
@@ -61,6 +65,15 @@ class SymbolTask < Rake::TaskLib
 
       desc "create png images from all symbols"
       task @name => all_image_tasks
+
+      desc "create json"
+      task :json do
+        FileUtils.mkdir_p 'json'
+        File.open("json/symbols.json", "w+") do |json|
+          json.write Latex::Symbol::List.to_json
+        end
+        FileUtils.cp('json/symbols.json', 'sample-tool/public/symbols.json')
+      end
     end # namespace
   end
 

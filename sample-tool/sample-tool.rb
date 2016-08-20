@@ -2,7 +2,7 @@ require 'sinatra/base'
 require "sinatra/reloader"
 require "sinatra/json"
 require 'sequel'
-require '../lib/latex/symbol'
+require 'json'
 
 DB = Sequel.connect(ENV['POSTGRES_URL'])
 
@@ -18,8 +18,10 @@ class SampleTool < Sinatra::Base
   end
 
   get '/symbols' do
+    symbols_file = File.read('public/symbols.json')
+    symbols = JSON.parse(symbols_file)
     counts = Sample.group_and_count(:key).map{|r| {r[:key] => r[:count]} }.reduce(&:merge)
-    json Latex::Symbol::List.map { |s| s.to_hash.merge(sample_count: counts[s.id.to_s] || 0) }
+    json symbols.map { |s| s.merge(sample_count: counts[s['id'].to_s] || 0) }
   end
 
   get '/samples' do
