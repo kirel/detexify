@@ -1,5 +1,11 @@
 .env
 .ipynb_checkpoints
+
+# postgres migration
+*.sql.gz
+detexify.json
+all_docs.json
+
 .DS_Store
 .svn
 *~
