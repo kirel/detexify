@@ -37,14 +37,14 @@
 - bothmodes:
   - \$
   - \_
-  - \ddag 
-  - \{ 
-  - \P 
+  - \ddag
+  - \{
+  - \P
   - \copyright
   - \dots
-  - \} 
-  - \S 
-  - \dag 
+  - \}
+  - \S
+  - \dag
   - \pounds
   # added by me
   - \&
@@ -53,13 +53,13 @@
 - \--
 - \---
 - \----
-# Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode 
+# Table 4: AMS Commands Deﬁned to Work in Both Math and Text Mode
 - package: amssymb
   bothmodes:
     - \checkmark
     - \circledR
     - \maltese
-# Table 5: Non-ASCII Letters (Excluding Accented Letters) 
+# Table 5: Non-ASCII Letters (Excluding Accented Letters)
 - \aa
 - \L
 - \o
@@ -82,7 +82,7 @@
     - \ng
     - \TH
     - \th
-# Table 6: Letters Used to Typeset African Languages 
+# Table 6: Letters Used to Typeset African Languages
 # - fontenc: T4
 #   textmode:
 #     - \B{D}
@@ -154,7 +154,7 @@
     - \guillemotright
     - \guilsinglright
     - \quotesinglbase
-    
+
 # Table 10: tipa Phonetic Symbols
 - package: tipa
   textmode:
@@ -322,7 +322,7 @@
     - \textyogh
     - \textglobrise
     - \textrtaill
-# Table 11: tipx Phonetic Symbols 
+# Table 11: tipx Phonetic Symbols
 # - package: tipx
 #   textmode:
 #     - \textaolig
@@ -443,7 +443,7 @@
     - \textcopyleft
     - \textregistered
     - \texttrademark
-# Table 36: Miscellaneous textcomp Symbols 
+# Table 36: Miscellaneous textcomp Symbols
     - \textasteriskcentered
     - \textordfeminine
     - \textbardbl
@@ -477,7 +477,7 @@
     - \textnumero
     - \texttwelveudash
     - \textopenbullet
-# Table 37: Miscellaneous wasysym Text-mode Symbols 
+# Table 37: Miscellaneous wasysym Text-mode Symbols
 - package: wasysym
   textmode:
     - \permil
@@ -492,7 +492,7 @@
     - \mathellipsis
     - \mathsection
     - \mathunderscore
-# Table 40: Binary Operators 
+# Table 40: Binary Operators
     - \amalg
     - \cup
     - \oplus
@@ -551,7 +551,7 @@
     - \veebar
     - \circledast
     - \doublebarwedge
-# Table 43: wasysym Binary Operators 
+# Table 43: wasysym Binary Operators
 - package: wasysym
   mathmode:
     - \lhd
@@ -607,7 +607,7 @@
     - \landupint
     - \varointctrclockwise
     - \oiint
-# Table 62: Binary Relations 
+# Table 62: Binary Relations
 - mathmode:
     - \approx
     - \not\approx #added by me
@@ -695,7 +695,7 @@
   mathmode:
     - \inplus
     - \niplus
-# Table 78: Subset and Superset Relations 
+# Table 78: Subset and Superset Relations
 - mathmode:
     - \sqsupseteq
     - \supset
@@ -723,7 +723,7 @@
     - \varsupsetneqq
     - \Subset
     - \supsetneq
-# Table 85: Inequalities 
+# Table 85: Inequalities
     - \geq
     - \gg
     - \leq
@@ -784,7 +784,7 @@
     - \ntriangleleft
     - \ntrianglerighteq
     - \trianglerighteq
-# Table 95: Arrows 
+# Table 95: Arrows
 - mathmode:
     - \Downarrow
     - \longleftarrow
@@ -812,7 +812,7 @@
     - \leftrightarrow
     - \nearrow
     - \Updownarrow
-# Table 96: Harpoons 
+# Table 96: Harpoons
     - \leftharpoondown
     - \rightharpoondown
     - \rightleftharpoons
@@ -829,7 +829,7 @@
     - \textrightarrow
     - \textleftarrow
     - \textuparrow
-# Table 98: AMS Arrows 
+# Table 98: AMS Arrows
 - package: amssymb
   mathmode:
     - \circlearrowleft
@@ -856,14 +856,14 @@
     - \upuparrows
     - \leftarrowtail
     - \rightarrowtail
-# Table 99: AMS Negated Arrows 
+# Table 99: AMS Negated Arrows
     - \nLeftarrow
     - \nLeftrightarrow
     - \nRightarrow
     - \nleftarrow
     - \nleftrightarrow
     - \nrightarrow
-# Table 100: AMS Harpoons 
+# Table 100: AMS Harpoons
     - \downharpoonleft
     - \leftrightharpoons
     - \upharpoonleft
@@ -934,7 +934,7 @@
   - \Theta
   - \Pi
   - \Phi
-# Table 123: AMS Greek Letters 
+# Table 123: AMS Greek Letters
 - package: amssymb
   mathmode:
     - \digamma
@@ -1047,7 +1047,7 @@
     - \|
     - /
     # - \backslash
-# Table 144: stmaryrd Variable-sized Delimiters 
+# Table 144: stmaryrd Variable-sized Delimiters
 - package: stmaryrd
   mathmode:
     - \llbracket
@@ -1061,7 +1061,7 @@
     - \textrbrackdbl
     - \textlquill
     - \textrquill
-# Table 174: Dots 
+# Table 174: Dots
 - mathmode:
     - \cdotp
     - \colon
@@ -1080,7 +1080,7 @@
     - \dotsm
     - \dotsc
     - \dotso
-# Table 184: Miscellaneous LATEX 2ε Math Symbols 
+# Table 184: Miscellaneous LATEX 2ε Math Symbols
 - mathmode:
     - \aleph
 #    - \Diamond
@@ -1103,7 +1103,7 @@
     - \neg
     - \triangle
     - \sqrt{} # not on the table... more an accent than a symbol
-# Table 185: Miscellaneous AMS Math Symbols 
+# Table 185: Miscellaneous AMS Math Symbols
 - package: amssymb
   mathmode:
     - \angle
@@ -1356,7 +1356,7 @@
     - \Virgo
     - \Sagittarius
     - \Pisces
-# Table 210: marvosym Communication Symbols 
+# Table 210: marvosym Communication Symbols
 - package: marvosym
   textmode:
     - \Email
@@ -1372,7 +1372,7 @@
 # Table 212: wasysym Biological Symbols
 - package: wasysym
   bothmodes:
-    - \female 
+    - \female
     - \male
 - package: skull
   mathmode:
@@ -1381,6 +1381,7 @@
 - package: wasysym
   textmode:
     - \LEFTarrow
+    - \RIGHTarrow
     - \lightning
     - \DOWNarrow
     - \phone
@@ -1390,7 +1391,6 @@
   bothmodes:
     - \checked #
     - \kreuz #
-    - \RIGHTarrow
     - \ataribox #
     - \clock #
     - \smiley #
@@ -1403,7 +1403,7 @@
     - \wasylozenge #
     - \brokenvert #
     - \invdiameter #
-# Table 263: Other marvosym Symbols 
+# Table 263: Other marvosym Symbols
 - package: marvosym
   textmode:
     - \Ankh
