@@ -122,7 +122,7 @@ GEM
       tilt (~> 1.4.1)
     padrino-support (0.12.5)
       activesupport (>= 3.1)
-    rack (1.6.4)
+    rack (1.6.12)
     rack-livereload (0.3.16)
       rack
     rack-protection (1.5.3)
