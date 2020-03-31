@@ -1,0 +1,19 @@
+postgres:
+  image: postgres:9.5
+  environment:
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_DB: $POSTGRES_DB
+  ports:
+    - "${POSTGRES_PORT}:5432"
+# couchdb:
+#   image: couchdb:1.6
+#   ports:
+#     - "${COUCHDB_PORT}:5984"
+sample_tool:
+  build: sample-tool
+  environment:
+    - "PORT=9292"
+  ports:
+    - "9292:9292"
+  links:
+    - "postgres:db"

@@ -4,12 +4,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <title>Sample Tool</title>
-  <script type="text/javascript" charset="utf-8" src="jquery-latest.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="lodash.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="jquery-3.1.0.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="sammy-latest.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="sammy.json.js"></script>
   <script type="text/javascript" charset="utf-8" src="sammy.mustache.js"></script>
   <script type="text/javascript" charset="utf-8" src="raphael-min.js"></script>
-  <script type="text/javascript" charset="utf-8" src="lodash.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="jquery.raphael.canvassify.js"></script>
   <script type="text/javascript" charset="utf-8">
 
     var stroke2path = function(stroke) {
@@ -29,7 +30,7 @@
         var c = this;
         $.getJSON('/symbols', function(symbols) {
           console.log(symbols);
-          symbols = _.sortBy(symbols, function(s) { return -s.sample_count })
+          symbols = _.sortBy(symbols, function(s) { return s.sample_count })
           var template = '<ul id="symbols">{{#symbols}}<li><a href="#/samples/{{id}}">{{id}}</a> - {{sample_count}} - <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="{{css_class}}"></li>{{/symbols}}</ul>'
           $('#main').html(c.ms(template, {symbols: symbols}));
         });
@@ -40,6 +41,27 @@
         // get samples and display them
         var symid = this.params['symid'];
         $('#main').text('');
+
+        $('#main').append('<div id="training"><div id="tafel"></div><button id="train">train</button><button id="clear">clear</button></div>');
+        $('#tafel').canvassify({width:400, height:400})
+        $('#train').on('click', function(evt) {
+          var canvas = $('#tafel').get(0).canvassified;
+          console.log(canvas.strokes);
+          $.ajax({
+            url: '/samples/'+symid,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({strokes: canvas.strokes}),
+            success: function(result) {
+              canvas.clear();
+            }
+          });
+        });
+        $('#clear').on('click', function(evt) {
+          var canvas = $('#tafel').get(0).canvassified;
+          canvas.clear();
+        });
+
         $('#main').append('<ul id="samples"></ul>');
         $.getJSON('/symbols', function(symbols) {
           symbol = _.mapValues(_.groupBy(symbols, 'id'), _.head)[symid]
@@ -89,6 +111,12 @@
   <style type="text/css" media="screen">
     body, p {
       font-family: sans-serif;
+    }
+
+    #tafel {
+      border: 1px solid black;
+      width: 400px;
+      height: 400px;
     }
 
     ul#symbols {

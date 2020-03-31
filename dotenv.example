@@ -1,0 +1,14 @@
+COUCH=https://kirelabs.cloudant.com/detexify
+TRAINCOUCH=https://kirelabs.cloudant.com/detexify
+#TESTCOUCH=http://localhost:5984/detexify-test-mini
+CLASSIFIER=http://46.101.201.136:3000
+
+RACK_ENV=development
+
+export POSTGRES_USER=postgres
+export POSTGRES_DB=detexify
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=5442
+export POSTGRES_URL="postgres://$POSTGRES_USER:@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
+
+export COUCHDB_PORT=5984

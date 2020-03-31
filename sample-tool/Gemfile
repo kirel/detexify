@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+ruby '2.2.2'
+
+gem "json"
+gem "rack-contrib"
+gem "sinatra"
+gem "sinatra-reloader"
+gem "sinatra-json"
+
+gem 'sequel'
+gem 'pg'
