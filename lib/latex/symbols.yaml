@@ -1228,6 +1228,32 @@
 - package: bbold
   mathmode:
     - \mathbb{1}
+    - \mathbb{A}
+    - \mathbb{B}
+    - \mathbb{C}
+    - \mathbb{D}
+    - \mathbb{E}
+    - \mathbb{F}
+    - \mathbb{G}
+    - \mathbb{H}
+    - \mathbb{I}
+    - \mathbb{J}
+    - \mathbb{K}
+    - \mathbb{L}
+    - \mathbb{M}
+    - \mathbb{N}
+    - \mathbb{O}
+    - \mathbb{P}
+    - \mathbb{Q}
+    - \mathbb{R}
+    - \mathbb{S}
+    - \mathbb{T}
+    - \mathbb{U}
+    - \mathbb{V}
+    - \mathbb{W}
+    - \mathbb{X}
+    - \mathbb{Y}
+    - \mathbb{Z}
 - package: dsfont
   mathmode:
     - \mathds{1}
