@@ -52,14 +52,14 @@ $ ->
 
     try
       if document.execCommand("copy")
-        range.collapse() # Remove selection if copy succeeded
+        selection.collapse(null) # Remove selection if copy succeeded
 
         $(this)
           .addClass "flash"
           .on "animationend", ->
             $(this).removeClass("flash")
     catch error
-      console.error("Your browser doesn't support the copy command. Use CTRL + V instead.")
+      console.error("Your browser doesn't support the copy command. Use CTRL + V instead.", error)
 
   # Canvas
   c = $.canvassify("#tafel",
