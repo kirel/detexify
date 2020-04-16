@@ -23,7 +23,7 @@
 
   template = """
   {{#symbols}}
-  <li id="{{id}}">
+  <li id="{{id}}" title="Click to copy the command">
     <div class="symbol">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="{{css_class}}">
     </div>

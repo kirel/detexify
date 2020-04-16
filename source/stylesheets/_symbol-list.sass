@@ -12,6 +12,9 @@ ul.symbol-list
     padding: 0
     overflow: hidden
 
+    &.flash
+      animation: flash 1s linear
+
     .info
       display: table-cell
       vertical-align: middle
@@ -39,7 +42,16 @@ ul.symbol-list
 
     &:hover
       background-color: whitesmoke
+      cursor: pointer
 
     &.active:hover,
     &.active
       background-color: cornsilk
+
+@keyframes flash
+  0%
+    background-color: whitesmoke
+  10%
+    background-color: #EEE
+  100%
+    background-color: whitesmoke
