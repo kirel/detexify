@@ -59,7 +59,7 @@ $ ->
           .on "animationend", ->
             $(this).removeClass("flash")
     catch error
-      console.error("Your browser doesn't support the copy command. Use CTRL + V instead.", error)
+      console.error("Your browser doesn't support the copy command. Use CTRL + C instead.", error)
 
   # Canvas
   c = $.canvassify("#tafel",
