@@ -17,7 +17,7 @@ group :test do
   gem "rack-test"
 end
 
-  gem "middleman", "~>3.4.1"
+  gem "middleman", "~>4.3.11"
   gem "middleman-livereload", "~> 3.1.0"
   gem "bourbon", "~>4.2.6"
   gem "neat", "1.7.4"
