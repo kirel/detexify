@@ -52,7 +52,7 @@ js: symbols
           / <option value='samples'>number of samples</option>
       #filter
         Filter by
-        %input{:type => "text"}/
+        %input{:type => "text", :autocomplete=>"off", :autocorrect=>"off", :autocapitalize=>"off", :spellcheck=>"false"}/
     #symbols--loading
       .spinner
       loading...
