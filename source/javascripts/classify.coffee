@@ -40,6 +40,27 @@ $ ->
 
     return
 
+  $(".symbol-list").on "click", "li", ->
+    command = $("code.command", this)[0]
+
+    range = document.createRange()
+    range.selectNode(command)
+
+    selection = window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
+
+    try
+      if document.execCommand("copy")
+        selection.collapse(null) # Remove selection if copy succeeded
+
+        $(this)
+          .addClass "flash"
+          .on "animationend", ->
+            $(this).removeClass("flash")
+    catch error
+      console.error("Your browser doesn't support the copy command. Use CTRL + C instead.", error)
+
   # Canvas
   c = $.canvassify("#tafel",
     callback: classify
