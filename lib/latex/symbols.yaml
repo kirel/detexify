@@ -1424,3 +1424,16 @@
     - \CircledA
     #- \FullFHBO
     - \MVRightarrow
+# Table 290: marvosym Navigation Symbols
+- package: marvosym
+  textmode:
+    - \Forward
+    - \ForwardToEnd
+    - \ForwardToIndex
+    - \MoveDown
+    - \MoveUp
+    - \Rewind
+    - \RewindToIndex
+    - \RewindToStart
+    - \ToBottom
+    - \ToTop
